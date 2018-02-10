@@ -2,6 +2,4 @@ site_name: Video Utilities
 pages:
     - Home: index.md
     - Usage: usage.md
-docs_dir: sources
 repo_url: https://github.com/MrinalJain17/video_utils
-site_url: https://mrinaljain17.github.io/video_utils/index
