@@ -1,4 +1,4 @@
-## `Videos`
+## **`Videos`**
 
 To read in videos and store them as NumPy arrays.
 
@@ -54,7 +54,7 @@ If not set, the dimensions of the frames will not be altered.
 
 	If not set, then the pixels would not be normalized.  
 
-### `read_videos(paths)`
+### **`read_videos(paths)`**
 
 Function to read videos.
 
@@ -68,7 +68,7 @@ The value of `channels` could be 1 (gray scale) or 3 (RGB).
 #### **Raises**:
 - `ValueError`: If the value of `normalize_pixels` is invalid.
 
-### `get_frame_count(paths)`
+### **`get_frame_count(paths)`**
 
 Get the number of frames of all the videos.
 
