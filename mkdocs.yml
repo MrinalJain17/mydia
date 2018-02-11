@@ -1,0 +1,6 @@
+site_name: Video Utilities
+site_description: Read videos as NumPy arrays in Python
+theme: mkdocs
+pages:
+- Home: index.md
+- Usage: usage.md
