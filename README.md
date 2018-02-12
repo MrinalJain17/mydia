@@ -1,6 +1,8 @@
 # Video Utilities
 Contains functions to read videos as NumPy arrays in Python
 
+Read the documentation at [mrinaljain17.github.io/video_utils](https://mrinaljain17.github.io/video_utils/)
+
 ## Instructions
 1. Clone the repository and navigate to the downloaded folder.
 
@@ -42,7 +44,7 @@ Download the required binaries from [here](https://www.ffmpeg.org/download.html)
 
 ### Additional Libraries to install:
 
-Several libraries like [Numpy](http://www.numpy.org/), [Pillow](https://python-imaging.github.io/) come pre-installed with the Anaconda distribution of python.  
+Several libraries like [Numpy](http://www.numpy.org/), [Pillow](https://python-imaging.github.io/), [Matplotlib](https://matplotlib.org/) etc., required for the package come pre-installed with the Anaconda distribution of Python.  
 Install the following extra packages:
 
 - [Scikit-video](http://www.scikit-video.org/stable/)
