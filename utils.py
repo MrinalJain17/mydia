@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from skvideo.io import FFmpegReader, ffprobe
 from skvideo.utils import rgb2gray
 from PIL import Image
@@ -107,6 +108,48 @@ class Videos(object):
                 raise ValueError('Invalid value of \'normalize_pixels\'')
 
         return tensor
+
+    def plot_video_frames(self, path=None, video=None, num_col=3, figsize=(15, 100)):
+        """Plot the frames of the video.
+		
+		Either pass a video, or its path to plot the frames of the video as a grid.
+		
+		Args:
+            path (str): Path of the video whose frames are to be plotted.
+			
+			video (numpy.ndarray): A numpy array of shape (<`max_frames`>, <height>, <width>, <channels>).  
+				It is the video whose frames are to be plotted.
+			
+			num_col (int): The number of columns in the grid of frames. Defaults to 3.
+			
+			figsize (tuple): Size of the figure to be plotted. Defaults to *(15, 100)*.  
+				The figure is a grid of frames, having `num_col` columns.
+				This parameter defines the relative-spacing between adjacent frames.
+				
+		Returns:
+			matplotlib.figure.Figure object: The figure that was plotted.
+
+        """
+
+        # Shape of 'video' = (<`max_frames`>, <height>, <width>, <channels>)
+        if(path != None):
+            video = self.read_videos([path])[0]
+
+        num_row = int(np.ceil(video.shape[0] / num_col))
+        fig, axarr = plt.subplots(num_row, num_col, figsize=figsize)
+        row = 0
+        col = 0
+        for index, frame in enumerate(video):
+            if index in range(num_col, num_row * num_col, num_col):
+                row += 1
+                col = 0
+            if self.to_gray:
+                axarr[row, col].imshow(np.squeeze(frame), cmap='gray')
+            else:
+                axarr[row, col].imshow(frame)
+            col += 1
+
+        return fig
 
     def get_frame_count(self, paths):
         """Get the number of frames of all the videos.

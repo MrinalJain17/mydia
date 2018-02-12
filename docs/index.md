@@ -13,11 +13,11 @@ Contains functions to read videos as NumPy arrays in Python
 		from utils import Videos
 		
 		reader = Videos(target_size=(150, 25), 
-				to_gray=True, 
-				max_frames=60, 
-				extract_frames='first', 
-				required_fps=0, 
-				normalize_pixels=(0, 1))
+						to_gray=True, 
+						max_frames=60, 
+						extract_frames='first', 
+						required_fps=0, 
+						normalize_pixels=(0, 1))
 		
 		paths = [..]    # List of strings - each string being the path (absolute) of a video
 		videos = reader.read_videos(paths)
@@ -41,7 +41,7 @@ For **Windows or MAC/OSX**:
 
 ### Additional Libraries to install:
 
-Several libraries like [Numpy](http://www.numpy.org/), [Pillow](https://python-imaging.github.io/) come pre-installed with the Anaconda distribution of python.  
+Several libraries like [Numpy](http://www.numpy.org/), [Pillow](https://python-imaging.github.io/), [Matplotlib](https://matplotlib.org/) etc., required for the package come pre-installed with the Anaconda distribution of Python.  
 Install the following extra packages:
 
 - [Scikit-video](http://www.scikit-video.org/stable/)

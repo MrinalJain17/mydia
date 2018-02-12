@@ -5,8 +5,8 @@ To read in videos and store them as NumPy arrays.
 The videos are stored as a 5-dimensional tensor - `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`.  
 The value of `channels` could be 1 (gray scale) or 3 (RGB).
 
-- **`target_size (tuple)`**: `(New_Width, New_Height)`. Defaults to `None`.
-A tuple denoting the target width and height (of the frames) of the videos.
+- **`target_size (tuple)`**: `(New_Width, New_Height)`. Defaults to `None`.  
+A tuple denoting the target width and height (of the frames) of the videos.  
 If not set, the dimensions of the frames will not be altered.
 
 	**Note:**  
@@ -52,9 +52,11 @@ If not set, the dimensions of the frames will not be altered.
 
 	**str** - `'z-score'`: Z-score normalization will be used.  
 
-	If not set, then the pixels would not be normalized.  
+	If not set, then the pixels would not be normalized.
 
-### **`read_videos(paths)`**
+---
+
+## **`read_videos(paths)`**
 
 Function to read videos.
 
@@ -62,13 +64,38 @@ Function to read videos.
 - `paths (list of str)`: A list of paths of the videos to be read.
 
 #### **Returns**:
-- Numpy.ndarray: A 5-dimensional tensor with shape `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`.  
+- `Numpy.ndarray`: A 5-dimensional tensor with shape `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`.  
 The value of `channels` could be 1 (gray scale) or 3 (RGB).
 
 #### **Raises**:
 - `ValueError`: If the value of `normalize_pixels` is invalid.
 
-### **`get_frame_count(paths)`**
+---
+
+## **`plot_video_frames(path=None, video=None, num_col=3, figsize=(15, 100))`**
+
+Plot the frames of the video.  
+**Either pass a video, or its path to plot the frames of the video as a grid.**
+
+#### **Args**:
+- `path (str)`: Path of the video whose frames are to be plotted.
+			
+- `video (numpy.ndarray)`: A numpy array of shape `(<max_frames>, <height>, <width>, <channels>)`.  
+	It is the video whose frames are to be plotted.
+
+- `num_col (int)`: The number of columns in the grid of frames. Defaults to 3.
+
+- `figsize (tuple)`: Size of the figure to be plotted. Defaults to *(15, 100)*.  
+
+	The figure is a grid of frames, having `num_col` columns.  
+	This parameter defines the relative-spacing between adjacent frames in the grid.
+
+#### **Returns**:
+- `Object (matplotlib.figure.Figure)`: The figure that was plotted.
+
+---
+
+## **`get_frame_count(paths)`**
 
 Get the number of frames of all the videos.
 
@@ -79,3 +106,5 @@ Can be used to determine the value of `max_frames`.
 
 #### **Returns**:
 - `dict (python dictionary)`: Key - *path of video*, value - *number of frames in that video*.
+
+---
