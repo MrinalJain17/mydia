@@ -50,7 +50,7 @@ class Videos(object):
             str - 'z-score': Z-score normalization will be used.
             If not set, then the pixels would not be normalized.
 
-            The pixel values would be normalized based on the pixels of each video.
+            The pixel values would be normalized based on the pixels of the whole data.
 
     """
 
@@ -94,14 +94,14 @@ class Videos(object):
                     len(self.normalize_pixels) == 2):
                 base = self.normalize_pixels[0]
                 r = self.normalize_pixels[1] - base
-                min_ = np.min(tensor, axis=(1, 2, 3), keepdims=True)
-                max_ = np.max(tensor, axis=(1, 2, 3), keepdims=True)
+                min_ = np.min(tensor)
+                max_ = np.max(tensor)
                 return ((tensor.astype('float32') - min_) /
                         (max_ - min_)) * r + base
 
             elif self.normalize_pixels == 'z-score':
-                mean = np.mean(tensor, axis=(1, 2, 3), keepdims=True)
-                std = np.std(tensor, axis=(1, 2, 3), keepdims=True)
+                mean = np.mean(tensor)
+                std = np.std(tensor)
                 return (tensor.astype('float32') - mean) / std
 
             else:

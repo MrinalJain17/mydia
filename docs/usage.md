@@ -46,7 +46,7 @@ If not set, the dimensions of the frames will not be altered.
 		The resulting video (in form of tensor) will have a total of _10 * 7 = 70 frames_.  
 	
 - **`normalize_pixels (tuple, str)`**: Whether to normalize pixel values for each video or not. Defaults to `None`.  
-	The pixel values would be normalized based on the pixels of each video.
+	The pixel values would be normalized based on the pixels of the whole data.
 
 	**tuple** - `(New_min, New_max)`: Min-max normalization will be used.  
 
