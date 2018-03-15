@@ -83,7 +83,7 @@ class Videos(object):
         """
 
         list_of_videos = [
-            self._read_video(path) for path in tqdm(paths)
+            self._read_video(path) for path in tqdm(paths, unit='videos')
         ]
 
         tensor = np.vstack(list_of_videos)
