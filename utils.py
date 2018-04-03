@@ -54,9 +54,15 @@ class Videos(object):
 
     """
 
-    def __init__(self, target_size=None, to_gray=False, max_frames=None,
-                 extract_frames='middle', required_fps=None,
-                 normalize_pixels=None):
+    def __init__(
+        self,
+        target_size=None,
+        to_gray=False,
+        max_frames=None,
+        extract_frames="middle",
+        required_fps=None,
+        normalize_pixels=None,
+    ):
         """Initializing the variables"""
 
         self.target_size = target_size
@@ -82,30 +88,28 @@ class Videos(object):
 
         """
 
-        list_of_videos = [
-            self._read_video(path) for path in tqdm(paths, unit='videos')
-        ]
+        list_of_videos = [self._read_video(path) for path in tqdm(paths, unit="videos")]
 
         tensor = np.vstack(list_of_videos)
 
         if self.normalize_pixels is not None:
             # Pixels are normalized for each video individually
             if (isinstance(self.normalize_pixels, tuple)) and (
-                    len(self.normalize_pixels) == 2):
+                len(self.normalize_pixels) == 2
+            ):
                 base = self.normalize_pixels[0]
                 r = self.normalize_pixels[1] - base
                 min_ = np.min(tensor)
                 max_ = np.max(tensor)
-                return ((tensor.astype('float32') - min_) /
-                        (max_ - min_)) * r + base
+                return ((tensor.astype("float32") - min_) / (max_ - min_)) * r + base
 
-            elif self.normalize_pixels == 'z-score':
+            elif self.normalize_pixels == "z-score":
                 mean = np.mean(tensor)
                 std = np.std(tensor)
-                return (tensor.astype('float32') - mean) / std
+                return (tensor.astype("float32") - mean) / std
 
             else:
-                raise ValueError('Invalid value of \'normalize_pixels\'')
+                raise ValueError("Invalid value of 'normalize_pixels'")
 
         return tensor
 
@@ -132,7 +136,7 @@ class Videos(object):
         """
 
         # Shape of 'video' = (<`max_frames`>, <height>, <width>, <channels>)
-        if(path != None):
+        if (path != None):
             video = self.read_videos([path])[0]
 
         num_row = int(np.ceil(video.shape[0] / num_col))
@@ -144,7 +148,7 @@ class Videos(object):
                 row += 1
                 col = 0
             if self.to_gray:
-                axarr[row, col].imshow(np.squeeze(frame), cmap='gray')
+                axarr[row, col].imshow(np.squeeze(frame), cmap="gray")
             else:
                 axarr[row, col].imshow(frame)
             col += 1
@@ -186,7 +190,7 @@ class Videos(object):
 
         cap = FFmpegReader(filename=path)
         list_of_frames = []
-        self.fps = int(cap.inputfps)                  # Frame Rate
+        self.fps = int(cap.inputfps)  # Frame Rate
 
         for index, frame in enumerate(cap.nextFrame()):
 
@@ -198,8 +202,7 @@ class Videos(object):
                 if self.required_fps == 0:
                     frame_count = cap.inputframenum
                     duration = frame_count / self.fps
-                    curr_required_fps = int(
-                        np.ceil(self.max_frames / duration))
+                    curr_required_fps = int(np.ceil(self.max_frames / duration))
 
                 is_valid = range(curr_required_fps)
                 capture_frame = (index % self.fps) in is_valid
@@ -209,9 +212,10 @@ class Videos(object):
                 if self.target_size is not None:
                     temp_image = Image.fromarray(frame)
                     frame = np.asarray(
-                        temp_image.resize(
-                            self.target_size,
-                            Image.ANTIALIAS)).astype('uint8')
+                        temp_image.resize(self.target_size, Image.ANTIALIAS)
+                    ).astype(
+                        "uint8"
+                    )
 
                 # Shape of each frame -> (<height>, <width>, 3)
                 list_of_frames.append(frame)
@@ -246,19 +250,20 @@ class Videos(object):
         total_frames = video.shape[0]
         if self.max_frames <= total_frames:
 
-            if self.extract_frames == 'first':
+            if self.extract_frames == "first":
                 video = video[:self.max_frames]
-            elif self.extract_frames == 'last':
+            elif self.extract_frames == "last":
                 video = video[(total_frames - self.max_frames):]
-            elif self.extract_frames == 'middle':
+            elif self.extract_frames == "middle":
                 # No. of frames to remove from the front
                 front = ((total_frames - self.max_frames) // 2) + 1
                 video = video[front:(front + self.max_frames)]
             else:
-                raise ValueError('Invalid value of \'extract_frames\'')
+                raise ValueError("Invalid value of 'extract_frames'")
 
         else:
             raise IndexError(
-                'Required number of frames is greater than the total number of frames in the video')
+                "Required number of frames is greater than the total number of frames in the video"
+            )
 
         return video
