@@ -1,7 +1,0 @@
-site_name: Video Utilities
-site_description: Read videos as NumPy arrays in Python
-theme: material
-repo_url: https://github.com/MrinalJain17/video_utils
-pages:
-- Home: index.md
-- Usage: usage.md

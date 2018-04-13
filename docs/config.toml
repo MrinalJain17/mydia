@@ -1,0 +1,20 @@
+baseURL = "https://mrinaljain17.github.io/mydia/"
+languageCode = "en-us"
+title = "Mydia"
+
+theme = "hugo-theme-learn"
+
+# For search functionality
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+author = "Mrinal Jain"
+description = "Read videos as numpy arrays"
+showVisitedLinks = false
+disableSearch = true
+disableInlineCopyToClipBoard = true
+disableShortcutsTitle = false
+disableLanguageSwitchingButton = false
+ordersectionsby = "weight"
+themeVariant = ""
