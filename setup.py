@@ -1,9 +1,20 @@
 from setuptools import find_packages, setup
+from codecs import open
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
 
 setup(
     name="Mydia",
     version="1.0.0",
-    description="Read videos as NumPy arrays",
+    description="Read videos as numpy arrays",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/MrinalJain17/Mydia",
     author="Mrinal Jain",
     author_email="mrinaljain007@gmail.com",
     license="MIT",
@@ -26,4 +37,9 @@ setup(
         "Topic :: Multimedia :: Video :: Capture",
     ],
     packages=find_packages(),
+    project_urls={
+        "Documentation": "https://mrinaljain17.github.io/Mydia/",
+        "Bug Reports": "https://github.com/MrinalJain17/Mydia/issues",
+        "Source": "https://github.com/MrinalJain17/Mydia",
+    },
 )

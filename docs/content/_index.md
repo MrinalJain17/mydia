@@ -37,7 +37,7 @@ video = reader.read(video_path)   # a tensor of shape (1, 9, 480, 720, 3)
 reader.plot(video[0])   # Plotting the frames of the video in a grid
 ```
 
-![Video frames](https://github.com/MrinalJain17/Mydia/tree/master/static/images/video_frames.PNG)
+![Video frames](https://github.com/MrinalJain17/Mydia/raw/master/static/images/video_frames.PNG)
 
 *Hmm.. Let's read the same video in __gray scale__.*
 
@@ -54,4 +54,4 @@ video = reader.read(video_path)   # a tensor of shape (1, 9, 480, 720, 1)
 reader.plot(video[0])   # Plotting the frames of the video in a grid
 ```
 
-![Video frames](https://github.com/MrinalJain17/Mydia/tree/master/static/images/video_frames_gray.PNG)
+![Video frames](https://github.com/MrinalJain17/Mydia/raw/master/static/images/video_frames_gray.PNG)
