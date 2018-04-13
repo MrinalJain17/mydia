@@ -1,3 +1,5 @@
+@echo off
+
 :: Generate site
 hugo
 
