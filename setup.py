@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name="Mydia",
     version="1.0.0",
-    description="Reding videos as NumPy arrays",
+    description="Read videos as NumPy arrays",
     author="Mrinal Jain",
     author_email="mrinaljain007@gmail.com",
     license="MIT",
