@@ -11,7 +11,7 @@ To read in videos and store them as NumPy arrays.
 The videos are stored as a 5-dimensional tensor - `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`.
 The value of `channels` could be 1 (gray scale) or 3 (RGB).
 
-### Parameters
+#### Parameters
 
 + **target_size** : *tuple*, optional  
     Tuple of form `(New_Width, New_Height)`, defaults to `None`.  
@@ -65,7 +65,7 @@ The value of `channels` could be 1 (gray scale) or 3 (RGB).
 + **random_state** : *int*, optional  
     The number to seed the random number generator (when using the `mode` as "random"), defaults to 17.
 
-#### `read(paths)`
+### `read(paths)`
 Function to read videos.
 
 #### Parameters
@@ -77,7 +77,7 @@ Function to read videos.
     A 5-dimensional tensor with shape `(<No. of videos>, <No. of frames>, <height>, <width>, <channels>)`.  
     The value of `channels` could be 1 (gray scale) or 3 (RGB).
 
-#### `plot(video=None, path=None, num_col=3, figsize=None)`
+### `plot(video=None, path=None, num_col=3, figsize=None)`
 Plot the frames of the video in a grid.
 
 #### Parameters
