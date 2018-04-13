@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://mrinaljain17.github.io/mydia/"
 languageCode = "en-us"
 title = "Mydia"
 
@@ -10,7 +10,7 @@ home = ["HTML", "RSS", "JSON"]
 
 [params]
 author = "Mrinal Jain"
-description = "Read videos as NumPy arrays"
+description = "Read videos as numpy arrays"
 showVisitedLinks = false
 disableSearch = true
 disableInlineCopyToClipBoard = true
