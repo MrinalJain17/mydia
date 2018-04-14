@@ -1,33 +1,12 @@
-# Video Utilities
+# Mydia
 
-__*Read videos as numpy arrays, with a gamut of additional functionalities.*__
+Read videos as numpy arrays, with a gamut of additional functionalities.
 
-### Installation
+[Read the Documentation](https://mrinaljain17.github.io/Mydia/)
 
-* **Install Mydia from PyPI (recommended):**
+## Getting started
 
-```bash
-pip install Mydia
-```
-
-* **Alternatively, install from Github source:**
-
-First, clone the repository.
-
-```bash
-git clone https://github.com/MrinalJain17/Mydia.git
-```
-
-Then, build the module
-
-```bash
-cd Mydia
-python setup.py install
-```
-
-### Getting started
-
-##### *Let's read in a video*
+*Let's read in a video*
 
 ```python
 from mydia import Videos
@@ -40,7 +19,7 @@ video = reader.read(video_path)   # a tensor of shape (1, 132, 720, 1080, 3)
 
 The tensor represents **1 video** having **132 frames**, with each frame having a width and height of 1080 and 720 pixels respectively. `3` denotes the *RGB channels* of the video.
 
-##### *Extracting only 9 frames (at equal intervals) from the entire video and resizing each frame to be 720 pixels in width and 480 pixels in height.*
+*Extracting only 9 frames (at equal intervals) from the entire video and resizing each frame to be 720 pixels in width and 480 pixels in height.*
 
 ```python
 from mydia import Videos
@@ -72,6 +51,29 @@ reader.plot(video[0])   # Plotting the frames of the video in a grid
 ```
 
 ![Video frames](https://github.com/MrinalJain17/Mydia/raw/master/static/images/video_frames_gray.PNG)
+
+## Installation
+
+* **Install Mydia from PyPI (recommended):**
+
+```bash
+pip install Mydia
+```
+
+* **Alternatively, install from Github source:**
+
+First, clone the repository.
+
+```bash
+git clone https://github.com/MrinalJain17/Mydia.git
+```
+
+Then, build the module
+
+```bash
+cd Mydia
+python setup.py install
+```
 
 ## Requirements
 `Python 3.x` (preferably from the [Anaconda Distribution](https://www.anaconda.com/download/))

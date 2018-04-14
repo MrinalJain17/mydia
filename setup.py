@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 from codecs import open
 from os import path
 
-here = path.abspath(path.dirname('.'))
+here = path.abspath(path.dirname("."))
 
 # Get the long description from the README file
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
@@ -13,7 +13,7 @@ setup(
     version="1.0.0",
     description="Read videos as numpy arrays",
     long_description=long_description,
-    description_content_type="text/markdown; charset=UTF-8; variant=GFM",
+    long_description_content_type="text/markdown; charset=UTF-8; variant=GFM",
     url="https://mrinaljain17.github.io/Mydia/",
     author="Mrinal Jain",
     author_email="mrinaljain007@gmail.com",
