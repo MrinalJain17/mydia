@@ -1,11 +1,11 @@
 ---
-title: "Basics"
+title: "Mydia"
 date: 2018-04-13T18:17:48+05:30
 ---
 
 # Video Utilities
 
-#### Read videos as numpy arrays, with a gamut of additional functionalities.
+#### *Read videos as numpy arrays, with a gamut of additional functionalities.*
 
 ### Getting started
 

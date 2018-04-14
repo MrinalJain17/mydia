@@ -22,7 +22,7 @@ Download the required binaries from [here](https://www.ffmpeg.org/download.html)
 ### Additional Libraries to install:
 
 Several libraries like [Numpy](http://www.numpy.org/), [Pillow](https://python-imaging.github.io/), [Matplotlib](https://matplotlib.org/) etc., required for the package come pre-installed with the Anaconda distribution for Python.  
-Install the following extra packages:
+Install the following extra packages (if not already installed):
 
 - [Scikit-video](http://www.scikit-video.org/stable/)
 
