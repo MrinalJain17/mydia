@@ -9,7 +9,7 @@ weight: 1
 * **Install Mydia from PyPI (recommended):**
 
 ```bash
-pip install Mydia
+pip install mydia
 ```
 
 * **Alternatively, install from Github source:**
@@ -17,12 +17,12 @@ pip install Mydia
 First, clone the repository.
 
 ```bash
-git clone https://github.com/MrinalJain17/Mydia.git
+git clone https://github.com/MrinalJain17/mydia.git
 ```
 
 Then, build the module
 
 ```bash
-cd Mydia
+cd mydia
 python setup.py install
 ```

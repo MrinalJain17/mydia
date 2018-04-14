@@ -5,16 +5,15 @@ from os import path
 here = path.abspath(path.dirname("."))
 
 # Get the long description from the README file
-with open(path.join(here, "README.md"), encoding="utf-8") as f:
+with open(path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
     name="Mydia",
-    version="1.0.1",
+    version="1.0.2",
     description="Read videos as numpy arrays",
     long_description=long_description,
-    long_description_content_type="text/markdown; charset=UTF-8; variant=GFM",
-    url="https://mrinaljain17.github.io/Mydia/",
+    url="https://mrinaljain17.github.io/mydia/",
     author="Mrinal Jain",
     author_email="mrinaljain007@gmail.com",
     license="MIT",
@@ -38,8 +37,7 @@ setup(
     ],
     packages=find_packages(),
     project_urls={
-        "Documentation": "https://mrinaljain17.github.io/Mydia/",
-        "Bug Reports": "https://github.com/MrinalJain17/Mydia/issues",
-        "Source": "https://github.com/MrinalJain17/Mydia",
+        "Documentation": "https://mrinaljain17.github.io/mydia/",
+        "Source": "https://github.com/MrinalJain17/mydia",
     },
 )
