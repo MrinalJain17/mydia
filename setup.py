@@ -2,15 +2,14 @@ from setuptools import find_packages, setup
 from codecs import open
 from os import path
 
-here = path.abspath(path.dirname("."))
-
 # Get the long description from the README file
-with open(path.join(here, "README.rst"), encoding="utf-8") as f:
+with open("README.rst", encoding="utf-8") as f:
     long_description = f.read()
+    long_description = long_description.replace("\r", "")
 
 setup(
-    name="Mydia",
-    version="1.0.2",
+    name="mydia",
+    version="1.0.3",
     description="Read videos as numpy arrays",
     long_description=long_description,
     url="https://mrinaljain17.github.io/mydia/",

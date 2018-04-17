@@ -3,7 +3,7 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-from skvideo.io import FFmpegReader, ffprobe
+from skvideo.io import FFmpegReader
 from skvideo.utils import rgb2gray
 from tqdm import tqdm
 
@@ -86,7 +86,7 @@ class Videos(object):
         """
 
         self.target_size = None
-        if (target_size != None):
+        if target_size != None:
             if isinstance(target_size, int):
                 self.target_size = (target_size, target_size)
             elif len(target_size) == 2:

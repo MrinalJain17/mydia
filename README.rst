@@ -1,3 +1,4 @@
+
 Mydia
 =====
 
@@ -71,16 +72,11 @@ Installation
 
 -  **Alternatively, install from Github source:**
 
-First, clone the repository.
+First, clone the repository and then build the module.
 
 .. code:: bash
 
     git clone https://github.com/MrinalJain17/mydia.git
-
-Then, build the module
-
-.. code:: bash
-
     cd mydia
     python setup.py install
 
@@ -110,11 +106,11 @@ Several libraries like `Numpy <http://www.numpy.org/>`__, `Pillow <https://pytho
 Install the following extra packages (if not already installed):
 
 `Scikit-video <http://www.scikit-video.org/stable/>`__
-   ::
+::
 
-           pip install sk-video
+        pip install sk-video
 
 `tqdm <https://pypi.python.org/pypi/tqdm#installation>`__ - Required for displaying the progress bar.
-   ::
+::
 
-           pip install tqdm
+        pip install tqdm
