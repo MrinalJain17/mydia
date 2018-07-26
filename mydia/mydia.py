@@ -11,7 +11,11 @@ from tqdm import tqdm
 class Videos(object):
     """To read in videos and store them as NumPy arrays.
 
-    The videos are stored as a 5-dimensional tensor - `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`.
+    The videos are stored as a 5-dimensional tensor with shape:  
+    
+    `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)` - if `data_format` is set to "channels_last" or,  
+    `(<No. of Videos>, <channels>, <No. of frames>, <height>, <width>)` - if `data_format` is set to "channels_first".
+
     The value of `channels` could be 1 (gray scale) or 3 (RGB).
 
     Parameters
@@ -64,6 +68,18 @@ class Videos(object):
     
     normalize : bool, optional
         If `True`, then the pixel values will be normalized to be in range (0, 1), defaults to `False`.  
+
+    data_format : str
+        One of {"channels_first", "channels_last"}, defaults to `channels_last`.
+
+        `channels_last` corresponds to the tensors with the following dimension - 
+        `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`
+
+         `channels_first` corresponds to the tensors with the following dimension - 
+        `(<No. of Videos>, <channels>, <No. of frames>, <height>, <width>)`
+
+        Use `channels_last` when using libraries like *tensorflow/keras* and `channels_first` when working 
+        with *pytorch* or *theano*.
     
     random_state : int, optional
         The number to seed the random number generator (when using the `mode` as "random"), defaults to 17.
@@ -79,6 +95,7 @@ class Videos(object):
         extract_position="first",
         required_fps=None,
         normalize=False,
+        data_format="channels_last",
         random_state=17,
     ):
         """Initializing class variables
@@ -114,6 +131,10 @@ class Videos(object):
                     "Set a value for 'num_frames' to avoid unexpected behaviour"
                 )
         self.normalize = normalize
+        if data_format in ["channels_last", "channels_first"]:
+            self.data_format = data_format
+        else:
+            raise ValueError("Invalid value of 'data_format'")
         self.random_state = random_state
         np.random.seed(self.random_state)
 
@@ -128,8 +149,7 @@ class Videos(object):
         Returns
         -------
         numpy.ndarray
-            A 5-dimensional tensor with shape `(1, <No. of frames>, <height>, <width>, <channels>)`.  
-            The value of `channels` could be 1 (gray scale) or 3 (RGB).
+            A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
 
         """
 
@@ -206,16 +226,16 @@ class Videos(object):
         total_frames = len(index_array)
         if self.num_frames < total_frames:
             if self.extract_position == "first":
-                return index_array[:self.num_frames]
+                return index_array[: self.num_frames]
 
             elif self.extract_position == "last":
-                return index_array[(total_frames - self.num_frames):]
+                return index_array[(total_frames - self.num_frames) :]
 
             elif self.extract_position == "middle":
                 front = (
                     (total_frames - self.num_frames) // 2
                 ) + 1  # No. of frames to remove from the front
-                return index_array[front:(front + self.num_frames)]
+                return index_array[front : (front + self.num_frames)]
 
         else:
             raise IndexError(
@@ -233,8 +253,7 @@ class Videos(object):
         Returns
         -------
         numpy.ndarray
-            A 5-dimensional tensor with shape `(<No. of videos>, <No. of frames>, <height>, <width>, <channels>)`.  
-            The value of `channels` could be 1 (gray scale) or 3 (RGB).
+            A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
 
         """
 
@@ -247,6 +266,9 @@ class Videos(object):
         list_of_videos = [self._read_video(path) for path in tqdm(paths, unit="videos")]
         video_tensor = np.vstack(list_of_videos)
 
+        if self.data_format == "channels_first":
+            video_tensor = np.transpose(video_tensor, axes=(0, 4, 1, 2, 3))
+
         if self.normalize:
             video_tensor = video_tensor.astype(np.float) / 255
 
@@ -258,8 +280,8 @@ class Videos(object):
         Parameters
         ----------
         video : numpy.ndarray
-            A video (numpy array) of shape `(<No. of frames>, <height>, <width>, <channels>)`, 
-            which will be plotted as a grid.
+            A video tensor with shape `(<No. of frames>, <height>, <width>, <channels>)` or 
+            `(<channels>, <No. of frames>, <height>, <width>)`, depending on the value of `data_format`.
         
         path : str
             The path of the video to be plotted.  
@@ -284,6 +306,10 @@ class Videos(object):
             video = self.read(path)[0]
         else:
             raise ValueError("Either pass a 'video' or a 'path' to the video")
+
+        if not ((video.shape[-1] == 1) or (video.shape[-1] == 3)):
+            # If the channels are not at the end, they should be at the beginning
+            video = np.transpose(video, axes=(1, 2, 3, 0))
 
         gray = True if video.shape[-1] == 1 else False
 
