@@ -9,80 +9,79 @@ from tqdm import tqdm
 
 
 class Videos(object):
-    """To read in videos and store them as NumPy arrays.
+    """Class to read in videos and store them as numpy arrays.
 
-    The videos are stored as a 5-dimensional tensor with shape:  
-    
-    `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)` - if `data_format` is set to "channels_last" or,  
-    `(<No. of Videos>, <channels>, <No. of frames>, <height>, <width>)` - if `data_format` is set to "channels_first".
+    The videos are stored as a 5-dimensional tensor where the shape of the tensor depends on the `data_format`.
 
-    The value of `channels` could be 1 (gray scale) or 3 (RGB).
+    `(<num_videos>, <num_frames>, <height>, <width>, <channels>)` - if `data_format` is set to "channels_last" or, 
 
-    Parameters
-    ----------
-    target_size : tuple, optional
-        Tuple of form `(New_Width, New_Height)`, defaults to `None`.  
-        A tuple denoting the target width and height (of the frames) of the videos. 
-        If not set, the dimensions of the frames will not be altered.  
+    `(<num_videos>, <channels>, <num_frames>, <height>, <width>)` - if `data_format` is set to "channels_first"
+
+    The value of `channels` could be 1 (for gray scale) or 3 (for RGB).
+
+    Args:
+        target_size (:obj:`tuple`, optional): Tuple of form `(new_width, new_height)`, defaults to None. 
+            It is the (new) target width and height (of the frames) of the videos. 
+            If not set, the dimensions of the frames will not be altered.  
         
-        Note:  
-        A single video is a stack of frames. If the dimension of all the frames is not the same, they cannot by stacked.
-    
-    to_gray : bool, optional
-        If `True`, all the frames of the videos are converted to gray scale, defaults to `False`.
-    
-    mode : str, optional
-        One of {"auto", "manual", "random"}, defaults to `auto`.  
-        
-        `auto`: The reader will read frames at equal intervals from the entire video. 
-        The number of frames to be extracted (read) will depend on the value of `num_frames`.  
-        `manual`: The user would manually provide the details to extract frames from the video. 
-        Available parameters to tune are `num_frames`, `extract_position` and `required_fps`.  
-        `random`: The reader will read frames at random from the entire video. 
-        The number of frames to be extracted (read) will depend on the value of `num_frames`.
-    
-    num_frames : int, optional
-        The (exact) number of frames to extract from each video, defaults to `None`.  
-        Frames are extracted based on the value of `mode`.  
-        If set to `None`, all the frames of the video would be kept.
+            Note:  
+                A single video is a stack of frames. 
+                If the dimension of all the frames is not the same, they cannot by stacked.
+        to_gray (bool, optional): 
+            If True, all the frames of the video(s) are converted to gray scale, defaults to False.
+        mode (str, optional): One of {"auto", "manual", "random"}, defaults to `auto`. 
+            `auto`: The reader will read frames at equal intervals from the entire video.  
+            The number of frames to be extracted (read) will depend on the value of `num_frames`. 
 
-        Note:  
-        Videos are stacked together. If the number of frames in all the videos are not the same, they cannot be stacked.
-    
-    extract_position : str, optional
-        One of {"first", "middle", "last"}, defaults to `first`.  
-        
-        `first`: Extract the frames from the beginning of the video.  
-        `last`: Extract the frames from the end of the video.  
-        `middle`: Extract the frames from the middle of the video  
-        (Removes `(total frames - 'max_frames') // 2` from the beginning as well as the end of the video)
-    
-    required_fps : int, optional
-        The number of frame(s) to capture per second from the video, defaults to `None`.  
-        
-        Example:  
-        Let the duration of a video to be 10 seconds and assume that it was captured at the rate of 30fps.  
-        Suppose the value of `required_fps` is set to 7.  
-        Then for each second, the **first** 7 frames would be captured.  
-        The resulting video (in form of tensor) will have a total of 10 x 7 = 70 frames.
-    
-    normalize : bool, optional
-        If `True`, then the pixel values will be normalized to be in range (0, 1), defaults to `False`.  
+            `manual`: The user would manually provide the details to extract frames from the video.  
+            Available parameters to tune are `num_frames`, `extract_position` and `required_fps`. 
 
-    data_format : str
-        One of {"channels_first", "channels_last"}, defaults to `channels_last`.
+            `random`: The reader will read frames at random from the entire video.  
+            The number of frames to be extracted (read) will depend on the value of `num_frames`.
+        num_frames (int, optional): The (exact) number of frames to extract from each video, defaults to None. 
+            Frames are extracted based on the value of `mode`. 
+            If set to None, all the frames of the video would be kept.
 
-        `channels_last` corresponds to the tensors with the following dimension - 
-        `(<No. of Videos>, <No. of frames>, <height>, <width>, <channels>)`
+            Note:  
+                Videos are stacked together. 
+                If the number of frames in all the videos are not the same, they cannot be stacked.
+        extract_position (str, optional): One of {"first", "middle", "last"}, defaults to `first`. 
+            `first`: Extract the frames from the beginning of the video 
 
-         `channels_first` corresponds to the tensors with the following dimension - 
-        `(<No. of Videos>, <channels>, <No. of frames>, <height>, <width>)`
+            `last`: Extract the frames from the end of the video 
 
-        Use `channels_last` when using libraries like *tensorflow/keras* and `channels_first` when working 
-        with *pytorch* or *theano*.
-    
-    random_state : int, optional
-        The number to seed the random number generator (when using the `mode` as "random"), defaults to 17.
+            `middle`: Extract the frames from the middle of the video by 
+            removing euqal number of frames from the beginning as well as the end of the video
+        required_fps (int, optional): The number of frame(s) to capture per second from the video, defaults to None. 
+            Example:  
+                Let the duration of a video to be 10 seconds and assume that it was captured at the rate of 30 fps.  
+                Suppose the value of `required_fps` is set to 7.  
+                Then for each second, the **first** 7 frames would be captured.  
+                The resulting video (in form of tensor) will have a total of 10 x 7 = 70 frames.
+        normalize (bool, optional): 
+            If True, then the pixel values will be normalized to be in range `(0, 1)`, defaults to False.
+        data_format (str): One of {"channels_first", "channels_last"}, defaults to `channels_last`. 
+            `channels_last` corresponds to the tensors with the following dimension - 
+            `(<num_videos>, <num_frames>, <height>, <width>, <channels>)`
+
+            `channels_first` corresponds to the tensors with the following dimension - 
+            `(<num_videos>, <channels>, <num_frames>, <height>, <width>)`
+
+            Use `channels_last` when using libraries like *tensorflow/keras* and `channels_first` when working 
+            with *pytorch* or *theano*.
+        random_state (int, optional): 
+            The number to seed the random number generator (when using the `mode` as "random"), defaults to 17.
+
+    Example::
+
+        from mydia import Videos
+
+        reader = Videos(target_size=(720, 480), 
+                        to_gray=False, 
+                        num_frames=128, 
+                        data_format="channels_first")
+
+        video = reader.read('/path/to/video')
 
     """
 
@@ -141,15 +140,11 @@ class Videos(object):
     def _read_video(self, path):
         """Used internally by `read()` to read in a single video.
 
-        Parameters
-        ----------
-        path : str
-            Path of the video to be read.
+        Args:
+            path (str): Path of the video to be read.
         
-        Returns
-        -------
-        numpy.ndarray
-            A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
+        Returns:
+            numpy.ndarray: A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
 
         """
 
@@ -245,15 +240,11 @@ class Videos(object):
     def read(self, paths):
         """Function to read videos.
 
-        Parameters
-        ----------
-        paths : list
-            A list of paths of the videos to be read.
+        Args:
+            paths (:obj:`list`): A list of paths of the videos to be read.
         
-        Returns
-        -------
-        numpy.ndarray
-            A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
+        Returns:
+            :obj:`numpy.ndarray`: A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
 
         """
 
@@ -277,24 +268,22 @@ class Videos(object):
     def plot(self, video=None, path=None, num_col=3, figsize=None):
         """Plot the frames of the video in a grid.
 
-        Parameters
-        ----------
-        video : numpy.ndarray
-            A video tensor with shape `(<No. of frames>, <height>, <width>, <channels>)` or 
-            `(<channels>, <No. of frames>, <height>, <width>)`, depending on the value of `data_format`.
-        
-        path : str
-            The path of the video to be plotted.  
-            Either pass the path of the video, or the video itself.  
-            If both are passed, the one for which the path is provided will be used.
-        
-        num_col : int, optional
-            The number of columns the grid should have, defaults to 3.
-        
-        figsize : tuple, optional
-            The size of the entire figure, defaults to `None`.  
-            This tuple is passes to the `matplotlib.figure` object to set it's size.  
-            If set as `None`, it is calculated automatically (recommended).
+        Args:
+            video (:obj:`numpy.ndarray`): 
+                A video tensor with shape `(<num_frames>, <height>, <width>, <channels>)` or 
+                `(<channels>, <num_frames>, <height>, <width>)`, depending on the value of `data_format`.
+            
+            path (str): The path of the video to be plotted.  
+                Either pass the path of the video, or the video itself.  
+                If both are passed, the one for which the path is provided will be used.
+            
+            num_col (int, optional): 
+                The number of columns the grid should have, defaults to 3.
+            
+            figsize (:obj:`tuple`, optional): The size of the matplotlib figure, defaults to None.  
+                This tuple is passed to the `matplotlib.figure` object to set it's size.  
+                
+                If set as None, it is calculated automatically (recommended).
 
         """
 

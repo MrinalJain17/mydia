@@ -9,7 +9,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="mydia",
-    version="1.0.3",
+    version="1.0.4",
     description="Read videos as numpy arrays",
     long_description=long_description,
     url="https://mrinaljain17.github.io/mydia/",
