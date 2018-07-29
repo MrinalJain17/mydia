@@ -1,3 +1,5 @@
+:github_url: https://github.com/MrinalJain17/mydia
+
 Video Utilities
 ===============
 
