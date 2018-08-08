@@ -23,7 +23,7 @@ class Videos(object):
         target_size (:obj:`tuple`, optional): Tuple of form `(new_width, new_height)`, defaults to None. 
             It is the (new) target width and height (of the frames) of the videos. 
             If not set, the dimensions of the frames will not be altered.  
-        
+
             Note:  
                 A single video is a stack of frames. 
                 If the dimension of all the frames is not the same, they cannot by stacked.
@@ -102,7 +102,7 @@ class Videos(object):
         """
 
         self.target_size = None
-        if target_size != None:
+        if target_size is not None:
             if isinstance(target_size, int):
                 self.target_size = (target_size, target_size)
             elif len(target_size) == 2:
@@ -123,9 +123,9 @@ class Videos(object):
             raise ValueError("Invalid value of 'extract_position'")
 
         self.required_fps = 0
-        if required_fps != None:
+        if required_fps is not None:
             self.required_fps = int(required_fps)
-            if num_frames == None:
+            if num_frames is None:
                 warnings.warn(
                     "Set a value for 'num_frames' to avoid unexpected behaviour"
                 )
@@ -151,12 +151,12 @@ class Videos(object):
         cap = FFmpegReader(filename=path)
         fps = int(cap.inputfps)
         total_frames = cap.inputframenum
-        if self.target_size == None:
+        if self.target_size is None:
             width, height = (cap.inputwidth, cap.inputheight)
         else:
             width, height = self.target_size
 
-        if (self.num_frames == None) and (self.required_fps == 0):
+        if (self.num_frames is None) and (self.required_fps == 0):
             self.num_frames = total_frames
             indices = np.arange(total_frames, dtype=np.int)
         else:
@@ -172,7 +172,7 @@ class Videos(object):
 
         for idx, frame in enumerate(cap.nextFrame()):
             if idx in indices:
-                if self.target_size != None:
+                if self.target_size is not None:
                     image = Image.fromarray(frame)
                     image = image.resize((width, height), resample=Image.ANTIALIAS)
                     frame = np.asarray(image, dtype="uint8")
@@ -242,7 +242,7 @@ class Videos(object):
 
         Args:
             paths (:obj:`list`): A list of paths of the videos to be read.
-        
+
         Returns:
             :obj:`numpy.ndarray`: A 5-dimensional tensor - the shape of which will depend on the value of `data_format`  
 
@@ -272,17 +272,17 @@ class Videos(object):
             video (:obj:`numpy.ndarray`): 
                 A video tensor with shape `(<num_frames>, <height>, <width>, <channels>)` or 
                 `(<channels>, <num_frames>, <height>, <width>)`, depending on the value of `data_format`.
-            
+
             path (str): The path of the video to be plotted.  
                 Either pass the path of the video, or the video itself.  
                 If both are passed, the one for which the path is provided will be used.
-            
+
             num_col (int, optional): 
                 The number of columns the grid should have, defaults to 3.
-            
+
             figsize (:obj:`tuple`, optional): The size of the matplotlib figure, defaults to None.  
                 This tuple is passed to the `matplotlib.figure` object to set it's size.  
-                
+
                 If set as None, it is calculated automatically (recommended).
 
         """
@@ -291,7 +291,7 @@ class Videos(object):
             if video.ndim != 4:
                 raise ValueError("Invalid value for 'video'")
 
-        elif path != None:
+        elif path is not None:
             video = self.read(path)[0]
         else:
             raise ValueError("Either pass a 'video' or a 'path' to the video")
@@ -303,7 +303,7 @@ class Videos(object):
         gray = True if video.shape[-1] == 1 else False
 
         num_row = int(np.ceil(video.shape[0] / num_col))
-        if figsize == None:
+        if figsize is None:
             figsize = (7 * num_col, 4 * num_row)  # Based on trails and errors
         else:
             if isinstance(figsize, int):
