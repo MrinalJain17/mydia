@@ -7,5 +7,5 @@ Video Utilities
    :maxdepth: 1
 
    install.rst
-   getting-started.rst
+   auto_examples/index
    videos.rst

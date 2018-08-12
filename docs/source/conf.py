@@ -44,6 +44,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
+    "sphinx_gallery.gen_gallery",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -100,6 +101,7 @@ html_context = {
     "css_files": [
         "https://fonts.googleapis.com/css?family=Lato",
         "_static/css/mydia_theme.css",
+        "_static/css/gallery.css",
     ]
 }
 
@@ -171,6 +173,13 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+
+sphinx_gallery_conf = {
+    "examples_dirs": "../examples",
+    "gallery_dirs": "auto_examples",
+    "reference_url": {"mydia": None},
+    "download_all_examples": False,
+}
 
 # -- Options for intersphinx extension ---------------------------------------
 
