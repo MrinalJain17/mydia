@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Code Documentation &mdash; Mydia 1.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/css/mydia_theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Get started with some basics" href="auto_examples/plot_getting_started.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Mydia
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install.html#additional-libraries-to-install">Additional Libraries to install:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_getting_started.html">Get started with some basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="auto_examples/plot_getting_started.html#how-to-simple-read-a-video-given-its-path">How to simple read a video, given its path?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_examples/plot_getting_started.html#now-lets-try-to-be-a-little-more-specific">Now, let’s try to be a little more specific</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="auto_examples/plot_getting_started.html#great-now-lets-read-the-same-video-in-gray-scale-instead-of-rgb">Great! Now let’s read the same video in <strong>gray scale</strong>, instead of RGB.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="auto_examples/plot_getting_started.html#saving-the-loaded-video-tensor">Saving the loaded video tensor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Module: <cite>mydia</cite></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Mydia</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Code Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/videos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mydia">
+<span id="code-documentation"></span><h1>Code Documentation<a class="headerlink" href="#module-mydia" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Module: <cite>mydia</cite><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mydia.Videos">
+<em class="property">class </em><code class="descclassname">mydia.</code><code class="descname">Videos</code><span class="sig-paren">(</span><em>target_size=None</em>, <em>to_gray=False</em>, <em>mode='auto'</em>, <em>num_frames=None</em>, <em>extract_position='first'</em>, <em>required_fps=None</em>, <em>normalize=False</em>, <em>data_format='channels_last'</em>, <em>random_state=17</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mydia/mydia.html#Videos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mydia.Videos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to read in videos and store them as numpy arrays.</p>
+<p>The videos are stored as a 5-dimensional tensor where the shape of the tensor depends on the <cite>data_format</cite>.</p>
+<p><cite>(&lt;num_videos&gt;, &lt;num_frames&gt;, &lt;height&gt;, &lt;width&gt;, &lt;channels&gt;)</cite> - if <cite>data_format</cite> is set to “channels_last” or,</p>
+<p><cite>(&lt;num_videos&gt;, &lt;channels&gt;, &lt;num_frames&gt;, &lt;height&gt;, &lt;width&gt;)</cite> - if <cite>data_format</cite> is set to “channels_first”</p>
+<p>The value of <cite>channels</cite> could be 1 (for gray scale) or 3 (for RGB).</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>target_size (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>, optional): Tuple of form <cite>(new_width, new_height)</cite>, defaults to None. </dt>
+<dd><p class="first">It is the (new) target width and height (of the frames) of the videos. 
+If not set, the dimensions of the frames will not be altered.</p>
+<dl class="last docutils">
+<dt>Note:  </dt>
+<dd>A single video is a stack of frames. 
+If the dimension of all the frames is not the same, they cannot by stacked.</dd>
+</dl>
+</dd>
+<dt>to_gray (bool, optional): </dt>
+<dd>If True, all the frames of the video(s) are converted to gray scale, defaults to False.</dd>
+<dt>mode (str, optional): One of {“auto”, “manual”, “random”}, defaults to <cite>auto</cite>. </dt>
+<dd><p class="first"><cite>auto</cite>: The reader will read frames at equal intervals from the entire video.  
+The number of frames to be extracted (read) will depend on the value of <cite>num_frames</cite>.</p>
+<p><cite>manual</cite>: The user would manually provide the details to extract frames from the video.  
+Available parameters to tune are <cite>num_frames</cite>, <cite>extract_position</cite> and <cite>required_fps</cite>.</p>
+<p class="last"><cite>random</cite>: The reader will read frames at random from the entire video.  
+The number of frames to be extracted (read) will depend on the value of <cite>num_frames</cite>.</p>
+</dd>
+<dt>num_frames (int, optional): The (exact) number of frames to extract from each video, defaults to None. </dt>
+<dd><p class="first">Frames are extracted based on the value of <cite>mode</cite>. 
+If set to None, all the frames of the video would be kept.</p>
+<dl class="last docutils">
+<dt>Note:  </dt>
+<dd>Videos are stacked together. 
+If the number of frames in all the videos are not the same, they cannot be stacked.</dd>
+</dl>
+</dd>
+<dt>extract_position (str, optional): One of {“first”, “middle”, “last”}, defaults to <cite>first</cite>. </dt>
+<dd><p class="first"><cite>first</cite>: Extract the frames from the beginning of the video</p>
+<p><cite>last</cite>: Extract the frames from the end of the video</p>
+<p class="last"><cite>middle</cite>: Extract the frames from the middle of the video by 
+removing euqal number of frames from the beginning as well as the end of the video</p>
+</dd>
+<dt>required_fps (int, optional): The number of frame(s) to capture per second from the video, defaults to None. </dt>
+<dd><dl class="first last docutils">
+<dt>Example:  </dt>
+<dd>Let the duration of a video to be 10 seconds and assume that it was captured at the rate of 30 fps.  
+Suppose the value of <cite>required_fps</cite> is set to 7.  
+Then for each second, the <strong>first</strong> 7 frames would be captured.  
+The resulting video (in form of tensor) will have a total of 10 x 7 = 70 frames.</dd>
+</dl>
+</dd>
+<dt>normalize (bool, optional): </dt>
+<dd>If True, then the pixel values will be normalized to be in range <cite>(0, 1)</cite>, defaults to False.</dd>
+<dt>data_format (str): One of {“channels_first”, “channels_last”}, defaults to <cite>channels_last</cite>. </dt>
+<dd><p class="first"><cite>channels_last</cite> corresponds to the tensors with the following dimension - 
+<cite>(&lt;num_videos&gt;, &lt;num_frames&gt;, &lt;height&gt;, &lt;width&gt;, &lt;channels&gt;)</cite></p>
+<p><cite>channels_first</cite> corresponds to the tensors with the following dimension - 
+<cite>(&lt;num_videos&gt;, &lt;channels&gt;, &lt;num_frames&gt;, &lt;height&gt;, &lt;width&gt;)</cite></p>
+<p class="last">Use <cite>channels_last</cite> when using libraries like <em>tensorflow/keras</em> and <cite>channels_first</cite> when working 
+with <em>pytorch</em> or <em>theano</em>.</p>
+</dd>
+<dt>random_state (int, optional): </dt>
+<dd>The number to seed the random number generator (when using the <cite>mode</cite> as “random”), defaults to 17.</dd>
+</dl>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="k">import</span> <span class="n">Videos</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">(</span><span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span> 
+                <span class="n">to_gray</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                <span class="n">num_frames</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+                <span class="n">data_format</span><span class="o">=</span><span class="s2">&quot;channels_first&quot;</span><span class="p">)</span>
+
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;/path/to/video&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="mydia.Videos.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>paths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mydia/mydia.html#Videos.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mydia.Videos.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to read videos.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>paths (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>): A list of paths of the videos to be read.</dd>
+<dt>Returns:</dt>
+<dd><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: A 5-dimensional tensor - the shape of which will depend on the value of <cite>data_format</cite></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mydia.Videos.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>video=None</em>, <em>path=None</em>, <em>num_col=3</em>, <em>figsize=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mydia/mydia.html#Videos.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mydia.Videos.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the frames of the video in a grid.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>video (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>): </dt>
+<dd>A video tensor with shape <cite>(&lt;num_frames&gt;, &lt;height&gt;, &lt;width&gt;, &lt;channels&gt;)</cite> or 
+<cite>(&lt;channels&gt;, &lt;num_frames&gt;, &lt;height&gt;, &lt;width&gt;)</cite>, depending on the value of <cite>data_format</cite>.</dd>
+<dt>path (str): The path of the video to be plotted.  </dt>
+<dd>Either pass the path of the video, or the video itself.  
+If both are passed, the one for which the path is provided will be used.</dd>
+<dt>num_col (int, optional): </dt>
+<dd>The number of columns the grid should have, defaults to 3.</dd>
+<dt>figsize (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>, optional): The size of the matplotlib figure, defaults to None.  </dt>
+<dd><p class="first">This tuple is passed to the <cite>matplotlib.figure</cite> object to set it’s size.</p>
+<p class="last">If set as None, it is calculated automatically (recommended).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="auto_examples/plot_getting_started.html" class="btn btn-neutral" title="Get started with some basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Mrinal Jain.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
