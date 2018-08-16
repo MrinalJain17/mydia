@@ -13,9 +13,9 @@ Getting started
 
 .. only:: html
 
-    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_getting_started_thumb.png
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_1_getting_started_thumb.png
 
-        :ref:`sphx_glr_auto_examples_plot_getting_started.py`
+        :ref:`sphx_glr_auto_examples_plot_1_getting_started.py`
 
 .. raw:: html
 
@@ -25,7 +25,47 @@ Getting started
 .. toctree::
    :hidden:
 
-   /auto_examples/plot_getting_started
+   /auto_examples/plot_1_getting_started
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="-  We want to resize each frame to be 720 pixels in width and 480 pixels    in height. -  Not a...">
+
+.. only:: html
+
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_2_frame_selection_thumb.png
+
+        :ref:`sphx_glr_auto_examples_plot_2_frame_selection.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_2_frame_selection
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="-  We want to resize each frame to be 720 pixels in width and 480 pixels    in height. -  Not a...">
+
+.. only:: html
+
+    .. figure:: /auto_examples/images/thumb/sphx_glr_plot_3_frame_selection_with_gray_thumb.png
+
+        :ref:`sphx_glr_auto_examples_plot_3_frame_selection_with_gray.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_3_frame_selection_with_gray
 .. raw:: html
 
     <div style='clear:both'></div>

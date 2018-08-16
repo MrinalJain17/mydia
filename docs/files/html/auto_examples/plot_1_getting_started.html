@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="../_static/css/gallery.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Code Documentation" href="../videos.html" />
+    <link rel="next" title="Frame selection and resizing" href="plot_2_frame_selection.html" />
     <link rel="prev" title="Getting started" href="index.html" /> 
 
   
@@ -95,14 +95,13 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting started</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Get started with some basics</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#how-to-simple-read-a-video-given-its-path">How to simple read a video, given its path?</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#now-lets-try-to-be-a-little-more-specific">Now, let’s try to be a little more specific</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#great-now-lets-read-the-same-video-in-gray-scale-instead-of-rgb">Great! Now let’s read the same video in <strong>gray scale</strong>, instead of RGB.</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-simply-read-a-video-given-its-path">How to simply read a video, given its path?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#or-read-multiple-videos">Or, read multiple videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#saving-the-loaded-video-tensor">Saving the loaded video tensor</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="plot_2_frame_selection.html">Frame selection and resizing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_3_frame_selection_with_gray.html">Frame selection, resizing, and conversion to gray scale</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../videos.html">Code Documentation</a><ul>
@@ -162,7 +161,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/auto_examples/plot_getting_started.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/auto_examples/plot_1_getting_started.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,21 +176,20 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-getting-started-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-1-getting-started-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="get-started-with-some-basics">
-<span id="sphx-glr-auto-examples-plot-getting-started-py"></span><h1>Get started with some basics<a class="headerlink" href="#get-started-with-some-basics" title="Permalink to this headline">¶</a></h1>
+<span id="sphx-glr-auto-examples-plot-1-getting-started-py"></span><h1>Get started with some basics<a class="headerlink" href="#get-started-with-some-basics" title="Permalink to this headline">¶</a></h1>
 <p>Reading videos into NumPy arrays was never more simple. In addition,
 this library also provides an entire range of additional functionalities
 for reading the videos.</p>
-<div class="section" id="how-to-simple-read-a-video-given-its-path">
-<h2>How to simple read a video, given its path?<a class="headerlink" href="#how-to-simple-read-a-video-given-its-path" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-simply-read-a-video-given-its-path">
+<h2>How to simply read a video, given its path?<a class="headerlink" href="#how-to-simply-read-a-video-given-its-path" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import</span>
 <span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Initialize video path</span>
-<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;./sample_video/bigbuckbunny.mp4&#39;</span>
+<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;./sample_video/bigbuckbunny.mp4&quot;</span>
 
 <span class="c1"># Create a reader object</span>
 <span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
@@ -211,69 +209,15 @@ for reading the videos.</p>
 having a width and height of 1080 and 720 pixels respectively. “<strong>3</strong>”
 denotes the Red, Green and Blue (RGB) channels of the video.</p>
 </div>
-<div class="section" id="now-lets-try-to-be-a-little-more-specific">
-<h2>Now, let’s try to be a little more specific<a class="headerlink" href="#now-lets-try-to-be-a-little-more-specific" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>We want to resize each frame to be 720 pixels in width and 480 pixels
-in height.</li>
-<li>Not all the frames are required. Let’s just capture exactly 12 frames
-(at equal intervals) from the video.</li>
-<li>And finally, we’ll also visualize the captured frames.</li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import</span>
-<span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Initialize video path</span>
-<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;./sample_video/bigbuckbunny.mp4&#39;</span>
-
-<span class="c1"># Configuring the parameters</span>
-<span class="c1"># Setting &#39;target_size&#39; = (720, 480) : this denotes the new width and height of the frames</span>
-<span class="c1"># Setting &#39;num_frames&#39; = 12 : to capture exactly 12 frames</span>
-<span class="c1"># For more detailed information, view the code documentation.</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">(</span><span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span>
-                <span class="n">num_frames</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-
-<span class="c1"># Call the &#39;read()&#39; function to get the required video tensor</span>
-<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>   <span class="c1"># a tensor of shape (1, 12, 480, 720, 3)</span>
-
-<span class="c1"># Plot the video frames in a grid</span>
-<span class="n">reader</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="section" id="or-read-multiple-videos">
+<h2>Or, read multiple videos<a class="headerlink" href="#or-read-multiple-videos" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="k">import</span> <span class="n">Videos</span>
+<span class="n">video_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="c1"># list of path of videos</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_paths</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="../_images/sphx_glr_plot_getting_started_001.png" class="sphx-glr-single-img" src="../_images/sphx_glr_plot_getting_started_001.png" />
-<div class="section" id="great-now-lets-read-the-same-video-in-gray-scale-instead-of-rgb">
-<h3>Great! Now let’s read the same video in <strong>gray scale</strong>, instead of RGB.<a class="headerlink" href="#great-now-lets-read-the-same-video-in-gray-scale-instead-of-rgb" title="Permalink to this headline">¶</a></h3>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The number of channels for a video in gray scale is 1
-(indicated by the last value in the tuple).</p>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import</span>
-<span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Initialize video path</span>
-<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;./sample_video/bigbuckbunny.mp4&#39;</span>
-
-<span class="c1"># Configuring the parameters</span>
-<span class="c1"># Other parameters are the same as described above.</span>
-<span class="c1"># The only additional parameter to modify is &#39;to_gray&#39;</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">(</span><span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span>
-                <span class="n">to_gray</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                <span class="n">num_frames</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-
-<span class="c1"># Call the &#39;read()&#39; function to get the required video tensor</span>
-<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>   <span class="c1"># a tensor of shape (1, 12, 480, 720, 1)</span>
-
-<span class="c1"># Plot the video frames in a grid</span>
-<span class="n">reader</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-<img alt="../_images/sphx_glr_plot_getting_started_002.png" class="sphx-glr-single-img" src="../_images/sphx_glr_plot_getting_started_002.png" />
-</div>
+<p><em>For detailed information of the output tensor, view the code documentation.</em></p>
 </div>
 <div class="section" id="saving-the-loaded-video-tensor">
 <h2>Saving the loaded video tensor<a class="headerlink" href="#saving-the-loaded-video-tensor" title="Permalink to this headline">¶</a></h2>
@@ -290,12 +234,12 @@ the documentation of:</p>
 <p class="last">Since the whole reading process is time consuming, this could turn out to be
 a useful way to store and reload the video tensors.</p>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  7.414 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-getting-started-py">
+<p><strong>Total running time of the script:</strong> ( 0 minutes  8.362 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-1-getting-started-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../_downloads/plot_getting_started.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_getting_started.py</span></code></a></div>
+<a class="reference download internal" href="../_downloads/plot_1_getting_started.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_1_getting_started.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../_downloads/plot_getting_started.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_getting_started.ipynb</span></code></a></div>
+<a class="reference download internal" href="../_downloads/plot_1_getting_started.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_1_getting_started.ipynb</span></code></a></div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -309,7 +253,7 @@ a useful way to store and reload the video tensors.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../videos.html" class="btn btn-neutral float-right" title="Code Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="plot_2_frame_selection.html" class="btn btn-neutral float-right" title="Frame selection and resizing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

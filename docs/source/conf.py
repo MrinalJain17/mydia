@@ -17,6 +17,7 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 import sphinx_rtd_theme
+from sphinx_gallery.sorting import FileNameSortKey
 
 # -- Project information -----------------------------------------------------
 
@@ -179,6 +180,7 @@ sphinx_gallery_conf = {
     "gallery_dirs": "auto_examples",
     "reference_url": {"mydia": None},
     "download_all_examples": False,
+    "within_subsection_order": FileNameSortKey,
 }
 
 # -- Options for intersphinx extension ---------------------------------------
