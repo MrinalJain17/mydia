@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Get started with some basics &mdash; Mydia 1.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/mydia_theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Frame selection and resizing" href="plot_2_frame_selection.html" />
+    <link rel="prev" title="Getting started" href="index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Mydia
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../install.html#additional-libraries-to-install">Additional Libraries to install:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Get started with some basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-simply-read-a-video-given-its-path">How to simply read a video, given its path?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#or-read-multiple-videos">Or, read multiple videos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#saving-the-loaded-video-tensor">Saving the loaded video tensor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plot_2_frame_selection.html">Frame selection and resizing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_3_frame_selection_with_gray.html">Frame selection, resizing, and conversion to gray scale</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../videos.html">Code Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../videos.html#id1">Module: <cite>mydia</cite></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Mydia</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Getting started</a> &raquo;</li>
+        
+      <li>Get started with some basics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/auto_examples/plot_1_getting_started.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-1-getting-started-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="get-started-with-some-basics">
+<span id="sphx-glr-auto-examples-plot-1-getting-started-py"></span><h1>Get started with some basics<a class="headerlink" href="#get-started-with-some-basics" title="Permalink to this headline">¶</a></h1>
+<p>Reading videos into NumPy arrays was never more simple. In addition,
+this library also provides an entire range of additional functionalities
+for reading the videos.</p>
+<div class="section" id="how-to-simply-read-a-video-given-its-path">
+<h2>How to simply read a video, given its path?<a class="headerlink" href="#how-to-simply-read-a-video-given-its-path" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import</span>
+<span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
+
+<span class="c1"># Initialize video path</span>
+<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;./sample_video/bigbuckbunny.mp4&quot;</span>
+
+<span class="c1"># Create a reader object</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+
+<span class="c1"># Call the &#39;read()&#39; function to get the video tensor</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+
+<span class="c1"># a tensor of shape (1, 132, 720, 1080, 3)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The shape of the tensor:&quot;</span><span class="p">,</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The shape of the tensor: (1, 132, 720, 1280, 3)
+</pre></div>
+</div>
+<p>The tensor represents <strong>1 video</strong> having <strong>132 frames</strong>, with each frame
+having a width and height of 1080 and 720 pixels respectively. “<strong>3</strong>”
+denotes the Red, Green and Blue (RGB) channels of the video.</p>
+</div>
+<div class="section" id="or-read-multiple-videos">
+<h2>Or, read multiple videos<a class="headerlink" href="#or-read-multiple-videos" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="k">import</span> <span class="n">Videos</span>
+<span class="n">video_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="c1"># list of path of videos</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_paths</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>For detailed information of the output tensor, view the code documentation.</em></p>
+</div>
+<div class="section" id="saving-the-loaded-video-tensor">
+<h2>Saving the loaded video tensor<a class="headerlink" href="#saving-the-loaded-video-tensor" title="Permalink to this headline">¶</a></h2>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>Once the videos have been processed, they could be saved
+as <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (in .npz or .npy format). For further details, view
+the documentation of:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.save.html#numpy.save" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.save</span></code></a>: for saving in .npy format</li>
+<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html#numpy.savez" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.savez</span></code></a>: for saving in .npz format</li>
+<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.load.html#numpy.load" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.load</span></code></a>: for loading back the saved numpy tensors</li>
+</ul>
+<p class="last">Since the whole reading process is time consuming, this could turn out to be
+a useful way to store and reload the video tensors.</p>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  8.362 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-1-getting-started-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" href="../_downloads/plot_1_getting_started.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_1_getting_started.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" href="../_downloads/plot_1_getting_started.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_1_getting_started.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="plot_2_frame_selection.html" class="btn btn-neutral float-right" title="Frame selection and resizing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Mrinal Jain.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
