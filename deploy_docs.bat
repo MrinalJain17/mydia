@@ -1,5 +1,6 @@
 @echo off
 
+:: This batch file should be executed from the root of the project
 cd docs
 
 echo Deleting old documentation...

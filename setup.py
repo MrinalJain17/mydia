@@ -10,7 +10,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="mydia",
-    version="1.0.4",
+    version="1.0.5",
     description="Read videos as numpy arrays",
     long_description=long_description,
     url="https://mrinaljain17.github.io/mydia/",
@@ -18,8 +18,8 @@ setup(
     author_email="mrinaljain007@gmail.com",
     license="MIT",
     install_requires=[
-        "numpy>=1.14.2",
-        "matplotlib>=2.2.2",
+        "numpy>=1.14.0",
+        "matplotlib>=2.2.0",
         "Pillow>=5.1.0",
         "sk-video>=1.1.10",
         "tqdm>=4.20.0",
