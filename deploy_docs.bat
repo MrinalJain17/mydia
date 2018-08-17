@@ -7,7 +7,7 @@ call make clean
 rmdir files /S /Q
 rmdir source\auto_examples /S /Q
 git worktree prune
-rmdir .git\worktrees\files /S /Q
+rmdir ..\.git\worktrees\files /S /Q
 
 echo Checking out gh-pages branch into files...
 git worktree add -B gh-pages files origin/gh-pages
