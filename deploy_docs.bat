@@ -24,4 +24,13 @@ copy index.html .\files
 copy .nojekyll .\files
 
 echo Updating gh-pages branch...
-cd files && git add --all && git commit -m "Publishing to gh-pages"
+if "%~1" == "" (
+	cd files && git add --all && git commit -m "Publishing docs"
+) else (
+	cd files && git add --all && git commit -m %1
+)
+
+echo Push changes to github
+git push origin gh-pages
+
+cd ..
