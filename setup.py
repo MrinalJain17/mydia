@@ -3,6 +3,8 @@ from os import path
 
 from setuptools import find_packages, setup
 
+from mydia import mydia
+
 # Get the long description from the README file
 with open("README.rst", encoding="utf-8") as f:
     long_description = f.read()
@@ -10,20 +12,14 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="mydia",
-    version="1.0.5",
+    version=mydia.__version__,
     description="Read videos as numpy arrays",
     long_description=long_description,
     url="https://mrinaljain17.github.io/mydia/",
     author="Mrinal Jain",
     author_email="mrinaljain007@gmail.com",
     license="MIT",
-    install_requires=[
-        "numpy>=1.14.0",
-        "matplotlib>=2.2.0",
-        "Pillow>=5.1.0",
-        "sk-video>=1.1.10",
-        "tqdm>=4.20.0",
-    ],
+    install_requires=["numpy>=1.14.5", "ffmpeg-python>=0.1.16", "tqdm>=4.25.0"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
