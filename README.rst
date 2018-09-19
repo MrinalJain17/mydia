@@ -58,7 +58,7 @@ Installation
       python setup.py install
 
 Requirements
-~~~~~~~~~~~~
+------------
 
 ``Python 3.x`` (preferably from the `Anaconda
 Distribution <https://www.anaconda.com/download/>`__)
