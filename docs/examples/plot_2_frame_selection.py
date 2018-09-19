@@ -11,7 +11,7 @@ Frame selection and resizing
 
 # Imports
 import matplotlib.pyplot as plt
-from mydia import Videos
+from mydia import Videos, plot
 
 # Initialize video path
 video_path = r"./sample_video/bigbuckbunny.mp4"
@@ -26,7 +26,7 @@ reader = Videos(target_size=(720, 480), num_frames=12)
 video = reader.read(video_path)  # a tensor of shape (1, 12, 480, 720, 3)
 
 # Plot the video frames in a grid
-reader.plot(video[0])
+plot(video[0])
 plt.show()
 
 ##############################################################################

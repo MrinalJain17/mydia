@@ -19,6 +19,8 @@
 import sphinx_rtd_theme
 from sphinx_gallery.sorting import FileNameSortKey
 
+from mydia import mydia
+
 # -- Project information -----------------------------------------------------
 
 project = "Mydia"
@@ -26,9 +28,9 @@ copyright = "2018, Mrinal Jain"
 author = "Mrinal Jain"
 
 # The short X.Y version
-version = "1.0"
+version = "2.0"
 # The full version, including alpha/beta/rc tags
-release = "1.0.5"
+release = mydia.__version__
 
 
 # -- General configuration ---------------------------------------------------
