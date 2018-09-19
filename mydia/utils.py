@@ -1,13 +1,6 @@
-from typing import List, NamedTuple
+from typing import List
 
 import numpy as np
-
-
-class TargetSize(NamedTuple):
-    """A named tuple representing tha target size of frames of a video"""
-    width: int
-    height: int
-    rescale: bool = False
 
 
 def _mode_auto(total_frames: int, num_frames: int, fps: int) -> List[int]:
@@ -53,7 +46,7 @@ def _mode_last(total_frames: int, num_frames: int, fps: int) -> List[int]:
 
 
 def _mode_middle(total_frames: int, num_frames: int, fps: int) -> List[int]:
-    """The :code:middle` mode for frame extraction
+    """The :code:`middle` mode for frame extraction
 
     Refer to the documentation of the class :code:`Videos` for further details.
     

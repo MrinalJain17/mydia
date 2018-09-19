@@ -28,8 +28,11 @@ Requirements
 ``Python 3.x`` (preferably from the `Anaconda
 Distribution <https://www.anaconda.com/download/>`__)
 
-The program uses `Scikit-video <http://www.scikit-video.org/stable/>`__, which requires 
-``FFmpeg`` to be installed on the system. To install ``FFmpeg`` on your machine - 
+The program uses `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__, which provides
+python bindings for `FFmpeg <https://www.ffmpeg.org/>`__ (used as the backend for reading and 
+processing videos)
+
+To install ``FFmpeg`` on your machine - 
 
 For **Linux** users:
 
@@ -47,20 +50,19 @@ For **Windows or MAC/OSX** users:
 Additional Libraries to install:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Several libraries like `Numpy <http://www.numpy.org/>`__,
-`Pillow <https://python-imaging.github.io/>`__ and
-`Matplotlib <https://matplotlib.org/>`__, required for the package come
-pre-installed with the Anaconda distribution for Python. If you are not
-using the default anaconda distribution, then first install the packages
-mentioned above and along with their dependencies.
+Install the following packages along with their dependencies:
 
-Also, install the following additional packages:
-
--  `Scikit-video <http://www.scikit-video.org/stable/>`__
+-  `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__
 
 .. code:: bash
 
-       pip install sk-video
+       pip install ffmpeg-python
+
+-  `Numpy <http://www.numpy.org/>`__
+
+.. code:: bash
+
+       pip install numpy
 
 -  `tqdm <https://pypi.python.org/pypi/tqdm#installation>`__ - Required
    for displaying the progress bar.
@@ -68,3 +70,10 @@ Also, install the following additional packages:
 .. code:: bash
 
        pip install tqdm
+
+-  `Matplotlib <https://matplotlib.org/>`__ - (Optional) For plotting the frames
+   of a video
+
+.. code:: bash
+
+       pip install matplotlib

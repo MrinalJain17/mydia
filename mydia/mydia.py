@@ -12,20 +12,13 @@ __version__ = "2.0.0"
 __author__ = "Mrinal Jain"
 
 import warnings
-from typing import List, Tuple, Union
+from typing import List, NamedTuple, Tuple, Union
 
 import ffmpeg
 import numpy as np
 from tqdm import tqdm
 
-from .utils import (
-    TargetSize,
-    _mode_auto,
-    _mode_first,
-    _mode_last,
-    _mode_middle,
-    _mode_random,
-)
+from .utils import _mode_auto, _mode_first, _mode_last, _mode_middle, _mode_random
 
 NUM_CHANNELS = {"rgb24": 3, "gray": 1}
 MODES = {
@@ -37,12 +30,20 @@ MODES = {
 }
 
 
+class TargetSize(NamedTuple):
+    """A named tuple representing tha target size of frames of a video"""
+
+    width: int
+    height: int
+    rescale: bool = False
+
+
 class Videos(object):
     """Class to read in videos and store them as numpy arrays
 
     The videos are stored as a 5-dimensional tensor where the shape of the tensor depends on the `data_format`.
 
-    If the `data format`="channels_last"` => :code:`(<num_videos>, <num_frames>, <height>, <width>, <channels>)`
+    If the `data format`="channels_last"` => :code:`(<num_videos>, <num_frames>, <height>, <width>, <channels>)`  
 
     If the `data format`="channels_first"` => :code:`(<num_videos>, <channels>, <num_frames>, <height>, <width>)`
 
@@ -54,16 +55,26 @@ class Videos(object):
         to_gray: 
             If True, all the frames of the video(s) are converted to gray scale, defaults to False
         mode: One of {"auto", "random", "first", "last", "middle"}, defaults to `auto`
-            :code:`auto`: The reader will read `num_frames` frames at equal intervals from the entire video
+            :code:`auto`: The reader will read **N** frames at equal intervals from the entire video
             
-            :code:`random`: The reader will read `num_frames` frames at random from the entire video
+            :code:`random`: The reader will read **N** frames at random from the entire video
             
-            :code:`first`: The reader will read the first `num_frames` frames
+            :code:`first`: The reader will read the first **N** frames
 
-            :code:`last`: The reader will read the last `num_frames` frames
+            :code:`last`: The reader will read the last **N** frames
 
-            :code:`middle`: The reader will read the middle `num_frames` frames, by removing equal number of
+            :code:`middle`: The reader will read the middle **N** frames, by removing equal number of
             frames from the beginning and end of the video
+
+            Here, the value of **N** is :code:`num_frames`
+
+            .. important:: **Custom Frame Selection**
+             
+             Internally, each :code:`mode` is mapped to a callable function, that returns a list of indices 
+             of the frames to be extracted. Similarly, you could also pass a such callable for selecting frames 
+             based on a custom method. 
+             
+             See examples for further details.
         num_frames: The (exact) number of frames to extract from each video, defaults to None
             Frames are extracted based on the value of :code:`mode`. 
             If set to None, all the frames of the video would be kept.

@@ -2,8 +2,8 @@
 Get started with some basics
 ============================
 
-Reading videos into NumPy arrays was never more simple. This library 
-provides an entire range of additional functionalities such as custom frame selection, 
+Reading videos into NumPy arrays was never more simple. This library provides 
+an entire range of additional functionalities such as custom frame selection, 
 frame resizing, pixel normalization, grayscale conversion and much more.
 
 """
