@@ -16,22 +16,26 @@ Getting started
 
    # Import
    from mydia import Videos
-
+   
    # Initialize video path
-   video_path = r"./static/sample_video/bigbuckbunny.mp4"
-
+   video_path = r".docs/examples/sample_video/bigbuckbunny.mp4"
+   
    # Create a reader object
    reader = Videos()
-
+   
    # Call the 'read()' function to get the video tensor
-   video = reader.read(video_path)   # a tensor of shape (1, 132, 720, 1080, 3)
+   # which will be of shape (1, 132, 720, 1080, 3)
+   video = reader.read(video_path)
 
-The tensor represents **1 video** having **132 frames**, with each frame
-having a width and height of 1080 and 720 pixels respectively. “**3**”
-denotes the Red, Green and Blue (RGB) channels of the video.
+The tensor can be interpreted as -
 
-More examples available in the code documentation `here <https://mrinaljain17.github.io/mydia/html/auto_examples/index.html>`_
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* 1 video
+* Having 132 frames, 
+* Dimension (width x height) of each frame: 1080x720 pixels
+* ``3`` denotes that the video is RGB
+
+View more examples `here <https://mrinaljain17.github.io/mydia/html/auto_examples/index.html>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Installation
 ------------
@@ -87,28 +91,12 @@ Additional Libraries to install:
 
 Install the following packages along with their dependencies:
 
--  `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__
+* `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__
+* `Numpy <http://www.numpy.org/>`__
+* `tqdm <https://pypi.python.org/pypi/tqdm#installation>`__ - Required for displaying the 
+  progress bar.
+* `Matplotlib <https://matplotlib.org/>`__ - (Optional) For plotting the frames of a video
 
 .. code:: bash
 
-       pip install ffmpeg-python
-
--  `Numpy <http://www.numpy.org/>`__
-
-.. code:: bash
-
-       pip install numpy
-
--  `tqdm <https://pypi.python.org/pypi/tqdm#installation>`__ - Required
-   for displaying the progress bar.
-
-.. code:: bash
-
-       pip install tqdm
-
--  `Matplotlib <https://matplotlib.org/>`__ - (Optional) For plotting the frames
-   of a video
-
-.. code:: bash
-
-       pip install matplotlib
+       pip install ffmpeg-python numpy tqdm matplotlib

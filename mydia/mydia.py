@@ -7,7 +7,7 @@ The module  uses **FFmpeg** as its backend to process the videos.
 
 """
 
-__version__ = "2.0.0"
+__version__ = "2.0.1"
 __author__ = "Mrinal Jain"
 
 import warnings
