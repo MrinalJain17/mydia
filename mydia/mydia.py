@@ -1,10 +1,9 @@
 """Mydia: Read videos as numpy arrays
 
-The class `Videos` in this module can be used to read videos with advance support
-for frame selection, frame resizing and normalization.
+The class :class:`Videos` in this module can be used to read videos with advance support 
+for frame selection, frame resizing, pixel normalization and grayscale conversion.
 
-The module is a wrapper around the library `ffmpeg-python`, and uses `FFmpeg` as 
-its backend to process the videos.
+The module  uses **FFmpeg** as its backend to process the videos.
 
 """
 
@@ -12,7 +11,7 @@ __version__ = "2.0.0"
 __author__ = "Mrinal Jain"
 
 import warnings
-from typing import List, NamedTuple, Tuple, Union
+from typing import NamedTuple
 
 import ffmpeg
 import numpy as np
@@ -41,74 +40,96 @@ class TargetSize(NamedTuple):
 class Videos(object):
     """Class to read in videos and store them as numpy arrays
 
-    The videos are stored as a 5-dimensional tensor where the shape of the tensor depends on the `data_format`.
+    The videos are stored as a 5-dimensional tensor where the shape of the tensor depends 
+    on the ``data_format``.
 
-    If the `data format`="channels_last"` => :code:`(<num_videos>, <num_frames>, <height>, <width>, <channels>)`  
+    :param target_size: 
+        A tuple of form ``(width, height)`` indicating the dimension to 
+        resize the frames of the video, defaults to `None`. The dimension of the frames 
+        will not be altered if this parameter is not set.
+    :type target_size: tuple[int, int]
 
-    If the `data format`="channels_first"` => :code:`(<num_videos>, <channels>, <num_frames>, <height>, <width>)`
+    :param to_gray: Convert video to grayscale, defaults to `False`.
+    :type to_gray: bool
 
-    The value of `channels` will be 1 (for gray scale) or 3 (for RGB).
+    :param mode: 
+        The method used for frame extraction, if ``num_frames`` is set. It could be one 
+        of "auto", "random", "first", "last" or "middle". 
 
-    Args:
-        target_size: Tuple of form `(new_width, new_height)`, defaults to None
-            If not set, the dimensions of the frames will not be altered
-        to_gray: 
-            If True, all the frames of the video(s) are converted to gray scale, defaults to False
-        mode: One of {"auto", "random", "first", "last", "middle"}, defaults to `auto`
-            :code:`auto`: The reader will read **N** frames at equal intervals from the entire video
-            
-            :code:`random`: The reader will read **N** frames at random from the entire video
-            
-            :code:`first`: The reader will read the first **N** frames
+        * ``"auto"``: **N** frames will be extracted at equal intervals
+        * ``"random"``: **N** frames will be randomly extracted (no repetetion). Set the 
+          parameter `random_state` to get the same result every time.
+        * ``"first"``, ``"last"`` and ``"middle"`` will extract **N** contiguous frames 
+          from the beginning, end and middle of the video respectively.
 
-            :code:`last`: The reader will read the last **N** frames
+    :type mode: str
 
-            :code:`middle`: The reader will read the middle **N** frames, by removing equal number of
-            frames from the beginning and end of the video
+    :param num_frames: 
+        The (exact) number of frames to extract from the video, defaults to `None`. Frames 
+        are extracted based on the value of ``mode``. If not set, all the frames of the 
+        video are kept.
+    :type num_frames: int
 
-            Here, the value of **N** is :code:`num_frames`
+    :param normalize: Normalize pixels to be in range `(0, 1)`, defaults to `False`
+    :type normalize: bool
 
-            .. important:: **Custom Frame Selection**
-             
-             Internally, each :code:`mode` is mapped to a callable function, that returns a list of indices 
-             of the frames to be extracted. Similarly, you could also pass a such callable for selecting frames 
-             based on a custom method. 
-             
-             See examples for further details.
-        num_frames: The (exact) number of frames to extract from each video, defaults to None
-            Frames are extracted based on the value of :code:`mode`. 
-            If set to None, all the frames of the video would be kept.
-        normalize: 
-            If True, then the pixel values will be normalized to be in range `(0, 1)`, defaults to False.
-        data_format: One of {"channels_first", "channels_last"}, defaults to `channels_last`.
-            Use `channels_last` when using libraries like **tensorflow/keras** and `channels_first` when working 
-            with **pytorch** or **theano**.
-        random_state:
-            The number to seed the random number generator (when using the `mode` as "random"), defaults to 17.
+    :param data_format: 
+        Video data format, either "channels_last" or "channels_first". 
+        
+        * ``"channels_last"``: The tensor will have shape 
+          ``(<samples>, <frames>, <height>, <width>, <channels>)``
+        * ``"channels_first"``: The tensor will have shape 
+          ``(<samples>, <channels>, <frames>, <height>, <width>)``
+        
+        ``channels`` will be **1** for grayscale videos and **3** for RGB videos.
+    :type data_format: str
 
-    Example::
+    :param random_state: 
+        Integer that seeds the (numpy) random number generator, defaults to 17.
+    :type random_state: int
 
-        from mydia import Videos
+    **Example**
 
-        reader = Videos(target_size=(720, 480),
-                        to_gray=False,
-                        num_frames=128,
-                        data_format="channels_first")
+    .. code-block:: python
 
-        video = reader.read('/path/to/video')
+       from mydia import Videos
+   
+       reader = Videos(
+           target_size=(720, 480),
+           to_gray=False,
+           num_frames=128,
+           data_format="channels_first"
+       )
+   
+       video = reader.read("./path/to/video")
+
+    .. note::
+
+       .. versionchanged:: 2.0.0
+   
+          You could also pass a `callable` to ``mode`` for custom frame extraction. The 
+          `callable` should return a **list of integers**, denoting the indices of the frames 
+          to be extracted. It should take 3 (non-keyword) arguments: 
+   
+          * ``total_frames``: The total number of frames in the video
+          * ``num_frames``: The number of frames that you want to extract
+          * ``fps``: The frame rate of the video
+   
+          These arguments may/may not be used to generate the required frame indices. 
+          Detailed examples are provided in the documentation.
 
     """
 
     def __init__(
         self,
-        target_size: Tuple[int, int] = None,
-        to_gray: bool = False,
-        mode: str = "auto",
-        num_frames: int = None,
-        normalize: bool = False,
-        data_format: str = "channels_last",
-        random_state: int = 17,
-    ) -> None:
+        target_size=None,
+        to_gray=False,
+        mode="auto",
+        num_frames=None,
+        normalize=False,
+        data_format="channels_last",
+        random_state=17,
+    ):
         """Initializing class variables"""
 
         self.target_size = None
@@ -142,14 +163,21 @@ class Videos(object):
 
         np.random.seed(random_state)
 
-    def _read_video(self, path: str) -> np.ndarray:
-        """Used internally by :code:`read()` to read in a single video.
+    def _read_video(self, path):
+        """Used internally by :func:`read()` to read in a **single** video.
 
-        Args:
-            path: Path of the video to be read
+        :param path: The path of the video to be read.
+        :type path: str
 
-        Returns:
-            A 5-dimensional tensor - the shape of which will depend on the value of :code:`data_format`
+        :return:
+            A 5-dimensional tensor, whose shape will depend on the value of ``data_format``
+
+            * For ``"channels_last"``: The tensor will have shape 
+              ``(1, <frames>, <height>, <width>, <channels>)``
+            * For ``"channels_first"``: The tensor will have shape 
+              ``(1, <channels>, <frames>, <height>, <width>)``
+
+        :rtype: :obj:`numpy.ndarray`
 
         """
 
@@ -180,8 +208,21 @@ class Videos(object):
 
         return np.expand_dims(video, axis=0)
 
-    def _probe(self, path: str) -> Tuple[int, int]:
-        """Used internally by :code:`_read_video()` to get the meta-data of a video"""
+    def _probe(self, path):
+        """Used internally by :func:`_read_video()` to get the meta-data of a video
+
+        .. note::
+
+           This function sets the `default` dimensions of the video, if the frames are not 
+           to be scaled.
+
+        :param path: The path of the video to be read.
+        :type path: str
+
+        :return: Frame rate and total number of frames in the video.
+        :rtype: tuple[int, int]
+
+        """
 
         probe = ffmpeg.probe(filename=path)
         video_stream = next(
@@ -199,14 +240,26 @@ class Videos(object):
 
         return (fps, total_frames)
 
-    def read(self, paths: Union[str, List[str]]) -> np.ndarray:
+    def read(self, paths):
         """Function to read videos
 
-        Args:
-            paths: A list of paths of the videos to be read.
+        :param paths: A list of paths/path of the video(s) to be read.
+        :type paths: str or list[str]
         
-        Returns:
-            A 5-dimensional tensor - the shape of which will depend on the value of :code:`data_format`
+        :return: 
+            A 5-dimensional tensor, whose shape will depend on the value of ``data_format``.
+            
+            * For ``"channels_last"``: The tensor will have shape 
+              ``(<samples>, <frames>, <height>, <width>, <channels>)``
+            * For ``"channels_first"``: The tensor will have shape 
+              ``(<samples>, <channels>, <frames>, <height>, <width>)``
+
+        :rtype: :obj:`numpy.ndarray`
+
+        :raises ValueError: If ``paths`` is neither a string, not a list of strings.
+        :raises IndexError: 
+            If ``num_frames`` is set to a value greater than the total number of frames 
+            available in the video.
         
         """
 
@@ -228,28 +281,30 @@ class Videos(object):
         return video_tensor
 
 
-def plot(video: np.ndarray, num_col: int = 3, figsize: Tuple[int, int] = None) -> None:
+def plot(video, num_col=3, figsize=None):
     """Plot the frames of the video in a grid
 
-    Args:
-        video: 
-            A video tensor with shape :code:`(<num_frames>, <height>, <width>, <channels>)` or 
-            :code:`(<channels>, <num_frames>, <height>, <width>)`, depending on the value of `data_format`
-        num_col: 
-            The number of columns the grid should have, defaults to 3
-        figsize: The size of the matplotlib figure, defaults to None
-            This tuple is passed to the `matplotlib.figure` object to set it's size
+    :param video: A 5-dimensional video tensor. 
+    :type video: :obj:`numpy.ndarray` 
 
-            If set as None, it is calculated automatically (recommended)
+    :param num_col: The number of columns in the grid, defaults to 3.
+    :type num_col: int
+
+    :param figsize: 
+        The size of the matplotlib figure, defaults to `None`. This tuple is passed to the 
+        ``matplotlib.figure`` object to set it's size. If set as `None`, it is calculated 
+        automatically (recommended).
+    :type figsize: tuple[int, int] 
+
+    :raises ImportError: If ``matplotlib`` is not successfully imported.
+    :raises ValueError: If the dimension of the ``video`` tensor is invalid.
     
     """
 
     try:
         import matplotlib.pyplot as plt
     except ImportError:
-        raise (
-            "ImportError: 'matplotlib', required to plot the video frames, cannot be imported"
-        )
+        raise ("ImportError: Unable to import 'matplotlib' for plotting video frames")
 
     if video.ndim != 4:
         raise ValueError("Invalid value for 'video'")

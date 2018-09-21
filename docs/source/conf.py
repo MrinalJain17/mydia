@@ -14,7 +14,8 @@
 #
 # import os
 # import sys
-# sys.path.insert(0, os.path.abspath('.'))
+# sys.path.insert(0, os.path.abspath('../../mydia'))
+# sys.path.insert(0, os.path.abspath('../../.'))
 
 import sphinx_rtd_theme
 from sphinx_gallery.sorting import FileNameSortKey
@@ -188,7 +189,4 @@ sphinx_gallery_conf = {
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/", None),
-    "numpy": ("http://docs.scipy.org/doc/numpy/", None),
-}
+intersphinx_mapping = {"numpy": ("http://docs.scipy.org/doc/numpy/", None)}

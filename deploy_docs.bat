@@ -4,11 +4,9 @@
 cd docs
 
 echo Deleting old documentation...
-call make clean
+call make clean-cache
 rmdir files /S /Q
-rmdir source\auto_examples /S /Q
-git worktree prune
-rmdir ..\.git\worktrees\files /S /Q
+git worktree remove --force
 
 echo Checking out gh-pages branch into files...
 git worktree add -B gh-pages files origin/gh-pages

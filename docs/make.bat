@@ -13,6 +13,20 @@ set SPHINXPROJ=Mydia
 
 if "%1" == "" goto help
 
+if "%1" == "clean-cache" (
+	%SPHINXBUILD% -M clean %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+	echo.Removing everything under 'auto_examples'...
+	rd /s /q %SOURCEDIR%\auto_examples\
+	goto end
+)
+
+if "%1" == "html-noplot" (
+	%SPHINXBUILD%  -D plot_gallery=0 -b html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+	echo
+	echo.Build finished.
+	goto end
+)
+
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
 	echo.

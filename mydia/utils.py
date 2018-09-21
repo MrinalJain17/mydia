@@ -4,9 +4,9 @@ import numpy as np
 
 
 def _mode_auto(total_frames: int, num_frames: int, fps: int) -> List[int]:
-    """The :code:`auto` mode for frame extraction
+    """The ``auto`` mode for frame extraction
 
-    Refer to the documentation of the class :code:`Videos` for further details.
+    Refer to the documentation of the class :class:`Videos` for further details.
     
     """
     return np.linspace(
@@ -15,9 +15,9 @@ def _mode_auto(total_frames: int, num_frames: int, fps: int) -> List[int]:
 
 
 def _mode_random(total_frames: int, num_frames: int, fps: int) -> List[int]:
-    """The :code:`random` mode for frame extraction
+    """The ``random`` mode for frame extraction
 
-    Refer to the documentation of the class :code:`Videos` for further details.
+    Refer to the documentation of the class :class:`Videos` for further details.
     
     """
     return np.sort(
@@ -26,9 +26,9 @@ def _mode_random(total_frames: int, num_frames: int, fps: int) -> List[int]:
 
 
 def _mode_first(total_frames: int, num_frames: int, fps: int) -> List[int]:
-    """The :code:`first` mode for frame extraction
+    """The ``first`` mode for frame extraction
 
-    Refer to the documentation of the class :code:`Videos` for further details.
+    Refer to the documentation of the class :class:`Videos` for further details.
     
     """
     indices = np.arange(total_frames)
@@ -36,9 +36,9 @@ def _mode_first(total_frames: int, num_frames: int, fps: int) -> List[int]:
 
 
 def _mode_last(total_frames: int, num_frames: int, fps: int) -> List[int]:
-    """The :code:`last` mode for frame extraction
+    """The ``last`` mode for frame extraction
 
-    Refer to the documentation of the class :code:`Videos` for further details.
+    Refer to the documentation of the class :class:`Videos` for further details.
     
     """
     indices = np.arange(total_frames)
@@ -46,9 +46,9 @@ def _mode_last(total_frames: int, num_frames: int, fps: int) -> List[int]:
 
 
 def _mode_middle(total_frames: int, num_frames: int, fps: int) -> List[int]:
-    """The :code:`middle` mode for frame extraction
+    """The ``middle`` mode for frame extraction
 
-    Refer to the documentation of the class :code:`Videos` for further details.
+    Refer to the documentation of the class :class:`Videos` for further details.
     
     """
     indices = np.arange(total_frames)

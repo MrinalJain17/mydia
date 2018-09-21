@@ -9,3 +9,5 @@ Module: `mydia`
 
 .. autoclass:: Videos
     :members:
+
+.. autofunction:: plot

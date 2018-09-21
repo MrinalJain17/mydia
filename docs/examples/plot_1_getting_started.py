@@ -28,13 +28,16 @@ video = reader.read(video_path)
 print("The shape of the tensor:", video.shape)
 
 ##############################################################################
-# The tensor represents **1 video** having **132 frames**, with each frame
-# having a width and height of 1080 and 720 pixels respectively. “**3**”
-# denotes the Red, Green and Blue (RGB) channels of the video.
+# The tensor can be interpreted as -
+# 
+# * 1 video
+# * Having 132 frames, 
+# * Dimension (width x height) of each frame: 1080x720 pixels
+# * ``3`` denotes that the video is RGB
 #
 #
-# Or, read multiple videos
-# ------------------------
+# Similarly, read multiple videos
+# -------------------------------
 #
 # .. code:: python
 #
@@ -43,7 +46,8 @@ print("The shape of the tensor:", video.shape)
 #  reader = Videos()
 #  video = reader.read(video_paths)
 #
-# *For detailed information of the output tensor, view the code documentation.*
+# *For information on the parameters available, read the examples ahead and 
+# also, refer to the code documentation.*
 #
 #
 # Saving the loaded video tensor
@@ -53,11 +57,11 @@ print("The shape of the tensor:", video.shape)
 #  as :obj:`numpy.ndarray` (in .npz or .npy format). For further details, view
 #  the documentation of:
 #
-#  - :obj:`numpy.save`: for saving in .npy format
+#  * :obj:`numpy.save`: for saving in .npy format
 #
-#  - :obj:`numpy.savez`: for saving in .npz format
+#  * :obj:`numpy.savez`: for saving in .npz format
 #
-#  - :obj:`numpy.load`: for loading back the saved numpy tensors
+#  * :obj:`numpy.load`: for loading back the saved numpy tensors
 #
 #  Since the whole reading process is time consuming, this could turn out to be
 #  a useful way to store and reload the video tensors.
