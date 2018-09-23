@@ -1,4 +1,5 @@
 @echo off
+:: -----------------ONLY MEANT FOR INTERNAL USAGE-----------------
 
 :: This batch file should be executed from the root of the project
 cd docs

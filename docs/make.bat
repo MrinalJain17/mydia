@@ -13,6 +13,7 @@ set SPHINXPROJ=Mydia
 
 if "%1" == "" goto help
 
+:: Performs `make clean` and deletes the auto generated examples' files
 if "%1" == "clean-cache" (
 	%SPHINXBUILD% -M clean %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
 	echo.Removing everything under 'auto_examples'...
@@ -20,10 +21,27 @@ if "%1" == "clean-cache" (
 	goto end
 )
 
+:: Builds the documentation without executing the gallery examples
 if "%1" == "html-noplot" (
 	%SPHINXBUILD%  -D plot_gallery=0 -b html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
-	echo
-	echo.Build finished.
+	echo.Build finished without executing gallery examples.
+	goto end
+)
+
+:: Performs `make clean-cache` followed by `make html`
+if "%1" == "docs" (
+	%SPHINXBUILD% -M clean %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+	echo.Removing everything under 'auto_examples'...
+	rd /s /q %SOURCEDIR%\auto_examples\
+	%SPHINXBUILD% -b html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+	goto end
+)
+
+:: Performs `make clean` followed by `make html-noplot`
+if "%1" == "docs-noplot" (
+	%SPHINXBUILD% -M clean %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+	%SPHINXBUILD%  -D plot_gallery=0 -b html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+	echo.Build finished without executing gallery examples.
 	goto end
 )
 

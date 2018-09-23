@@ -4,10 +4,13 @@ Code Documentation
 .. automodule:: mydia
 .. currentmodule:: mydia
 
-Module: `mydia`
-~~~~~~~~~~~~~~~
+Mydia.Videos
+~~~~~~~~~~~~
 
 .. autoclass:: Videos
     :members:
+
+Mydia.plot
+~~~~~~~~~~
 
 .. autofunction:: plot

@@ -53,7 +53,7 @@ Additional Libraries to install:
 Install the following packages along with their dependencies:
 
 * `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__
-* `Numpy <http://www.numpy.org/>`__
+* `NumPy <http://www.numpy.org/>`__
 * `tqdm <https://pypi.python.org/pypi/tqdm#installation>`__ - Required for displaying the 
   progress bar.
 * `Matplotlib <https://matplotlib.org/>`__ - (Optional) For plotting the frames of a video

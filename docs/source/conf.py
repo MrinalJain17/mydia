@@ -17,10 +17,8 @@
 # sys.path.insert(0, os.path.abspath('../../mydia'))
 # sys.path.insert(0, os.path.abspath('../../.'))
 
-import sphinx_rtd_theme
-from sphinx_gallery.sorting import FileNameSortKey
-
 from mydia import mydia
+from sphinx_gallery.sorting import FileNameSortKey
 
 # -- Project information -----------------------------------------------------
 
@@ -88,26 +86,34 @@ autodoc_inherit_docstrings = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "alabaster"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {"collapse_navigation": False, "sticky_navigation": False}
+html_theme_options = {
+    "description": "A simple and efficient wrapper for reading videos as NumPy tensors",
+    "github_user": "MrinalJain17",
+    "github_repo": "mydia",
+    "github_button": True,
+    "github_type": "star",
+    "github_count": "true",
+    "github_banner": True,
+    "analytics_id": "UA-114571173-2",
+    "sidebar_collapse": True,
+    "show_powered_by": False,
+    "show_relbar_bottom": True,
+    "font_family": "'Lato', 'Garamond', 'Georgia', serif",
+    "caption_font_family": "'Lato', 'Garamond', 'Georgia', serif",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+# html_static_path = ["_static"]
 
-html_context = {
-    "css_files": [
-        "https://fonts.googleapis.com/css?family=Lato",
-        "_static/css/mydia_theme.css",
-        "_static/css/gallery.css",
-    ]
-}
+html_context = {}
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
