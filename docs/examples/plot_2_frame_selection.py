@@ -12,7 +12,7 @@ Frame selection, resizing, and grayscale conversion
 
   * Set ``mode`` to ``"random"``
 
-* And finally, visualize the captured frames using ``mydia.plot``
+* And finally, visualize the captured frames using :func:`mydia.plot`
 """
 
 # Imports
@@ -25,14 +25,15 @@ video_path = r"./sample_video/bigbuckbunny.mp4"
 # Configuring the parameters
 # For other paramaters available, view the code documentation.
 reader = Videos(
-    target_size=(720, 480), 
-    num_frames=12, 
+    target_size=(720, 480),
+    num_frames=12,
     mode="random",
 )
 
 # Call the 'read()' function to get the required video tensor
 # which will be of shape (1, 12, 480, 720, 3)
-video = reader.read(video_path) 
+video = reader.read(video_path)
+print("The shape of the tensor:", video.shape)
 
 # Plot the video frames in a grid
 plot(video[0])
@@ -46,6 +47,9 @@ plt.show()
 # * Now let's read the video with the same configuration, but in **grayscale**
 #   
 #   * For this, set ``to_gray`` to `True`
+#
+# * Also, the function `plot()` takes certain arguments to construct the grid
+#   of frames of the video. For more info, view :func:`mydia.plot`.
 
 # Imports
 import matplotlib.pyplot as plt
@@ -56,18 +60,19 @@ video_path = r"./sample_video/bigbuckbunny.mp4"
 
 # Configuring the parameters
 reader = Videos(
-    target_size=(720, 480), 
-    to_gray=True, 
-    num_frames=12, 
+    target_size=(720, 480),
+    to_gray=True,
+    num_frames=12,
     mode="random",
 )
 
 # Call the 'read()' function to get the required video tensor
 # which will be of shape (1, 12, 480, 720, 1)
 video = reader.read(video_path)
+print("The shape of the tensor:", video.shape)
 
 # Plot the video frames in a grid
-plot(video[0])
+plot(video[0], num_col=2)
 plt.show()
 
 ##############################################################################

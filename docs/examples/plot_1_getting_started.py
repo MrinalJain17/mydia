@@ -42,24 +42,31 @@ print("The shape of the tensor:", video.shape)
 # .. code:: python
 #
 #  from mydia import Videos
-#  video_paths = ["", "", ...] # list of path of videos
+#
+#  video_paths = [
+#      "path/to/video_1", 
+#      "path/to/video_2", 
+#      "path/to/video_3",
+#      ...,
+#  ]          # list of path of videos
+#
 #  reader = Videos()
 #  video = reader.read(video_paths)
 #
 # *For information on the parameters available, read the examples ahead and 
-# also, refer to the code documentation.*
+# also refer to the documentation of the class* :class:`mydia.Videos`.
 #
 #
 # Saving the loaded video tensor
 # ------------------------------
 #
 # .. important:: Once the videos have been processed, they could be saved
-#  as :obj:`numpy.ndarray` (in .npz or .npy format). For further details, view
+#  as :obj:`numpy.ndarray` (in `.npz` or `.npy` format). For further details, view
 #  the documentation of:
 #
-#  * :obj:`numpy.save`: for saving in .npy format
+#  * :obj:`numpy.save`: for saving in `.npy` format
 #
-#  * :obj:`numpy.savez`: for saving in .npz format
+#  * :obj:`numpy.savez`: for saving in `.npz` format
 #
 #  * :obj:`numpy.load`: for loading back the saved numpy tensors
 #
