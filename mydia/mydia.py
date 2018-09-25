@@ -1,4 +1,4 @@
-"""Mydia: Read videos as numpy arrays
+"""Mydia: A simple and efficient wrapper for reading videos as NumPy tensors
 
 The class :class:`Videos` in this module can be used to read videos with advance support 
 for frame selection, frame resizing, pixel normalization and grayscale conversion.
@@ -7,7 +7,7 @@ The module  uses **FFmpeg** as its backend to process the videos.
 
 """
 
-__version__ = "2.0.1"
+__version__ = "2.1.0"
 __author__ = "Mrinal Jain"
 
 import warnings
@@ -44,13 +44,19 @@ class Videos(object):
     on the ``data_format``.
 
     :param target_size: 
-        A tuple of form ``(width, height)`` indicating the dimension to 
-        resize the frames of the video, defaults to `None`. The dimension of the frames 
-        will not be altered if this parameter is not set.
+        A tuple of form ``(width, height)`` indicating the dimension to resize the frames 
+        of the video, defaults to `None`. The dimension of the frames will not be altered 
+        if this parameter is not set.
     :type target_size: tuple[int, int]
 
     :param to_gray: Convert video to grayscale, defaults to `False`.
     :type to_gray: bool
+
+    :param num_frames: 
+        The (exact) number of frames to extract from the video, defaults to `None`. Frames 
+        are extracted based on the value of ``mode``. If not set, all the frames of the 
+        video are kept.
+    :type num_frames: int
 
     :param mode: 
         The method used for frame extraction, if ``num_frames`` is set. It could be one 
@@ -64,13 +70,9 @@ class Videos(object):
 
     :type mode: str
 
-    :param num_frames: 
-        The (exact) number of frames to extract from the video, defaults to `None`. Frames 
-        are extracted based on the value of ``mode``. If not set, all the frames of the 
-        video are kept.
-    :type num_frames: int
-
-    :param normalize: Normalize pixels to be in range `(0, 1)`, defaults to `False`
+    :param normalize: 
+        Shifts each video to the range `(0, 1)` by subtracting the minimum and dividing by 
+        the difference between the maximum and the minimum pixel value. Defaults to `False`
     :type normalize: bool
 
     :param data_format: 
@@ -108,8 +110,8 @@ class Videos(object):
        .. versionchanged:: 2.0.0
    
           You could also pass a `callable` to ``mode`` for custom frame extraction. The 
-          `callable` should return a **list of integers**, denoting the indices of the frames 
-          to be extracted. It should take 3 (non-keyword) arguments: 
+          `callable` should return a **list of integers**, denoting the indices of the 
+          frames to be extracted. It should take 3 (non-keyword) arguments: 
    
           * ``total_frames``: The total number of frames in the video
           * ``num_frames``: The number of frames that you want to extract
@@ -118,14 +120,22 @@ class Videos(object):
           These arguments may/may not be used to generate the required frame indices. 
           Detailed examples are provided in the documentation.
 
+          .. warning::
+      
+             If you are passing a `callable` to ``mode``, then make sure that the number 
+             of frames (indices) it returns is equal to the value of ``num_frames``. If 
+             this condition is not met, then this would mean that the number of frames 
+             selected is different for different videos, and therefore they cannot be 
+             stacked into a single tensor.
+
     """
 
     def __init__(
         self,
         target_size=None,
         to_gray=False,
-        mode="auto",
         num_frames=None,
+        mode="auto",
         normalize=False,
         data_format="channels_last",
         random_state=17,
@@ -145,6 +155,8 @@ class Videos(object):
         if to_gray:
             self.pix_fmt = "gray"
 
+        self.num_frames = num_frames
+
         if isinstance(mode, str):
             if mode in ["auto", "first", "middle", "last", "random"]:
                 self.mode = MODES[mode]
@@ -153,7 +165,6 @@ class Videos(object):
         else:
             self.mode = mode
 
-        self.num_frames = num_frames
         self.normalize = normalize
 
         if data_format in ["channels_last", "channels_first"]:
@@ -186,9 +197,15 @@ class Videos(object):
         height = self.target_size.height
 
         out = ffmpeg.input(filename=path)
+
         if self.num_frames is not None:
             if self.num_frames <= total_frames:
                 indices = self.mode(total_frames, self.num_frames, fps)
+                temp_msg = """The number of frames to be selected returned by the callable 
+                does not match the value of the parameter 'num_frames'. Your callable 
+                should return the same number of frames for every video, regardless of their 
+                individual duration."""
+                assert len(indices) == self.num_frames, temp_msg
                 select_str = "+".join([f"eq(n,{idx})" for idx in indices])
                 out = out.filter("select", select_str)
             else:
@@ -196,15 +213,21 @@ class Videos(object):
                     "The value of 'num_frames' is greater than the total number "
                     "of frames available"
                 )
+
         if self.target_size.rescale:
             out = out.filter("scale", width, height)
+
         out = out.output("pipe:", vsync=0, format="rawvideo", pix_fmt=self.pix_fmt)
         out = out.global_args("-loglevel", "panic", "-hide_banner")
         out, _ = out.run(capture_stdout=True)
-
         video = np.frombuffer(out, np.uint8).reshape(
             [-1, height, width, NUM_CHANNELS[self.pix_fmt]]
         )
+
+        if self.normalize:
+            min_, max_ = np.min(video), np.max(video)
+            video = np.clip(video, min_, max_)
+            video = (video.astype("float") - min_) / (max_ - min_ + 1e-5)
 
         return np.expand_dims(video, axis=0)
 
@@ -213,8 +236,8 @@ class Videos(object):
 
         .. note::
 
-           This function sets the `default` dimensions of the video, if the frames are not 
-           to be scaled.
+           This function also sets the `default` dimensions of the video, if the frames 
+           are not to be resized.
 
         :param path: The path of the video to be read.
         :type path: str
@@ -260,6 +283,13 @@ class Videos(object):
         :raises IndexError: 
             If ``num_frames`` is set to a value greater than the total number of frames 
             available in the video.
+
+        .. important::
+
+           If multiple videos are to be read, then each video should have the same dimension 
+           ``(frames, height, width)``, otherwise they cannot be stacked into a single 
+           tensor. Therefore, the user **must** use the parameters ``target_size`` and 
+           ``num_frames`` to make sure of this.
         
         """
 
@@ -274,9 +304,6 @@ class Videos(object):
 
         if self.data_format == "channels_first":
             video_tensor = np.transpose(video_tensor, axes=(0, 4, 1, 2, 3))
-
-        if self.normalize:
-            video_tensor = video_tensor.astype(np.float) / 255
 
         return video_tensor
 

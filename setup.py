@@ -3,7 +3,7 @@ from os import path
 
 from setuptools import find_packages, setup
 
-from mydia import mydia
+from mydia.mydia import __version__
 
 # Get the long description from the README file
 with open("README.rst", encoding="utf-8") as f:
@@ -12,9 +12,10 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="mydia",
-    version=mydia.__version__,
-    description="Read videos as numpy arrays",
+    version=__version__,
+    description="A simple and efficient wrapper for reading videos as NumPy tensors",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://mrinaljain17.github.io/mydia/",
     author="Mrinal Jain",
     author_email="mrinaljain007@gmail.com",

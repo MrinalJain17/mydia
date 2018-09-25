@@ -39,11 +39,18 @@ The general format of the `callable` should be:
       indices, the number of frames are selected only for the unique values in the 
       index array.
 
+.. warning::
+
+   If you are passing a `callable` to ``mode``, then make sure that the number of frames 
+   (indices) it returns is equal to the value set in ``num_frames``. If this condition is 
+   not met, then this would mean that the number of frames selected is different for 
+   different videos, and therefore they cannot be stacked into a single tensor.
+
 Examples
 ~~~~~~~~
 
 * Let's say we want the first 20 even numbered frames (starting from 0, 2, 4, ...), 
-  assuming that the video has more that 20x2 = 40 frames.
+  assuming that the video atleast 20x2 = 40 frames.
   
 """
 
@@ -75,49 +82,9 @@ video = reader.read(video_path)
 print("The shape of the tensor:", video.shape)
 
 # Plot the video frames in a grid
-plot(video[0])
+plot(video[0], num_col=4)
 plt.show()
 
-################################################################################
-# * Now, let's try something a little more complicated. We will select the first 
-#   3 frames for each second of the video
-# 
-#   For example, suppose we have a video with a total of 70 frames with a frame 
-#   rate of 25. This means that the duration of the video is ~3 seconds (25 frames, 
-#   25 frames, 20 frames). Now, we need the first 3 frames for each second of the 
-#   video. 
-# 
-# **Given below is a method to select first `N` frames from each second of a video:**
-
-# Imports
-import matplotlib.pyplot as plt
-import numpy as np
-from mydia import Videos, plot
-
-# Initialize video path
-video_path = r"./sample_video/bigbuckbunny.mp4"
-
-# Custom frame selector
-N = 3
-def frames_per_second(total_frames, num_frames, fps):
-    t = np.arange(total_frames)
-    f = np.arange(fps)
-    mask = np.resize(f, total_frames)
-
-    return t[mask < N]
-
-# Configuring the parameters
-reader = Videos(
-    target_size=(720, 480),
-    num_frames=18,
-    mode=frames_per_second,
-)
-
-# Call the 'read()' function to get the required video tensor
-# which will be of shape (1, 18, 480, 720, 1)
-video = reader.read(video_path)
-print("The shape of the tensor:", video.shape)
-
-# Plot the video frames in a grid
-plot(video[0], num_col=3)
-plt.show()
+##############################################################################
+# *Note that `plot` can also take some arguments for customizing the grid. For more info, 
+# view the documentation of the function* :func:`mydia.plot`.
