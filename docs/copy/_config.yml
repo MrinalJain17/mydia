@@ -1,0 +1,4 @@
+theme: jekyll-theme-cayman
+title: "Mydia"
+description: "A simple and efficient wrapper for reading videos as NumPy tensors"
+show_downloads: "true"
