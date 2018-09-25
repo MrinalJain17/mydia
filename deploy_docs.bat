@@ -18,15 +18,11 @@ rmdir files\doctrees /S /Q
 rmdir files\html /S /Q
 del files\index.html
 del files\.nojekyll
-del files\_config.yml
-del files\index.md
 
 echo Generating site...
 call make html
 copy copy\index.html .\files
 copy copy\.nojekyll .\files
-copy copy\_config.yml .\files
-type ..\README.md > .\files\index.md
 
 echo Updating gh-pages branch...
 if "%~1" == "" (
