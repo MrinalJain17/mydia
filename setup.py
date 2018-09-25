@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 from mydia.mydia import __version__
 
 # Get the long description from the README file
-with open("README.rst", encoding="utf-8") as f:
+with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
     long_description = long_description.replace("\r", "")
 
