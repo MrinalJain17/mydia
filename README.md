@@ -4,7 +4,7 @@ Reading videos into NumPy arrays was never more simple. This library provides
 an entire range of additional functionalities such as custom frame selection, 
 frame resizing, pixel normalization, grayscale conversion and much more.
 
-[Read the Documentation](https://mrinaljain17.github.io/mydia/html/index.html)
+[Read the Documentation](https://mrinaljain17.github.io/mydia)
 
 ## Getting started
 
@@ -38,13 +38,19 @@ The tensor can be interpreted as:
 
 ## Installation
 
-- **Install Mydia from PyPI (recommended):**
+- **Install from PyPI (Recommended):**
 
     ```bash
         pip install mydia
     ```
 
-- **Alternatively, install from Github source:**
+- **Install using conda package manager (Supported on Windows only)**
+
+    ```bash
+        conda install -c mrinaljain17 mydia
+    ```
+
+- **Alternatively, install from source:**
 
   First, clone the repository
 

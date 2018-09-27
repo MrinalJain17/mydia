@@ -1,0 +1,39 @@
+{% set name = "mydia" %}
+{% set version = "2.1.1" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ef07ff6b0c17ddac6749ae6ce9e295a4799dfb14a951bc25ee56778b24684f9a
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv "
+
+requirements:
+  build:
+    - pip
+    - setuptools
+    - python    
+    - ffmpeg-python
+    - numpy
+    - matplotlib
+    - tqdm
+  run:
+    - ffmpeg-python
+    - numpy
+    - tqdm
+    - matplotlib
+    - python
+
+about:
+  home: https://github.com/MrinalJain17/mydia
+  license: MIT License
+  license_family: MIT
+  license_file: 
+  summary: A simple and efficient wrapper for reading videos as NumPy tensors
+  doc_url: https://mrinaljain17.github.io/mydia/
+  dev_url: 

@@ -7,7 +7,7 @@ The module  uses **FFmpeg** as its backend to process the videos.
 
 """
 
-__version__ = "2.1.0"
+__version__ = "2.1.1"
 __author__ = "Mrinal Jain"
 
 import warnings
@@ -263,11 +263,14 @@ class Videos(object):
 
         return (fps, total_frames)
 
-    def read(self, paths):
+    def read(self, paths, verbose=1):
         """Function to read videos
 
         :param paths: A list of paths/path of the video(s) to be read.
         :type paths: str or list[str]
+
+        :param verbose: If set to 0, the progress bar will be disabled.
+        :type verbose: int
         
         :return: 
             A 5-dimensional tensor, whose shape will depend on the value of ``data_format``.
@@ -298,8 +301,14 @@ class Videos(object):
                 paths = [paths]
             else:
                 raise ValueError("Invalid value of 'paths'")
+        disable = False
+        if verbose == 0:
+            disable = True
 
-        list_of_videos = [self._read_video(path) for path in tqdm(paths, unit="videos")]
+        list_of_videos = [
+            self._read_video(path)
+            for path in tqdm(paths, unit="videos", disable=disable)
+        ]
         video_tensor = np.vstack(list_of_videos)
 
         if self.data_format == "channels_first":

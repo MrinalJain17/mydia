@@ -1,13 +1,19 @@
 Installation
 ------------
 
--  **Install Mydia from PyPI (recommended):**
+-  **Install from PyPI (Recommended):**
 
    .. code:: bash
 
       pip install mydia
 
--  **Alternatively, install from Github source:**
+-  **Install using conda package manager (Supported on Windows only)**
+
+   .. code:: bash
+
+      conda install -c mrinaljain17 mydia
+
+-  **Alternatively, install from source:**
 
    First, clone the repository.
 
