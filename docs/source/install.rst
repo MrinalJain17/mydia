@@ -1,17 +1,17 @@
 Installation
 ------------
 
--  **Install from PyPI (Recommended):**
-
-   .. code:: bash
-
-      pip install mydia
-
--  **Install using conda package manager (Supported on Windows only)**
+-  **Install using Conda Package Manager (Recommended):**
 
    .. code:: bash
 
       conda install -c mrinaljain17 mydia
+
+-  **Install from PyPI:**
+
+   .. code:: bash
+
+      pip install mydia
 
 -  **Alternatively, install from source:**
 
@@ -46,6 +46,13 @@ For **Linux** users:
    
       $ sudo apt-get update
       $ sudo apt-get install libav-tools
+
+**OR**
+
+   .. code:: bash
+   
+      $ sudo apt-get update
+      $ sudo apt-get install ffmpeg
    
 For **Windows or MAC/OSX** users:
 
