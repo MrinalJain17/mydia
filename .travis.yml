@@ -4,8 +4,8 @@ dist: trusty
 before_install:
   - sudo apt-get update
   - wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
-  - tar xvf ffmpeg-git-*.tar.xz
-  - cd ./ffmpeg-git-*
+  - tar xvf ffmpeg-release-64bit-static.tar.xz
+  - cd ./ffmpeg-*
   - sudo cp ff* qt-faststart /usr/local/bin/
   - cd .. 
 install:
