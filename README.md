@@ -34,7 +34,7 @@ The tensor can be interpreted as:
 - Dimension (width x height) of each frame: 1080x720 pixels
 - `3` denotes that the video is RGB
 
-### View detailed examples [here](https://mrinaljain17.github.io/mydia/html/auto_examples/index.html)
+### View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
 
 ## Installation
 
