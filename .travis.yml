@@ -1,0 +1,25 @@
+language: python
+sudo: required
+dist: trusty
+python:
+  - "3.6"
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install libav-tools
+install:
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - travis_retry conda create -q -n test-environment python=3.6
+  - source activate test-environment
+  - travis_retry conda install numpy tqdm pytest pytest-runner matplotlib
+  - travis_retry conda install ffmpeg-python -c mrinaljain17
+  - export LD_LIBRARY_PATH=$HOME/miniconda/envs/test-environment/lib/:$LD_LIBRARY_PATH
+  - pip install -e .
+script:
+  - pytest
+after_success:
+  - pip uninstall -y mydia

@@ -21,6 +21,8 @@ setup(
     author_email="mrinaljain007@gmail.com",
     license="MIT",
     install_requires=["numpy>=1.14.5", "ffmpeg-python>=0.1.16", "tqdm>=4.25.0"],
+    setup_requires=["pytest-runner"],
+    tests_requires=["pytest", "numpy", "mydia"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
