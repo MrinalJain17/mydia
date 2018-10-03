@@ -20,7 +20,7 @@ reader = Videos()
 # Call the 'read()' function to get the video tensor
 video = reader.read(video_path)
 
-# a tensor of shape (1, 132, 720, 1080, 3)
+# a tensor of shape (1, 132, 720, 1280, 3)
 print("The shape of the tensor:", video.shape)
 
 ##############################################################################
@@ -28,7 +28,7 @@ print("The shape of the tensor:", video.shape)
 # 
 # * 1 video
 # * Having 132 frames, 
-# * Dimension (width x height) of each frame: 1080x720 pixels
+# * Dimension (width x height) of each frame: 1280x720 pixels
 # * ``3`` denotes that the video is RGB
 #
 # Similarly, read multiple videos

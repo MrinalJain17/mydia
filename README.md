@@ -1,4 +1,5 @@
 # Mydia
+[![Build Status](https://travis-ci.com/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.com/MrinalJain17/mydia)
 
 Reading videos into NumPy arrays was never more simple. This library provides 
 an entire range of additional functionalities such as custom frame selection, 
@@ -22,7 +23,7 @@ video_path = r".docs/examples/sample_video/bigbuckbunny.mp4"
 reader = Videos()
 
 # Call the 'read()' function to get the video tensor
-# which will be of shape (1, 132, 720, 1080, 3)
+# which will be of shape (1, 132, 720, 1280, 3)
 video = reader.read(video_path)
 
 ```
@@ -31,7 +32,7 @@ The tensor can be interpreted as:
 
 - 1 video
 - Having 132 frames, 
-- Dimension (width x height) of each frame: 1080x720 pixels
+- Dimension (width x height) of each frame: 1280x720 pixels
 - `3` denotes that the video is RGB
 
 ### View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
