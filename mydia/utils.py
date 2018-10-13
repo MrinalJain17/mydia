@@ -3,7 +3,7 @@ from typing import List
 import numpy as np
 
 
-def _mode_auto(total_frames: int, num_frames: int, fps: int) -> List[int]:
+def _mode_auto(total_frames: int, num_frames: int, fps: int, *args) -> List[int]:
     """The ``auto`` mode for frame extraction
 
     Refer to the documentation of the class :class:`Videos` for further details.
@@ -14,18 +14,20 @@ def _mode_auto(total_frames: int, num_frames: int, fps: int) -> List[int]:
     ).tolist()
 
 
-def _mode_random(total_frames: int, num_frames: int, fps: int) -> List[int]:
+def _mode_random(
+    total_frames: int, num_frames: int, fps: int, random_state: np.random.RandomState
+) -> List[int]:
     """The ``random`` mode for frame extraction
 
     Refer to the documentation of the class :class:`Videos` for further details.
     
     """
     return np.sort(
-        np.random.choice(total_frames, size=num_frames, replace=False)
+        random_state.choice(total_frames, size=num_frames, replace=False)
     ).tolist()
 
 
-def _mode_first(total_frames: int, num_frames: int, fps: int) -> List[int]:
+def _mode_first(total_frames: int, num_frames: int, fps: int, *args) -> List[int]:
     """The ``first`` mode for frame extraction
 
     Refer to the documentation of the class :class:`Videos` for further details.
@@ -35,7 +37,7 @@ def _mode_first(total_frames: int, num_frames: int, fps: int) -> List[int]:
     return indices[:num_frames].tolist()
 
 
-def _mode_last(total_frames: int, num_frames: int, fps: int) -> List[int]:
+def _mode_last(total_frames: int, num_frames: int, fps: int, *args) -> List[int]:
     """The ``last`` mode for frame extraction
 
     Refer to the documentation of the class :class:`Videos` for further details.
@@ -45,7 +47,7 @@ def _mode_last(total_frames: int, num_frames: int, fps: int) -> List[int]:
     return indices[(total_frames - num_frames) :].tolist()
 
 
-def _mode_middle(total_frames: int, num_frames: int, fps: int) -> List[int]:
+def _mode_middle(total_frames: int, num_frames: int, fps: int, *args) -> List[int]:
     """The ``middle`` mode for frame extraction
 
     Refer to the documentation of the class :class:`Videos` for further details.

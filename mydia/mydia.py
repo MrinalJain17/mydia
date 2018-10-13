@@ -172,7 +172,7 @@ class Videos(object):
         else:
             raise ValueError("Invalid value of 'data_format'")
 
-        np.random.seed(random_state)
+        self.random_state = np.random.RandomState(random_state)
 
     def _read_video(self, path):
         """Used internally by :func:`read()` to read in a **single** video.
@@ -200,7 +200,9 @@ class Videos(object):
 
         if self.num_frames is not None:
             if self.num_frames <= total_frames:
-                indices = self.mode(total_frames, self.num_frames, fps)
+                indices = self.mode(
+                    total_frames, self.num_frames, fps, self.random_state
+                )
                 temp_msg = """The number of frames to be selected returned by the callable 
                 does not match the value of the parameter 'num_frames'. Your callable 
                 should return the same number of frames for every video, regardless of their 
@@ -247,21 +249,31 @@ class Videos(object):
 
         """
 
-        probe = ffmpeg.probe(filename=path)
-        video_stream = next(
-            (stream for stream in probe["streams"] if stream["codec_type"] == "video"),
-            None,
-        )
-
-        # If the frame rate is 25, then the 'avg_frame_rate' is of the form `25/1`
-        fps = int(video_stream["avg_frame_rate"].split("/")[0])
-        total_frames = int(video_stream["nb_frames"])
-        if self.target_size is None:
-            self.target_size = TargetSize(
-                width=video_stream["width"], height=video_stream["height"]
+        try:
+            probe = ffmpeg.probe(filename=path)
+        except Exception as e:
+            print(e.stderr.decode())  # The exception returned by ffprobe is in bytes
+        else:
+            video_stream = next(
+                (
+                    stream
+                    for stream in probe["streams"]
+                    if stream["codec_type"] == "video"
+                ),
+                None,
             )
 
-        return (fps, total_frames)
+            # If the frame rate is 25, then the 'avg_frame_rate' is of the form `25/1`
+            fps = int(video_stream["avg_frame_rate"].split("/")[0])
+            total_frames = int(video_stream["nb_frames"])
+            if self.target_size is None:
+                self.target_size = TargetSize(
+                    width=video_stream["width"], height=video_stream["height"]
+                )
+
+            return (fps, total_frames)
+
+        # The method will return nothing if an exception is encountered
 
     def read(self, paths, verbose=1):
         """Function to read videos
@@ -305,11 +317,8 @@ class Videos(object):
         if verbose == 0:
             disable = True
 
-        list_of_videos = [
-            self._read_video(path)
-            for path in tqdm(paths, unit="videos", disable=disable)
-        ]
-        video_tensor = np.vstack(list_of_videos)
+        paths_iterator = tqdm(paths, unit="videos", disable=disable)
+        video_tensor = np.vstack(map(self._read_video, paths_iterator))
 
         if self.data_format == "channels_first":
             video_tensor = np.transpose(video_tensor, axes=(0, 4, 1, 2, 3))
@@ -317,31 +326,21 @@ class Videos(object):
         return video_tensor
 
 
-def plot(video, num_col=3, figsize=None):
-    """Plot the frames of the video in a grid
+def make_grid(video, num_col=3, padding=5):
+    """
 
-    :param video: A 5-dimensional video tensor. 
+    :param video: A 4-dimensional video tensor (a single video).
     :type video: :obj:`numpy.ndarray` 
 
     :param num_col: The number of columns in the grid, defaults to 3.
     :type num_col: int
 
-    :param figsize: 
-        The size of the matplotlib figure, defaults to `None`. This tuple is passed to the 
-        ``matplotlib.figure`` object to set it's size. If set as `None`, it is calculated 
-        automatically (recommended).
-    :type figsize: tuple[int, int] 
+    :param padding: Amount of padding (in pixels), defaults to 5.
+    :type padding: int
 
-    :raises ImportError: If ``matplotlib`` is not successfully imported.
     :raises ValueError: If the dimension of the ``video`` tensor is invalid.
     
     """
-
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError:
-        raise ("ImportError: Unable to import 'matplotlib' for plotting video frames")
-
     if video.ndim != 4:
         raise ValueError("Invalid value for 'video'")
 
@@ -350,21 +349,28 @@ def plot(video, num_col=3, figsize=None):
     if not ((video.shape[-1] == 1) or (video.shape[-1] == 3)):
         video = np.transpose(video, axes=(1, 2, 3, 0))
 
-    gray = True if video.shape[-1] == 1 else False
+    num_frames = video.shape[0]
+    new_height = video.shape[1] + padding
+    new_width = video.shape[2] + padding
+    channels = video.shape[3]
 
-    num_row = int(np.ceil(video.shape[0] / num_col))
-    if figsize is None:
-        figsize = (7 * num_col, 4 * num_row)  # Based on trails and errors
-    elif len(figsize) != 2:
-        raise ValueError("Invalid value for 'figsize'")
+    num_row = int(np.ceil(num_frames / num_col))
+    frame_pad = ((0, 0), (0, padding), (0, padding), (0, 0))
+    grid_pad = ((padding, 0), (padding, 0), (0, 0))
+    extra_frames = (num_row * num_col) - num_frames
 
-    fig = plt.figure(figsize=figsize)
-    for index, frame in enumerate(video):
-        if index != 0:  # Shows the axis only for the first frame
-            ax = fig.add_subplot(num_row, num_col, index + 1, xticks=[], yticks=[])
-        else:
-            ax = fig.add_subplot(num_row, num_col, index + 1)
-        if gray:
-            ax.imshow(np.squeeze(frame), cmap="gray")
-        else:
-            ax.imshow(frame)
+    video = np.pad(video, pad_width=frame_pad, mode="constant", constant_values=0)
+    video.resize(
+        (num_frames + extra_frames, new_height, new_width, channels)
+    )  # Appends the extra (empty) frames to the video tensor
+    video = (
+        video.reshape(num_row, num_col, new_height, new_width, channels)
+        .transpose((0, 2, 1, 3, 4))
+        .reshape(num_row * new_height, num_col * new_width, channels)
+    )
+    video = np.pad(video, pad_width=grid_pad, mode="constant", constant_values=0)
+
+    if channels == 1:
+        video = video[:, :, 0]
+
+    return video

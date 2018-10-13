@@ -14,6 +14,8 @@ takes 3 non-keyword arguments:
 * ``total_frames`` (`int`): The total number of frames in the video
 * ``num_frames`` (`int`): The number of frames that you want to extract
 * ``fps`` (`int`): The frame rate of the video
+* ``random_state`` (:obj:`numpy.random.RandomState`): A RandomState object to seed the 
+  random number generator
 
 You could create your own `callable` and pass it to the parameter ``mode``, gaining 
 immense flexibility in the frame selection process.
@@ -56,7 +58,7 @@ Examples
 
 # Imports
 import matplotlib.pyplot as plt
-from mydia import Videos, plot
+from mydia import Videos, make_grid
 
 # Initialize video path
 video_path = r"./sample_video/bigbuckbunny.mp4"
@@ -82,9 +84,9 @@ video = reader.read(video_path)
 print("The shape of the tensor:", video.shape)
 
 # Plot the video frames in a grid
-plot(video[0], num_col=4)
-plt.show()
+grid = make_grid(video[0], num_col=4)
+plt.imshow(grid, cmap="gray")
 
 ##############################################################################
-# *Note that `plot` can also take some arguments for customizing the grid. For more info, 
-# view the documentation of the function* :func:`mydia.plot`.
+# *Note that `make_grid` can also take some arguments for customizing the grid. For more 
+# info, view the documentation of the function* :func:`mydia.make_grid`.

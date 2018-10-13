@@ -17,7 +17,7 @@ Frame selection, resizing, and grayscale conversion
 
 # Imports
 import matplotlib.pyplot as plt
-from mydia import Videos, plot
+from mydia import Videos, make_grid
 
 # Initialize video path
 video_path = r"./sample_video/bigbuckbunny.mp4"
@@ -36,8 +36,8 @@ video = reader.read(video_path)
 print("The shape of the tensor:", video.shape)
 
 # Plot the video frames in a grid
-plot(video[0])
-plt.show()
+grid = make_grid(video[0])
+plt.imshow(grid)
 
 ##############################################################################
 # .. note:: The number of channels for a RGB video is 3
@@ -48,12 +48,12 @@ plt.show()
 #   
 #   * For this, set ``to_gray`` to `True`
 #
-# * Also, the function `plot()` takes certain arguments to construct the grid
-#   of frames of the video. For more info, view :func:`mydia.plot`.
+# * Also, the function `make_grid()` takes certain arguments to construct the grid
+#   of frames of the video. For more info, view :func:`mydia.make_grid`.
 
 # Imports
 import matplotlib.pyplot as plt
-from mydia import Videos, plot
+from mydia import Videos, make_grid
 
 # Initialize video path
 video_path = r"./sample_video/bigbuckbunny.mp4"
@@ -72,8 +72,8 @@ video = reader.read(video_path)
 print("The shape of the tensor:", video.shape)
 
 # Plot the video frames in a grid
-plot(video[0], num_col=2)
-plt.show()
+grid = make_grid(video[0], num_col=2)
+plt.imshow(grid, cmap="gray")
 
 ##############################################################################
 # .. note:: The number of channels for a video in gray scale is 1
