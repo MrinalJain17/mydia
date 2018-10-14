@@ -1,5 +1,5 @@
 {% set name = "mydia" %}
-{% set version = "2.1.1" %}
+{% set version = "2.2.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ef07ff6b0c17ddac6749ae6ce9e295a4799dfb14a951bc25ee56778b24684f9a
+  sha256: 56c6e89cb4640e29b83941373ed3179becea259b4fd9cd4377ac6b503386a24b
 
 build:
   number: 0
