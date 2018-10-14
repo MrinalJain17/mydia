@@ -21,6 +21,7 @@ requirements:
     - ffmpeg-python
     - numpy
     - tqdm
+    - pytest-runner
   run:
     - ffmpeg-python
     - numpy
