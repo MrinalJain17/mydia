@@ -39,17 +39,19 @@ print("The shape of the tensor:", video.shape)
 grid = make_grid(video[0])
 plt.imshow(grid)
 
-##############################################################################
+######################################################################
 # .. note:: The number of channels for a RGB video is 3
 #  (indicated by the last value in the tuple).
 # 
 # 
-# * Now let's read the video with the same configuration, but in **grayscale**
+# * Now let's read the video with the same configuration, but in 
+#   **grayscale**
 #   
 #   * For this, set ``to_gray`` to `True`
 #
-# * Also, the function `make_grid()` takes certain arguments to construct the grid
-#   of frames of the video. For more info, view :func:`mydia.make_grid`.
+# * Also, the function `make_grid()` takes certain arguments to construct 
+#   the grid of frames of the video. 
+#   For more info, view :func:`mydia.make_grid`.
 
 # Imports
 import matplotlib.pyplot as plt
@@ -75,6 +77,6 @@ print("The shape of the tensor:", video.shape)
 grid = make_grid(video[0], num_col=2)
 plt.imshow(grid, cmap="gray")
 
-##############################################################################
+######################################################################
 # .. note:: The number of channels for a video in gray scale is 1
 #  (indicated by the last value in the tuple).

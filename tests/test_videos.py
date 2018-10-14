@@ -1,3 +1,5 @@
+from multiprocessing import cpu_count
+
 import numpy as np
 import pytest
 
@@ -47,18 +49,18 @@ def test_random_repeatability():
         to_gray=True,
         num_frames=36,
         mode="random",
-        random_state=26,
+        random_state=117,
     )
     reader_2 = Videos(
         target_size=(360, 240),
         to_gray=True,
         num_frames=36,
         mode="random",
-        random_state=26,
+        random_state=117,
     )
 
     video_1 = reader_1.read(path, verbose=0)
-    video_2 = reader_2.read(path, verbose=0)
+    video_2 = reader_2.read(path, verbose=0, workers=cpu_count())
 
     assert np.array_equal(video_1, video_2) == True
 

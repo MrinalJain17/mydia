@@ -1,5 +1,6 @@
 # Mydia
 [![Build Status](https://travis-ci.com/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.com/MrinalJain17/mydia)
+![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
 
 Reading videos into NumPy arrays was never more simple. This library provides 
 an entire range of additional functionalities such as custom frame selection, 
@@ -9,7 +10,7 @@ frame resizing, pixel normalization, grayscale conversion and much more.
 
 ## Getting started
 
-**How to simply read a video, given its path?**
+### 1. Read a video, given its path
 
 ```python
 
@@ -33,7 +34,25 @@ The tensor can be interpreted as:
 - 1 video
 - Having 132 frames, 
 - Dimension (width x height) of each frame: 1280x720 pixels
-- `3` denotes that the video is RGB
+- `3` denotes that the video is in RGB format
+
+### 2. Use multiple workers for reading the videos in parallel
+
+```python
+
+from mydia import Videos
+
+video_paths = [
+    "path/to/video_1", 
+    "path/to/video_2", 
+    "path/to/video_3",
+    ...,
+]
+
+reader = Videos()
+video = reader.read(video_path, workers=4)
+
+```
 
 ### View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
 
@@ -70,9 +89,9 @@ The tensor can be interpreted as:
 
 `Python 3.x` (preferably from the [Anaconda Distribution](https://www.anaconda.com/download/))
 
-The program uses [ffmpeg-python](https://github.com/kkroening/ffmpeg-python), which provides
-python bindings for [FFmpeg](https://www.ffmpeg.org/) (used as the backend for reading and 
-processing videos)
+The program uses [ffmpeg-python](https://github.com/kkroening/ffmpeg-python), 
+which provides python bindings for [FFmpeg](https://www.ffmpeg.org/) 
+(used as the backend for reading and processing videos).
 
 To install `FFmpeg` on your machine:
 
@@ -101,9 +120,15 @@ Install the following packages along with their dependencies:
 
 - [ffmpeg-python](https://github.com/kkroening/ffmpeg-python)
 - [Numpy](http://www.numpy.org/)
-- [tqdm](https://pypi.python.org/pypi/tqdm#installation) - Required for displaying the 
-  progress bar.
+- [tqdm](https://pypi.python.org/pypi/tqdm#installation) - Required for 
+  displaying the progress bar.
 
 ```bash
     pip install ffmpeg-python numpy tqdm
 ```
+
+## License
+
+Copyright 2018 [Mrinal Jain](https://mrinaljain17.github.io/).
+
+Released under the [MIT License](https://mrinaljain17.github.io/license/).

@@ -4,9 +4,9 @@ Get started with some basics
 
 """
 
-##############################################################################
-# Simply read a video, given its path
-# -----------------------------------
+######################################################################
+# 1. Read a video, given its path
+# -------------------------------
 
 # Import
 from mydia import Videos
@@ -23,7 +23,7 @@ video = reader.read(video_path)
 # a tensor of shape (1, 132, 720, 1280, 3)
 print("The shape of the tensor:", video.shape)
 
-##############################################################################
+######################################################################
 # The tensor can be interpreted as -
 # 
 # * 1 video
@@ -31,10 +31,10 @@ print("The shape of the tensor:", video.shape)
 # * Dimension (width x height) of each frame: 1280x720 pixels
 # * ``3`` denotes that the video is RGB
 #
-# Similarly, read multiple videos
-# -------------------------------
+# 2. Read multiple videos
+# -----------------------
 #
-# .. code:: python
+# .. code-block:: python
 #
 #    from mydia import Videos
 #
@@ -48,10 +48,32 @@ print("The shape of the tensor:", video.shape)
 #    reader = Videos()
 #    video = reader.read(video_paths)
 #
-# Or, use a python generator for multiple videos
-# ----------------------------------------------
+# 3. Use multiple workers for reading the videos in parallel
+# ----------------------------------------------------------
+# 
+# .. code-block:: python
+#    :emphasize-lines: 11
 #
-# .. code:: python
+#    from mydia import Videos
+#
+#    video_paths = [
+#        "path/to/video_1", 
+#        "path/to/video_2", 
+#        "path/to/video_3",
+#        ...,
+#    ]          # list of path of videos
+#
+#    reader = Videos()
+#    video = reader.read(video_paths, workers=4)
+#
+# **The code above will use 4 CPUs to read the videos in parallel, 
+# which could result in a significant speed up, depending on the 
+# videos to be read and the performance of the CPU.**
+#
+# 4. Use a python generator for multiple videos
+# ---------------------------------------------
+#
+# .. code-block:: python
 #
 #    from mydia import Videos
 #
@@ -73,16 +95,16 @@ print("The shape of the tensor:", video.shape)
 #        vid = next(generate_video())
 #        # Do something
 #
-# *For information on the parameters available, read the examples ahead and 
-# also refer to the documentation of the class* :class:`mydia.Videos`.
+# *For information on the parameters available, read the examples ahead 
+# and also refer to the documentation of the class* :class:`mydia.Videos`.
 #
 #
 # Saving the loaded video tensor
 # ------------------------------
 #
-# .. important:: Once the videos have been processed, they could be saved
-#  as :obj:`numpy.ndarray` (in `.npz` or `.npy` format). For further details, view
-#  the documentation of:
+# .. important:: Once the videos have been processed, they could be 
+#  saved as :obj:`numpy.ndarray` (in `.npz` or `.npy` format). For 
+#  further details, view the documentation of:
 #
 #  * :obj:`numpy.save`: for saving in `.npy` format
 #
@@ -90,5 +112,5 @@ print("The shape of the tensor:", video.shape)
 #
 #  * :obj:`numpy.load`: for loading back the saved numpy tensors
 #
-#  Since the whole reading process is time consuming, this could turn out to be
-#  a useful way to store and reload the video tensors.
+#  Since the whole reading process is time consuming, this could turn 
+#  out to be a useful way to store and reload the video tensors.
