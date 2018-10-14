@@ -20,7 +20,6 @@ requirements:
     - python    
     - ffmpeg-python
     - numpy
-    - matplotlib
     - tqdm
   run:
     - ffmpeg-python
@@ -35,4 +34,3 @@ about:
   license_file: 
   summary: A simple and efficient wrapper for reading videos as NumPy tensors
   doc_url: https://mrinaljain17.github.io/mydia/
-  dev_url: 

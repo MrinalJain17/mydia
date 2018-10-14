@@ -108,26 +108,25 @@ class Videos(object):
 
     .. note::
 
-       .. versionchanged:: 2.0.0
-   
-          You could also pass a `callable` to ``mode`` for custom frame extraction. The 
-          `callable` should return a **list of integers**, denoting the indices of the 
-          frames to be extracted. It should take 3 (non-keyword) arguments: 
-   
-          * ``total_frames``: The total number of frames in the video
-          * ``num_frames``: The number of frames that you want to extract
-          * ``fps``: The frame rate of the video
-   
-          These arguments may/may not be used to generate the required frame indices. 
-          Detailed examples are provided in the documentation.
+       You could also pass a `callable` to ``mode`` for custom frame extraction. The 
+       `callable` should return a **list of integers**, denoting the indices of the 
+       frames to be extracted. It should take 4 (non-keyword) arguments: 
 
-          .. warning::
-      
-             If you are passing a `callable` to ``mode``, then make sure that the number 
-             of frames (indices) it returns is equal to the value of ``num_frames``. If 
-             this condition is not met, then this would mean that the number of frames 
-             selected is different for different videos, and therefore they cannot be 
-             stacked into a single tensor.
+       * ``total_frames``: The total number of frames in the video
+       * ``num_frames``: The number of frames that you want to extract
+       * ``fps``: The frame rate of the video
+       * ``random_state``: Integer to seed the random number generator
+
+       These arguments may/may not be used to generate the required frame indices. 
+       Detailed examples are provided in the documentation.
+
+       .. warning::
+
+          If you are passing a `callable` to ``mode``, then make sure that the number 
+          of frames (indices) it returns is equal to the value of ``num_frames``. If 
+          this condition is not met, then this would mean that the number of frames 
+          selected is different for different videos, and therefore they cannot be 
+          stacked into a single tensor.
 
     """
 
@@ -183,6 +182,16 @@ class Videos(object):
 
         :param verbose: If set to 0, the progress bar will be disabled.
         :type verbose: int
+
+        :param workers: 
+            The number of processes (CPUs) to use for reading the videos. This uses the 
+            ``multiprocessing`` module present in the python standard library.
+
+            Its value can range from 0 to `max_workers` where the latter is determined by 
+            calling ``multiprocessing.cpu_count()`` on your machine.
+
+            Defaults to 0, which means that multiprocessing will **not** be used.
+        :type workers: int
         
         :return: 
             A 5-dimensional tensor, whose shape will depend on the value of ``data_format``.
@@ -228,6 +237,29 @@ class Videos(object):
             video_tensor = np.transpose(video_tensor, axes=(0, 4, 1, 2, 3))
 
         return video_tensor
+
+    def _read_parallel(self, paths, disable, workers):
+        """Used internally by :func:`read()` to read the videos in parallel.
+
+        This uses the ``multiprocessing`` module present in the python standard library.
+
+        The function is constructed in a way so as to guarantee the repeatability of frames, 
+        irrespective of the `mode` used for frame selection.
+        
+        """
+        max_workers = cpu_count()
+        if workers > max_workers:
+            warnings.warn(f"The CPU can support maximum {max_workers} workers.")
+            workers = max_workers
+        list_of_videos = []
+        with Pool(workers) as pool:
+            with tqdm(total=len(paths), unit="videos", disable=disable) as pbar:
+                for _, result in enumerate(pool.imap(self._read_video, paths)):
+                    list_of_videos.append(result)
+                    pbar.update()
+        pool.join()
+
+        return np.vstack(list_of_videos)
 
     def _read_video(self, path):
         """Used internally by :func:`read()` to read in a **single** video.
@@ -330,24 +362,6 @@ class Videos(object):
 
         # The method will return nothing if an exception is encountered
 
-    def _read_parallel(self, paths, disable, workers):
-        """
-        
-        """
-        max_workers = cpu_count()
-        if workers > max_workers:
-            warnings.warn(f"The CPU can support maximum {max_workers} workers.")
-            workers = max_workers
-        list_of_videos = []
-        with Pool(workers) as pool:
-            with tqdm(total=len(paths), unit="videos", disable=disable) as pbar:
-                for _, result in enumerate(pool.imap(self._read_video, paths)):
-                    list_of_videos.append(result)
-                    pbar.update()
-        pool.join()
-
-        return np.vstack(list_of_videos)
-
 
 def make_grid(video, num_col=3, padding=5):
     """
@@ -360,6 +374,11 @@ def make_grid(video, num_col=3, padding=5):
 
     :param padding: Amount of padding (in pixels), defaults to 5.
     :type padding: int
+
+    :return: 
+        A gird of frames (numpy array) of shape ``(height, width, 3)`` if the video is 
+        RGB, or ``(height, width)`` if the video is in grayscale.
+    :rtype: :obj:`numpy.ndarray`
 
     :raises ValueError: If the dimension of the ``video`` tensor is invalid.
     
