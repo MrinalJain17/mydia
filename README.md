@@ -103,8 +103,7 @@ Install the following packages along with their dependencies:
 - [Numpy](http://www.numpy.org/)
 - [tqdm](https://pypi.python.org/pypi/tqdm#installation) - Required for displaying the 
   progress bar.
-- [Matplotlib](https://matplotlib.org/) - (Optional) For plotting the frames of a video
 
 ```bash
-    pip install ffmpeg-python numpy tqdm matplotlib
+    pip install ffmpeg-python numpy tqdm
 ```
