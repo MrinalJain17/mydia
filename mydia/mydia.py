@@ -11,6 +11,7 @@ __version__ = "2.1.1"
 __author__ = "Mrinal Jain"
 
 import warnings
+from multiprocessing import Pool, cpu_count
 from typing import NamedTuple
 
 import ffmpeg
@@ -172,7 +173,61 @@ class Videos(object):
         else:
             raise ValueError("Invalid value of 'data_format'")
 
-        self.random_state = np.random.RandomState(random_state)
+        self.random_state = random_state
+
+    def read(self, paths, verbose=1, workers=0):
+        """Function to read videos
+
+        :param paths: A list of paths/path of the video(s) to be read.
+        :type paths: str or list[str]
+
+        :param verbose: If set to 0, the progress bar will be disabled.
+        :type verbose: int
+        
+        :return: 
+            A 5-dimensional tensor, whose shape will depend on the value of ``data_format``.
+            
+            * For ``"channels_last"``: The tensor will have shape 
+              ``(<samples>, <frames>, <height>, <width>, <channels>)``
+            * For ``"channels_first"``: The tensor will have shape 
+              ``(<samples>, <channels>, <frames>, <height>, <width>)``
+
+        :rtype: :obj:`numpy.ndarray`
+
+        :raises ValueError: If ``paths`` is neither a string, not a list of strings.
+        :raises IndexError: 
+            If ``num_frames`` is set to a value greater than the total number of frames 
+            available in the video.
+
+        .. important::
+
+           If multiple videos are to be read, then each video should have the same dimension 
+           ``(frames, height, width)``, otherwise they cannot be stacked into a single 
+           tensor. Therefore, the user **must** use the parameters ``target_size`` and 
+           ``num_frames`` to make sure of this.
+        
+        """
+
+        if not isinstance(paths, list):
+            if isinstance(paths, str):
+                paths = [paths]
+            else:
+                raise ValueError("Invalid value of 'paths'")
+        disable = False
+        if verbose == 0:
+            disable = True
+
+        video_tensor = None
+        if (isinstance(workers, int)) and (workers > 0):
+            video_tensor = self._read_parallel(paths, disable, workers)
+        else:
+            paths_iterator = tqdm(paths, unit="videos", disable=disable)
+            video_tensor = np.vstack(map(self._read_video, paths_iterator))
+
+        if self.data_format == "channels_first":
+            video_tensor = np.transpose(video_tensor, axes=(0, 4, 1, 2, 3))
+
+        return video_tensor
 
     def _read_video(self, path):
         """Used internally by :func:`read()` to read in a **single** video.
@@ -275,55 +330,23 @@ class Videos(object):
 
         # The method will return nothing if an exception is encountered
 
-    def read(self, paths, verbose=1):
-        """Function to read videos
-
-        :param paths: A list of paths/path of the video(s) to be read.
-        :type paths: str or list[str]
-
-        :param verbose: If set to 0, the progress bar will be disabled.
-        :type verbose: int
-        
-        :return: 
-            A 5-dimensional tensor, whose shape will depend on the value of ``data_format``.
-            
-            * For ``"channels_last"``: The tensor will have shape 
-              ``(<samples>, <frames>, <height>, <width>, <channels>)``
-            * For ``"channels_first"``: The tensor will have shape 
-              ``(<samples>, <channels>, <frames>, <height>, <width>)``
-
-        :rtype: :obj:`numpy.ndarray`
-
-        :raises ValueError: If ``paths`` is neither a string, not a list of strings.
-        :raises IndexError: 
-            If ``num_frames`` is set to a value greater than the total number of frames 
-            available in the video.
-
-        .. important::
-
-           If multiple videos are to be read, then each video should have the same dimension 
-           ``(frames, height, width)``, otherwise they cannot be stacked into a single 
-           tensor. Therefore, the user **must** use the parameters ``target_size`` and 
-           ``num_frames`` to make sure of this.
+    def _read_parallel(self, paths, disable, workers):
+        """
         
         """
+        max_workers = cpu_count()
+        if workers > max_workers:
+            warnings.warn(f"The CPU can support maximum {max_workers} workers.")
+            workers = max_workers
+        list_of_videos = []
+        with Pool(workers) as pool:
+            with tqdm(total=len(paths), unit="videos", disable=disable) as pbar:
+                for _, result in enumerate(pool.imap(self._read_video, paths)):
+                    list_of_videos.append(result)
+                    pbar.update()
+        pool.join()
 
-        if not isinstance(paths, list):
-            if isinstance(paths, str):
-                paths = [paths]
-            else:
-                raise ValueError("Invalid value of 'paths'")
-        disable = False
-        if verbose == 0:
-            disable = True
-
-        paths_iterator = tqdm(paths, unit="videos", disable=disable)
-        video_tensor = np.vstack(map(self._read_video, paths_iterator))
-
-        if self.data_format == "channels_first":
-            video_tensor = np.transpose(video_tensor, axes=(0, 4, 1, 2, 3))
-
-        return video_tensor
+        return np.vstack(list_of_videos)
 
 
 def make_grid(video, num_col=3, padding=5):

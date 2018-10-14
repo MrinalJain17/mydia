@@ -15,16 +15,15 @@ def _mode_auto(total_frames: int, num_frames: int, fps: int, *args) -> List[int]
 
 
 def _mode_random(
-    total_frames: int, num_frames: int, fps: int, random_state: np.random.RandomState
+    total_frames: int, num_frames: int, fps: int, random_state: int
 ) -> List[int]:
     """The ``random`` mode for frame extraction
 
     Refer to the documentation of the class :class:`Videos` for further details.
     
     """
-    return np.sort(
-        random_state.choice(total_frames, size=num_frames, replace=False)
-    ).tolist()
+    r = np.random.RandomState(random_state)
+    return np.sort(r.choice(total_frames, size=num_frames, replace=False)).tolist()
 
 
 def _mode_first(total_frames: int, num_frames: int, fps: int, *args) -> List[int]:

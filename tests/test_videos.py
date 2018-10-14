@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from mydia import Videos, make_grid
 
 path = "./docs/examples/sample_video/bigbuckbunny.mp4"
@@ -41,13 +42,26 @@ def test_custom_frame():
 
 
 def test_random_repeatability():
-    reader_1 = Videos(target_size=(360, 240), to_gray=True, num_frames=36, mode="random", random_state=26)
-    reader_2 = Videos(target_size=(360, 240), to_gray=True, num_frames=36, mode="random", random_state=26)
+    reader_1 = Videos(
+        target_size=(360, 240),
+        to_gray=True,
+        num_frames=36,
+        mode="random",
+        random_state=26,
+    )
+    reader_2 = Videos(
+        target_size=(360, 240),
+        to_gray=True,
+        num_frames=36,
+        mode="random",
+        random_state=26,
+    )
 
     video_1 = reader_1.read(path, verbose=0)
     video_2 = reader_2.read(path, verbose=0)
 
     assert np.array_equal(video_1, video_2) == True
+
 
 def test_make_grid():
     target_width = 360
@@ -56,7 +70,9 @@ def test_make_grid():
     num_frames = 36
     num_col = 5
 
-    reader = Videos(target_size=(target_width, target_height), to_gray=False, num_frames=num_frames)
+    reader = Videos(
+        target_size=(target_width, target_height), to_gray=False, num_frames=num_frames
+    )
     video = reader.read(path, verbose=0)
     num_row = int(np.ceil(num_frames / num_col))
     grid = make_grid(video[0], num_col=num_col, padding=padding)
