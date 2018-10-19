@@ -17,8 +17,9 @@
 # sys.path.insert(0, os.path.abspath('../../mydia'))
 # sys.path.insert(0, os.path.abspath('../../.'))
 
-from mydia import mydia
 from sphinx_gallery.sorting import FileNameSortKey
+
+from mydia import mydia
 
 # -- Project information -----------------------------------------------------
 
@@ -102,6 +103,8 @@ html_theme_options = {
     "github_count": "true",
     "github_banner": True,
     "analytics_id": "UA-114571173-2",
+    "badge_branch": "master",
+    "travis_button": True,
     "sidebar_collapse": True,
     "show_powered_by": False,
     "show_relbar_bottom": True,

@@ -65,19 +65,14 @@ from mydia import Videos, make_grid
 video_path = r"./sample_video/bigbuckbunny.mp4"
 
 # Custom frame selector
-# `*args` is used because we do not need the arguments for generating the 
+# `*args` is used because we do not need the arguments for generating the
 # index array
 def even_frames(*args):
     return [i for i in range(0, 40, 2)]
 
 # Configuring the parameters
 # Passing `even_frames` to `mode`
-reader = Videos(
-    target_size=(720, 480),
-    to_gray=True,
-    num_frames=20,
-    mode=even_frames,
-)
+reader = Videos(target_size=(720, 480), to_gray=True, num_frames=20, mode=even_frames)
 
 # Call the 'read()' function to get the required video tensor
 # which will be of shape (1, 20, 480, 720, 3)
@@ -89,6 +84,6 @@ grid = make_grid(video[0], num_col=4)
 plt.imshow(grid, cmap="gray")
 
 ######################################################################
-# *Note that `make_grid` can also take some arguments for customizing 
-# the grid. For more info, view the documentation of the function* 
+# *Note that `make_grid` can also take some arguments for customizing
+# the grid. For more info, view the documentation of the function*
 # :func:`mydia.make_grid`.

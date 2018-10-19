@@ -2,7 +2,6 @@ from multiprocessing import cpu_count
 
 import numpy as np
 import pytest
-
 from mydia import Videos, make_grid
 
 path = "./docs/examples/sample_video/bigbuckbunny.mp4"

@@ -1,28 +1,40 @@
-from codecs import open
-from os import path
+import io
+import os
 
 from setuptools import find_packages, setup
 
 from mydia.mydia import __version__
 
+NAME = "mydia"
+DESCRIPTION = "A simple and efficient wrapper for reading videos as NumPy tensors."
+URL = "https://mrinaljain17.github.io/mydia/"
+DOCS = "https://mrinaljain17.github.io/mydia/"
+AUTHOR = "Mrinal Jain"
+EMAIL = "mrinaljain007@gmail.com"
+VERSION = __version__
+
+REQUIRED = ["numpy>=1.14.5", "ffmpeg-python>=0.1.16", "tqdm>=4.25.0"]
+
+here = os.path.abspath(os.path.dirname(__file__))
+
 # Get the long description from the README file
-with open("README.md", encoding="utf-8") as f:
-    long_description = f.read()
+with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+    long_description = "\n" + f.read()
     long_description = long_description.replace("\r", "")
 
 setup(
-    name="mydia",
-    version=__version__,
-    description="A simple and efficient wrapper for reading videos as NumPy tensors",
+    name=NAME,
+    version=VERSION,
+    description=DESCRIPTION,
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://mrinaljain17.github.io/mydia/",
-    author="Mrinal Jain",
-    author_email="mrinaljain007@gmail.com",
+    url=URL,
+    author=AUTHOR,
+    author_email=EMAIL,
     license="MIT",
-    install_requires=["numpy>=1.14.5", "ffmpeg-python>=0.1.16", "tqdm>=4.25.0"],
+    install_requires=REQUIRED,
     setup_requires=["pytest-runner"],
-    tests_require=["pytest", "numpy", "mydia"],
+    tests_require=["pytest", "numpy"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
@@ -34,9 +46,6 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Multimedia :: Video :: Capture",
     ],
-    packages=find_packages(),
-    project_urls={
-        "Documentation": "https://mrinaljain17.github.io/mydia/",
-        "Source": "https://github.com/MrinalJain17/mydia",
-    },
+    packages=find_packages(exclude=("tests",)),
+    project_urls={"Documentation": DOCS, "Source": URL},
 )

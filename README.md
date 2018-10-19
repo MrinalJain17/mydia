@@ -1,5 +1,5 @@
 # Mydia
-[![Build Status](https://travis-ci.com/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.com/MrinalJain17/mydia)
+[![Build Status](https://travis-ci.org/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.org/MrinalJain17/mydia)
 ![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
 
 Reading videos into NumPy arrays was never more simple. This library provides 

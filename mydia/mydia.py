@@ -75,9 +75,9 @@ class Videos(object):
         Video data format, either "channels_last" or "channels_first".
 
         * ``"channels_last"``: The tensor will have shape 
-          ``(<samples>, <frames>, <height>, <width>, <channels>)``
+          ``(<videos>, <frames>, <height>, <width>, <channels>)``
         * ``"channels_first"``: The tensor will have shape 
-          ``(<samples>, <channels>, <frames>, <height>, <width>)``
+          ``(<videos>, <channels>, <frames>, <height>, <width>)``
 
         ``channels`` will be **3** for videos in RGB format, or **1** 
         for videos in grayscale.
@@ -197,9 +197,9 @@ class Videos(object):
             of ``data_format``.
             
             * For ``"channels_last"``: The tensor will have shape 
-              ``(<samples>, <frames>, <height>, <width>, <channels>)``
+              ``(<videos>, <frames>, <height>, <width>, <channels>)``
             * For ``"channels_first"``: The tensor will have shape 
-              ``(<samples>, <channels>, <frames>, <height>, <width>)``
+              ``(<videos>, <channels>, <frames>, <height>, <width>)``
 
         Raises
         ------
@@ -307,8 +307,8 @@ class Videos(object):
                 out = out.filter("select", select_str)
             else:
                 raise IndexError(
-                    "The value of 'num_frames' is greater than the total number "
-                    "of frames available"
+                    "The value of 'num_frames' is greater than the total "
+                    "number of frames available"
                 )
 
         if self.target_size.rescale:
@@ -403,7 +403,6 @@ def make_grid(video, num_col=3, padding=5):
 
     Example
     -------
-
     .. code-block:: python
        :emphasize-lines: 7, 8
 
@@ -420,8 +419,8 @@ def make_grid(video, num_col=3, padding=5):
     if video.ndim != 4:
         raise ValueError("Invalid value for 'video'")
 
-    # If the channels are not at the end, then the format of the video is `channels_first`
-    # which needs to be converted to `channels_last`
+    # If the channels are not at the end, then the format of the video
+    # is `channels_first` which needs to be converted to `channels_last`
     if not ((video.shape[-1] == 1) or (video.shape[-1] == 3)):
         video = np.transpose(video, axes=(1, 2, 3, 0))
 

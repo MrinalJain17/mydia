@@ -24,11 +24,7 @@ video_path = r"./sample_video/bigbuckbunny.mp4"
 
 # Configuring the parameters
 # For other paramaters available, view the code documentation.
-reader = Videos(
-    target_size=(720, 480),
-    num_frames=12,
-    mode="random",
-)
+reader = Videos(target_size=(720, 480), num_frames=12, mode="random")
 
 # Call the 'read()' function to get the required video tensor
 # which will be of shape (1, 12, 480, 720, 3)
@@ -42,15 +38,15 @@ plt.imshow(grid)
 ######################################################################
 # .. note:: The number of channels for a RGB video is 3
 #  (indicated by the last value in the tuple).
-# 
-# 
-# * Now let's read the video with the same configuration, but in 
+#
+#
+# * Now let's read the video with the same configuration, but in
 #   **grayscale**
-#   
+#
 #   * For this, set ``to_gray`` to `True`
 #
-# * Also, the function `make_grid()` takes certain arguments to construct 
-#   the grid of frames of the video. 
+# * Also, the function `make_grid()` takes certain arguments to construct
+#   the grid of frames of the video.
 #   For more info, view :func:`mydia.make_grid`.
 
 # Imports
@@ -61,12 +57,7 @@ from mydia import Videos, make_grid
 video_path = r"./sample_video/bigbuckbunny.mp4"
 
 # Configuring the parameters
-reader = Videos(
-    target_size=(720, 480),
-    to_gray=True,
-    num_frames=12,
-    mode="random",
-)
+reader = Videos(target_size=(720, 480), to_gray=True, num_frames=12, mode="random")
 
 # Call the 'read()' function to get the required video tensor
 # which will be of shape (1, 12, 480, 720, 1)
