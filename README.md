@@ -2,9 +2,10 @@
 [![Build Status](https://travis-ci.org/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.org/MrinalJain17/mydia)
 ![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
 
-Reading videos into NumPy arrays was never more simple. This library provides 
-an entire range of additional functionalities such as custom frame selection, 
-frame resizing, pixel normalization, grayscale conversion and much more.
+Reading videos into NumPy arrays was never more simple. This library 
+provides an entire range of additional functionalities such as custom 
+frame selection, frame resizing, pixel normalization, grayscale conversion 
+and much more.
 
 [READ THE DOCUMENTATION](https://mrinaljain17.github.io/mydia)
 
@@ -54,7 +55,7 @@ video = reader.read(video_path, workers=4)
 
 ```
 
-### View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
+#### View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
 
 ## Installation
 
@@ -93,7 +94,16 @@ The program uses [ffmpeg-python](https://github.com/kkroening/ffmpeg-python),
 which provides python bindings for [FFmpeg](https://www.ffmpeg.org/) 
 (used as the backend for reading and processing videos).
 
-To install `FFmpeg` on your machine:
+### To install `FFmpeg` on your machine:
+
+- The recommended (and probably the easiest) method to install `FFmpeg` 
+  is via the conda package manager.
+
+  ```bash
+      conda install -c mrinaljain17 ffmpeg
+  ```
+
+However, if you are not using *conda*, then
 
 For **Linux** users - 
 
@@ -116,7 +126,7 @@ Extract the zip file and add the location of binaries to the `PATH` variable.
 
 ### Required Libraries
 
-Install the following packages along with their dependencies:
+The following packages will be installed along with their dependencies.
 
 - [ffmpeg-python](https://github.com/kkroening/ffmpeg-python)
 - [Numpy](http://www.numpy.org/)

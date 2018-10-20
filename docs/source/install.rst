@@ -1,5 +1,5 @@
 Installation
-------------
+============
 
 -  **Install using Conda Package Manager (Recommended):**
 
@@ -29,16 +29,26 @@ Installation
       python setup.py install
 
 Requirements
-~~~~~~~~~~~~
+------------
 
 ``Python 3.x`` (preferably from the `Anaconda
 Distribution <https://www.anaconda.com/download/>`__)
 
-The program uses `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__, which provides
-python bindings for `FFmpeg <https://www.ffmpeg.org/>`__ (used as the backend for reading and 
-processing videos)
+The program uses `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__, 
+which provides python bindings for `FFmpeg <https://www.ffmpeg.org/>`__ 
+(used as the backend for reading and processing videos)
 
-To install ``FFmpeg`` on your machine - 
+To install ``FFmpeg`` on your machine:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- The recommended (and probably the easiest) method to install ``FFmpeg``
+  is via the conda package manager.
+
+  .. code:: bash
+
+      conda install -c mrinaljain17 ffmpeg
+
+However, if you are not using *conda*, then
 
 For **Linux** users:
 
@@ -60,10 +70,10 @@ For **Windows or MAC/OSX** users:
    `here <https://www.ffmpeg.org/download.html>`__. Extract the zip file
    and add the location of binaries to the ``PATH`` variable
 
-Additional Libraries to install:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Required Libraries:
+~~~~~~~~~~~~~~~~~~~
 
-Install the following packages along with their dependencies:
+The following packages will be installed along with their dependencies.
 
 * `ffmpeg-python <https://github.com/kkroening/ffmpeg-python>`__
 * `NumPy <http://www.numpy.org/>`__
