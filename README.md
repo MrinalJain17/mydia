@@ -1,17 +1,17 @@
 # Mydia
 [![Build Status](https://travis-ci.org/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.org/MrinalJain17/mydia)
 ![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
+![Platform](https://img.shields.io/badge/Platforms-linux--64,osx--64,win--64-orange.svg)
 
-Reading videos into NumPy arrays was never more simple. This library 
-provides an entire range of additional functionalities such as custom 
-frame selection, frame resizing, pixel normalization, grayscale conversion 
-and much more.
+Reading videos as NumPy arrays was never more simple. This library provides an 
+entire range of additional functionalities such as custom frame selection, frame 
+resizing, pixel normalization, grayscale conversion and much more.
 
-[READ THE DOCUMENTATION](https://mrinaljain17.github.io/mydia)
+[**READ THE DOCUMENTATION**](https://mrinaljain17.github.io/mydia)
 
 ## Getting started
 
-### 1. Read a video, given its path
+#### 1. Read a video, given its path
 
 ```python
 
@@ -37,7 +37,7 @@ The tensor can be interpreted as:
 - Dimension (width x height) of each frame: 1280x720 pixels
 - `3` denotes that the video is in RGB format
 
-### 2. Use multiple workers for reading the videos in parallel
+#### 2. You can even use multiple workers for reading the videos in parallel
 
 ```python
 
@@ -55,87 +55,57 @@ video = reader.read(video_path, workers=4)
 
 ```
 
-#### View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
-
-## Installation
-
-- **Install using Conda Package Manager (Recommended):**
-
-    ```bash
-        conda install -c mrinaljain17 mydia
-    ```
-
-- **Install from PyPI:**
-
-    ```bash
-        pip install mydia
-    ```
-
-- **Alternatively, install from source:**
-
-  First, clone the repository
-
-    ```bash
-        git clone https://github.com/MrinalJain17/mydia.git
-    ```
-
-  Then, build the module
-
-    ```bash
-        cd mydia
-        python setup.py install
-    ```
+#### 3. View detailed examples [here](https://mrinaljain17.github.io/mydia/auto_examples/)
 
 ## Requirements
 
-`Python 3.x` (preferably from the [Anaconda Distribution](https://www.anaconda.com/download/))
+- `Python 3.x` (preferably from the [Anaconda Distribution](https://www.anaconda.com/download/))
 
-The program uses [ffmpeg-python](https://github.com/kkroening/ffmpeg-python), 
-which provides python bindings for [FFmpeg](https://www.ffmpeg.org/) 
-(used as the backend for reading and processing videos).
+- [`FFmpeg`](https://www.ffmpeg.org/): The backend for reading and processing 
+  the videos.
 
-### To install `FFmpeg` on your machine:
-
-- The recommended (and probably the easiest) method to install `FFmpeg` 
-  is via the conda package manager.
+  **The recommended (and probably the easiest) way of installing `FFmpeg` is 
+  via the conda package manager.**
 
   ```bash
       conda install -c mrinaljain17 ffmpeg
   ```
 
-However, if you are not using *conda*, then
+  However, if you are not using *conda*, then
+  
+  For **Linux** users - 
+  
+  ```bash
+      $ sudo apt-get update
+      $ sudo apt-get install ffmpeg
+  ```
+  
+  For **Windows or MAC/OSX** users - 
+  
+  Download the required binaries from [here](https://www.ffmpeg.org/download.html). 
+  Extract the zip file and add the location of binaries to the `PATH` variable.
 
-For **Linux** users - 
+## Installation
 
-```bash
-    $ sudo apt-get update
-    $ sudo apt-get install libav-tools
-```
+1. **Using the conda package manager (recommended):**
 
-**OR**
+    ```bash
+        conda install -c mrinaljain17 mydia
+    ```
 
-```bash
-    $ sudo apt-get update
-    $ sudo apt-get install ffmpeg
-```
+2. **Using pip:**
 
-For **Windows or MAC/OSX** users - 
+    ```bash
+        pip install mydia
+    ```
 
-Download the required binaries from [here](https://www.ffmpeg.org/download.html). 
-Extract the zip file and add the location of binaries to the `PATH` variable.
-
-### Required Libraries
-
-The following packages will be installed along with their dependencies.
+The following python packages that `mydia` depends on, will also be 
+installed, along with their dependencies.
 
 - [ffmpeg-python](https://github.com/kkroening/ffmpeg-python)
 - [Numpy](http://www.numpy.org/)
 - [tqdm](https://pypi.python.org/pypi/tqdm#installation) - Required for 
   displaying the progress bar.
-
-```bash
-    pip install ffmpeg-python numpy tqdm
-```
 
 ## License
 

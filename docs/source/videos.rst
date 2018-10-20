@@ -1,5 +1,5 @@
-Code Documentation
-==================
+API Reference
+=============
 
 .. automodule:: mydia
 .. currentmodule:: mydia

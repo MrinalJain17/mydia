@@ -1,4 +1,4 @@
 .. _examples-index:
 
-Getting started
+Getting Started
 ===============
