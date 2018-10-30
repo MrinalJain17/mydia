@@ -4,6 +4,7 @@ dist: trusty
 stages:
   - Test
   - Docs
+  - Deploy
 before_install: &before_install
   # Some of the code below is taken from https://conda.io/docs/user-guide/tasks/use-conda-with-travis-ci.html
   - sudo apt-get update
@@ -25,6 +26,7 @@ jobs:
   include:
     - stage: Test
       script: pytest
+
     - stage: Docs
       # Use previously defined before_install
       before_install: *before_install
@@ -44,3 +46,34 @@ jobs:
         local-dir: docs/files/html
         on:
           branch: master
+
+    - stage: Deploy
+      if: tag IS present
+      # Use previously defined before_install
+      before_install: *before_install
+      install:
+        - travis_retry conda install -y twine setuptools conda-build anaconda-client conda-verify
+        - pip install setup.py
+      script: true
+      after_success: # Nothing to do
+      before_deploy:
+        # Conda deploy if on tag
+        # ANACONDA_TOKEN should be provided by Travis
+        # How to generate ANACONDA_TOKEN: https://docs.anaconda.com/anaconda-cloud/user-guide/tasks/work-with-accounts#creating-access-tokens
+
+        # https://conda.io/docs/user-guide/tasks/build-packages/install-conda-build.html
+        - conda-build mydia --numpy 1.14 -c mrinaljain17 --output-folder ./dump ./conda_build/mydia
+        - conda convert --platform win-64 "./dump/linux-64/*.tar.bz2" -o ./dump
+        - conda convert --platform osx-64 "./dump/linux-64/*.tar.bz2" -o ./dump
+        # Upload to Anaconda
+        - anaconda -v -t $ANACONDA_TOKEN upload "./dump/linux-64/*.tar.bz2"
+        - anaconda -v -t $ANACONDA_TOKEN upload "./dump/win-64/*.tar.bz2"
+        - anaconda -v -t $ANACONDA_TOKEN upload "./dump/osx-64/*.tar.bz2"
+      deploy:
+        provider: pypi
+        user: $PYPI_USER
+        password: $PYPI_TOKEN
+        skip_cleanup: true
+        distributions: "sdist bdist_wheel"
+        on:
+          tags: true

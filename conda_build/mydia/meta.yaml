@@ -1,17 +1,15 @@
-{% set name = "mydia" %}
-{% set version = "2.2.0" %}
+{% set data = load_setup_py_data() %}
 
 package:
-  name: "{{ name|lower }}"
-  version: "{{ version }}"
+  name: {{ name|lower }}
+  version: {{ data['version'] }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 56c6e89cb4640e29b83941373ed3179becea259b4fd9cd4377ac6b503386a24b
+  path: ../..
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv "
+  script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
   build:
@@ -29,9 +27,7 @@ requirements:
     - python
 
 about:
-  home: https://github.com/MrinalJain17/mydia
-  license: MIT License
-  license_family: MIT
-  license_file: 
-  summary: A simple and efficient wrapper for reading videos as NumPy tensors
+  home: {{ data['url'] }}
+  license: {{ data['license'] }}
+  summary: {{ data['description'] }}
   doc_url: https://mrinaljain17.github.io/mydia/
