@@ -7,7 +7,7 @@ from mydia.mydia import __version__
 
 NAME = "mydia"
 DESCRIPTION = "A simple and efficient wrapper for reading videos as NumPy tensors."
-URL = "https://mrinaljain17.github.io/mydia/"
+URL = "https://github.com/MrinalJain17/mydia"
 DOCS = "https://mrinaljain17.github.io/mydia/"
 AUTHOR = "Mrinal Jain"
 EMAIL = "mrinaljain007@gmail.com"

@@ -136,7 +136,6 @@ class Videos(object):
         random_state=17,
     ):
         """Initializing class variables"""
-
         self.target_size = None
         if target_size is not None:
             if isinstance(target_size, tuple) and len(target_size) == 2:
@@ -218,7 +217,6 @@ class Videos(object):
         sure of this.
 
         """
-
         if not isinstance(paths, list):
             if isinstance(paths, str):
                 paths = [paths]
@@ -285,7 +283,6 @@ class Videos(object):
               ``(1, <channels>, <frames>, <height>, <width>)``
 
         """
-
         fps, total_frames = self._probe(path)
         width = self.target_size.width
         height = self.target_size.height
@@ -347,7 +344,6 @@ class Videos(object):
             Frame rate and the total number of frames in the video.
 
         """
-
         try:
             probe = ffmpeg.probe(filename=path)
         except Exception as e:

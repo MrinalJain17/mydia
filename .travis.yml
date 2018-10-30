@@ -1,10 +1,12 @@
 language: python
 sudo: required
 dist: trusty
+stages:
+  - Test
 before_install:
   - sudo apt-get update
 install:
-  # Some of this code is taken from https://github.com/keras-team/keras/blob/master/.travis.yml
+  # Some of the code below is taken from https://conda.io/docs/user-guide/tasks/use-conda-with-travis-ci.html
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -15,7 +17,10 @@ install:
   - travis_retry conda install -y numpy tqdm pytest pytest-runner
   - travis_retry conda install -y ffmpeg ffmpeg-python -c mrinaljain17
   - pip install -e .
-script:
-  - pytest
-after_success:
-  - pip uninstall -y mydia
+script: # Performed in jobs
+after_success: # Nothing to do
+
+jobs:
+  include:
+    - stage: Test
+      script: pytest

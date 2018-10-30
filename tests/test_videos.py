@@ -23,9 +23,9 @@ def test_reader(target_size, to_gray, num_frames, normalize, expected_shape):
         normalize=normalize,
     )
     video = reader.read(path, verbose=0)
-    if not normalize:
-        assert video.shape == expected_shape
-    else:
+    
+    assert video.shape == expected_shape
+    if normalize:
         assert (np.min(video) >= 0) and (np.max(video) <= 1)
 
 
