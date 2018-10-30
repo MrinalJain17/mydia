@@ -62,12 +62,12 @@ jobs:
 
         # https://conda.io/docs/user-guide/tasks/build-packages/install-conda-build.html
         - conda-build ./conda_build/mydia --numpy 1.14 -c mrinaljain17 --output-folder ./dump
-        - conda convert --platform win-64 "./dump/linux-64/*.tar.bz2" -o ./dump
-        - conda convert --platform osx-64 "./dump/linux-64/*.tar.bz2" -o ./dump
+        - conda convert --platform win-64 ./dump/linux-64/*.tar.bz2 -o ./dump
+        - conda convert --platform osx-64 ./dump/linux-64/*.tar.bz2 -o ./dump
         # Upload to Anaconda
-        - anaconda -v -t $ANACONDA_TOKEN upload "./dump/linux-64/*.tar.bz2"
-        - anaconda -v -t $ANACONDA_TOKEN upload "./dump/win-64/*.tar.bz2"
-        - anaconda -v -t $ANACONDA_TOKEN upload "./dump/osx-64/*.tar.bz2"
+        - anaconda -v -t $ANACONDA_TOKEN upload ./dump/linux-64/*.tar.bz2
+        - anaconda -v -t $ANACONDA_TOKEN upload ./dump/win-64/*.tar.bz2
+        - anaconda -v -t $ANACONDA_TOKEN upload ./dump/osx-64/*.tar.bz2
       deploy:
         provider: pypi
         user: $PYPI_USER
