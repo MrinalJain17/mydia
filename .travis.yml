@@ -14,7 +14,7 @@ before_install: &before_install
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
-  - travis_retry conda install -y python=3.6 numpy tqdm
+  - travis_retry conda install -y python=3.6 numpy tqdm pytest pytest-runner
   - travis_retry conda install -y ffmpeg ffmpeg-python -c mrinaljain17
 install:
   - pip install -e .
@@ -24,8 +24,6 @@ after_success:  # Nothing to do
 jobs:
   include:
     - stage: Test
-      install:
-        - travis_retry conda install -y pytest pytest-runner
       script: pytest
 
     - stage: Docs
