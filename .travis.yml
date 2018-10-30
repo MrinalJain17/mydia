@@ -3,6 +3,7 @@ sudo: required
 dist: trusty
 stages:
   - Test
+  - Docs
 before_install:
   - sudo apt-get update
 install:
@@ -17,10 +18,26 @@ install:
   - travis_retry conda install -y numpy tqdm pytest pytest-runner
   - travis_retry conda install -y ffmpeg ffmpeg-python -c mrinaljain17
   - pip install -e .
-script: # Performed in jobs
-after_success: # Nothing to do
+script:  # Performed in jobs
+after_success:  # Nothing to do
 
 jobs:
   include:
     - stage: Test
       script: pytest
+    - stage: Docs
+      install:
+        - travis_retry conda install -y sphinx pillow matplotlib
+        - pip install sphinx-gallery
+      script:
+        - cd docs && make html
+        - touch files/html/.nojekyll
+      after_success: # Nothing to do
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: false
+        local-dir: docs/files/html
+        on:
+          branch: master
