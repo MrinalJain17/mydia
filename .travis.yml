@@ -19,17 +19,14 @@ before_install: &before_install
   - travis_retry conda install -y ffmpeg ffmpeg-python -c mrinaljain17
 install:
   - pip install -e .
-script:  # Performed in jobs
-after_success:  # Nothing to do
+script:
+  - pytest
+after_success:  
 
 jobs:
   include:
-    - stage: Test
-      script: pytest
-
     - stage: Docs
-      # Use previously defined before_install
-      before_install: *before_install
+      before_install:  # Nothing to do
       install:
         - travis_retry conda install -y sphinx pillow matplotlib
         - pip install sphinx-gallery
