@@ -12,7 +12,7 @@ Frame selection, resizing, and grayscale conversion
 
   * Set ``mode`` to ``"random"``
 
-* And finally, visualize the captured frames using :func:`mydia.plot`
+* And finally, visualize the captured frames using :func:`mydia.make_grid`
 """
 
 # Imports

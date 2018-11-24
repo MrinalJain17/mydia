@@ -80,7 +80,7 @@ video = reader.read(video_path, workers=4)
       $ sudo apt-get install ffmpeg
   ```
   
-  For **Windows or MAC/OSX** users - 
+  For **Windows or OSX** users - 
   
   Download the required binaries from [here](https://www.ffmpeg.org/download.html). 
   Extract the zip file and add the location of binaries to the `PATH` variable.
