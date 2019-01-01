@@ -1,0 +1,291 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Get started with some basics &#8212; Mydia 2.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Frame selection, resizing, and grayscale conversion" href="plot_2_frame_selection.html" />
+    <link rel="prev" title="Getting Started" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-1-getting-started-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="get-started-with-some-basics">
+<span id="sphx-glr-auto-examples-plot-1-getting-started-py"></span><h1>Get started with some basics<a class="headerlink" href="#get-started-with-some-basics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="read-a-video-given-its-path">
+<h2>1. Read a video, given its path<a class="headerlink" href="#read-a-video-given-its-path" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import</span>
+<span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
+
+<span class="c1"># Initialize video path</span>
+<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;./sample_video/bigbuckbunny.mp4&quot;</span>
+
+<span class="c1"># Create a reader object</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+
+<span class="c1"># Call the &#39;read()&#39; function to get the video tensor</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+
+<span class="c1"># a tensor of shape (1, 132, 720, 1280, 3)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The shape of the tensor:&quot;</span><span class="p">,</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The shape of the tensor: (1, 132, 720, 1280, 3)
+</pre></div>
+</div>
+<p>The tensor can be interpreted as -</p>
+<ul class="simple">
+<li>1 video</li>
+<li>Having 132 frames,</li>
+<li>Dimension (width x height) of each frame: 1280x720 pixels</li>
+<li><code class="docutils literal notranslate"><span class="pre">3</span></code> denotes that the video is RGB</li>
+</ul>
+</div>
+<div class="section" id="read-multiple-videos">
+<h2>2. Read multiple videos<a class="headerlink" href="#read-multiple-videos" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
+
+<span class="n">video_paths</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;path/to/video_1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path/to/video_2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path/to/video_3&quot;</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">]</span>          <span class="c1"># list of path of videos</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_paths</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-multiple-workers-for-reading-the-videos-in-parallel">
+<h2>3. Use multiple workers for reading the videos in parallel<a class="headerlink" href="#use-multiple-workers-for-reading-the-videos-in-parallel" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
+
+<span class="n">video_paths</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;path/to/video_1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path/to/video_2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path/to/video_3&quot;</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">]</span>          <span class="c1"># list of path of videos</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+<span class="hll"><span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_paths</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><strong>The code above will use 4 CPUs to read the videos in parallel,
+which could result in a significant speed up, depending on the
+videos to be read and the performance of the CPU.</strong></p>
+</div>
+<div class="section" id="use-a-python-generator-for-multiple-videos">
+<h2>4. Use a python generator for multiple videos<a class="headerlink" href="#use-a-python-generator-for-multiple-videos" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
+
+<span class="n">video_paths</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;path/to/video_1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path/to/video_2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path/to/video_3&quot;</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">]</span>          <span class="c1"># list of path of videos</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">generate_video</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">video_paths</span><span class="p">:</span>
+        <span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">video</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">video_paths</span><span class="p">)):</span>
+    <span class="n">vid</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">generate_video</span><span class="p">())</span>
+    <span class="c1"># Do something</span>
+</pre></div>
+</div>
+<p><em>For information on the parameters available, read the examples ahead
+and also refer to the documentation of the class</em> <a class="reference internal" href="../videos.html#mydia.Videos" title="mydia.Videos"><code class="xref py py-class docutils literal notranslate"><span class="pre">mydia.Videos</span></code></a>.</p>
+</div>
+<div class="section" id="saving-the-loaded-video-tensor">
+<h2>Saving the loaded video tensor<a class="headerlink" href="#saving-the-loaded-video-tensor" title="Permalink to this headline">¶</a></h2>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>Once the videos have been processed, they could be
+saved as <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> (in <cite>.npz</cite> or <cite>.npy</cite> format). For
+further details, view the documentation of:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.save.html#numpy.save" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.save</span></code></a>: for saving in <cite>.npy</cite> format</li>
+<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.savez.html#numpy.savez" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.savez</span></code></a>: for saving in <cite>.npz</cite> format</li>
+<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.load.html#numpy.load" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.load</span></code></a>: for loading back the saved numpy tensors</li>
+</ul>
+<p class="last">Since the whole reading process is time consuming, this could turn
+out to be a useful way to store and reload the video tensors.</p>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  1.035 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-1-getting-started-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/5a04131d233bd4d6e51cbc1e77628687/plot_1_getting_started.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_1_getting_started.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/28fa576c5325aeb86a059d6423fadcce/plot_1_getting_started.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_1_getting_started.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">Getting Started</a>
+        </li>
+        <li>
+          <a href="plot_2_frame_selection.html" title="Next document">Frame selection, resizing, and grayscale conversion</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Mydia</a></h1>
+
+
+
+<p class="blurb">A simple and efficient wrapper for reading videos as NumPy tensors</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=MrinalJain17&repo=mydia&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/MrinalJain17/mydia">
+    <img
+        alt="https://secure.travis-ci.org/MrinalJain17/mydia.svg?branch=master"
+        src="https://secure.travis-ci.org/MrinalJain17/mydia.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Get started with some basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_2_frame_selection.html">Frame selection, resizing, and grayscale conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_3_custom_frame_selection.html">Custom frame selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../videos.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Getting Started</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="plot_2_frame_selection.html" title="next chapter">Frame selection, resizing, and grayscale conversion</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mrinal Jain.
+      
+      |
+      <a href="../_sources/auto_examples/plot_1_getting_started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/MrinalJain17/mydia" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-114571173-2']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

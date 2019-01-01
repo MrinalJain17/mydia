@@ -1,0 +1,270 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Custom frame selection &#8212; Mydia 2.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../videos.html" />
+    <link rel="prev" title="Frame selection, resizing, and grayscale conversion" href="plot_2_frame_selection.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-3-custom-frame-selection-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="custom-frame-selection">
+<span id="sphx-glr-auto-examples-plot-3-custom-frame-selection-py"></span><h1>Custom frame selection<a class="headerlink" href="#custom-frame-selection" title="Permalink to this headline">¶</a></h1>
+<p>By default, you can use one of the five available options for frame
+selection - <cite>{“auto”</cite>, <cite>“random”</cite>, <cite>“first”</cite>, <cite>“last”</cite>, and <cite>“middle”}</cite>,
+by passing it to the parameter <code class="docutils literal notranslate"><span class="pre">mode</span></code>. (View the documentation of
+<a class="reference internal" href="../videos.html#mydia.Videos" title="mydia.Videos"><code class="xref py py-class docutils literal notranslate"><span class="pre">mydia.Videos</span></code></a> for more information on what each of these does)</p>
+<p>Internally, each of these options are mapped to a <cite>callable</cite> that returns
+a list of integers denoting the indices of the frames to be selected.
+The <cite>callable</cite> takes 4 non-keyword arguments:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">total_frames</span></code> (<cite>int</cite>): The total number of frames in the video</li>
+<li><code class="docutils literal notranslate"><span class="pre">num_frames</span></code> (<cite>int</cite>): The number of frames that you want to extract</li>
+<li><code class="docutils literal notranslate"><span class="pre">fps</span></code> (<cite>int</cite>): The frame rate of the video</li>
+<li><code class="docutils literal notranslate"><span class="pre">random_state</span></code> (<cite>int</cite>): Integer to seed the random number generator</li>
+</ul>
+<p>You could create your own <cite>callable</cite> and pass it to the parameter
+<code class="docutils literal notranslate"><span class="pre">mode</span></code>, gaining immense flexibility in the frame selection process.</p>
+<p>The general format of the <cite>callable</cite> should be:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">total_frames</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">random_state</span><span class="p">):</span>
+    <span class="c1"># Create a list of integers denoting the required frame indices</span>
+    <span class="n">frames_indices</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Do something</span>
+    <span class="o">...</span>
+
+    <span class="k">return</span> <span class="n">frame_indices</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="last arabic simple">
+<li>There are no tests that validate the indices returned by the
+<cite>callable</cite> and therefore, they must be within the range 0 to
+<code class="docutils literal notranslate"><span class="pre">total_frames</span></code>.</li>
+<li>Also, the frames are <strong>not</strong> repeated. That is, even if there are
+repeated indices, the number of frames are selected only for the
+unique values in the index array.</li>
+</ol>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you are passing a <cite>callable</cite> to <code class="docutils literal notranslate"><span class="pre">mode</span></code>, then make sure that
+the number of frames (indices) it returns is equal to the value of
+<code class="docutils literal notranslate"><span class="pre">num_frames</span></code>. If this condition is not met, then this would mean
+that the number of frames selected is different for different videos,
+and therefore they cannot be stacked into a single tensor.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Let’s say we want the first 20 even numbered frames (starting
+from 0, 2, 4, …), assuming that the video has atleast 20x2 = 40 frames.</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span><span class="p">,</span> <span class="n">make_grid</span>
+
+<span class="c1"># Initialize video path</span>
+<span class="n">video_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;./sample_video/bigbuckbunny.mp4&quot;</span>
+
+<span class="c1"># Custom frame selector</span>
+<span class="c1"># `*args` is used because we do not need the arguments for generating the</span>
+<span class="c1"># index array</span>
+<span class="k">def</span> <span class="nf">even_frames</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+
+<span class="c1"># Configuring the parameters</span>
+<span class="c1"># Passing `even_frames` to `mode`</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">(</span><span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span> <span class="n">to_gray</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">num_frames</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">even_frames</span><span class="p">)</span>
+
+<span class="c1"># Call the &#39;read()&#39; function to get the required video tensor</span>
+<span class="c1"># which will be of shape (1, 20, 480, 720, 3)</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">video_path</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The shape of the video tensor:&quot;</span><span class="p">,</span> <span class="n">video</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Plot the video frames in a grid</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_col</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_3_custom_frame_selection_001.png" class="sphx-glr-single-img" src="../_images/sphx_glr_plot_3_custom_frame_selection_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The shape of the video tensor: (1, 20, 480, 720, 1)
+</pre></div>
+</div>
+<p><em>Note that `make_grid` can also take some arguments for customizing
+the grid. For more info, view the documentation of the function</em>
+<a class="reference internal" href="../videos.html#mydia.make_grid" title="mydia.make_grid"><code class="xref py py-func docutils literal notranslate"><span class="pre">mydia.make_grid()</span></code></a>.</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  0.526 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-3-custom-frame-selection-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/808aca9dae6d4fd4f86342a2218f1961/plot_3_custom_frame_selection.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_3_custom_frame_selection.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/ee00f56f9244470e3e1b4ffb53d7e86f/plot_3_custom_frame_selection.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_3_custom_frame_selection.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="plot_2_frame_selection.html" title="Previous document">Frame selection, resizing, and grayscale conversion</a>
+        </li>
+        <li>
+          <a href="../videos.html" title="Next document">API Reference</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Mydia</a></h1>
+
+
+
+<p class="blurb">A simple and efficient wrapper for reading videos as NumPy tensors</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=MrinalJain17&repo=mydia&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/MrinalJain17/mydia">
+    <img
+        alt="https://secure.travis-ci.org/MrinalJain17/mydia.svg?branch=master"
+        src="https://secure.travis-ci.org/MrinalJain17/mydia.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="plot_1_getting_started.html">Get started with some basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_2_frame_selection.html">Frame selection, resizing, and grayscale conversion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Custom frame selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../videos.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Getting Started</a><ul>
+      <li>Previous: <a href="plot_2_frame_selection.html" title="previous chapter">Frame selection, resizing, and grayscale conversion</a></li>
+      <li>Next: <a href="../videos.html" title="next chapter">API Reference</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mrinal Jain.
+      
+      |
+      <a href="../_sources/auto_examples/plot_3_custom_frame_selection.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/MrinalJain17/mydia" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-114571173-2']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

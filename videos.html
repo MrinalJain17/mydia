@@ -1,0 +1,363 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API Reference &#8212; Mydia 2.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Custom frame selection" href="auto_examples/plot_3_custom_frame_selection.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-mydia">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-mydia" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mydia-videos">
+<h2>mydia.Videos<a class="headerlink" href="#mydia-videos" title="Permalink to this headline">¶</a></h2>
+<p>An instance of this class is used as a reader to read videos.</p>
+<dl class="class">
+<dt id="mydia.Videos">
+<em class="property">class </em><code class="descclassname">mydia.</code><code class="descname">Videos</code><span class="sig-paren">(</span><em>target_size=None</em>, <em>to_gray=False</em>, <em>num_frames=None</em>, <em>mode='auto'</em>, <em>normalize=False</em>, <em>data_format='channels_last'</em>, <em>random_state=17</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mydia/mydia.html#Videos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mydia.Videos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to read in videos and store them as numpy arrays</p>
+<p>The videos are stored as a 5-dimensional tensor where the shape of
+the tensor depends on <code class="docutils literal notranslate"><span class="pre">data_format</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target_size</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – A tuple of form <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code> indicating the dimension to
+resize the frames of the video, defaults to <cite>None</cite>. The dimension
+of the frames will not be altered if this parameter is not set.</li>
+<li><strong>to_gray</strong> (<em>bool</em>) – Convert video to grayscale, defaults to <cite>False</cite>.</li>
+<li><strong>num_frames</strong> (<em>int</em>) – The (exact) number of frames to extract from the video, defaults
+to <cite>None</cite>. Frames are extracted based on the value of <code class="docutils literal notranslate"><span class="pre">mode</span></code>.
+If not set, all the frames of the video are kept.</li>
+<li><strong>mode</strong> (<em>str</em>) – <p>The method used for frame extraction if <code class="docutils literal notranslate"><span class="pre">num_frames</span></code> is set.
+It could be one of “auto”, “random”, “first”, “last” or “middle”.</p>
+<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>: <strong>N</strong> frames will be extracted at equal intervals.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;random&quot;</span></code>: <strong>N</strong> frames will be randomly extracted (no
+repetetion). Use <code class="docutils literal notranslate"><span class="pre">random_state</span></code> to ensure reproducibility.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;middle&quot;</span></code> will extract <strong>N</strong>
+contiguous frames from the beginning, end and middle of the
+video respectively.</li>
+</ul>
+</li>
+<li><strong>normalize</strong> (<em>bool</em>) – Shifts each video to the range <cite>(0, 1)</cite> by subtracting the minimum
+and dividing by the difference between the maximum and the minimum
+pixel value. Defaults to <cite>False</cite></li>
+<li><strong>data_format</strong> (<em>str</em>) – <p>Video data format, either “channels_last” or “channels_first”.</p>
+<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;channels_last&quot;</span></code>: The tensor will have shape
+<code class="docutils literal notranslate"><span class="pre">(&lt;videos&gt;,</span> <span class="pre">&lt;frames&gt;,</span> <span class="pre">&lt;height&gt;,</span> <span class="pre">&lt;width&gt;,</span> <span class="pre">&lt;channels&gt;)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;channels_first&quot;</span></code>: The tensor will have shape
+<code class="docutils literal notranslate"><span class="pre">(&lt;videos&gt;,</span> <span class="pre">&lt;channels&gt;,</span> <span class="pre">&lt;frames&gt;,</span> <span class="pre">&lt;height&gt;,</span> <span class="pre">&lt;width&gt;)</span></code></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">channels</span></code> will be <strong>3</strong> for videos in RGB format, or <strong>1</strong>
+for videos in grayscale.</p>
+</li>
+<li><strong>random_state</strong> (<em>int</em>) – Integer that seeds the (numpy) random number generator, defaults
+to 17. Used only when <code class="docutils literal notranslate"><span class="pre">mode</span></code> is set to “random”.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">(</span>
+    <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span>
+    <span class="n">to_gray</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+    <span class="n">num_frames</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+    <span class="n">data_format</span><span class="o">=</span><span class="s2">&quot;channels_first&quot;</span>
+<span class="p">)</span>
+
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;./path/to/video&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You could also pass a <cite>callable</cite> to <code class="docutils literal notranslate"><span class="pre">mode</span></code> for custom frame
+extraction. The <cite>callable</cite> should return a <strong>list of integers</strong>,
+denoting the indices of the frames to be extracted. It should
+take 4 (non-keyword) arguments:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">total_frames</span></code>: The total number of frames in the video</li>
+<li><code class="docutils literal notranslate"><span class="pre">num_frames</span></code>: The number of frames that you want to extract</li>
+<li><code class="docutils literal notranslate"><span class="pre">fps</span></code>: The frame rate of the video</li>
+<li><code class="docutils literal notranslate"><span class="pre">random_state</span></code>: Integer to seed the random number generator</li>
+</ul>
+<p class="last">These arguments may/may not be used to generate the required
+frame indices. Detailed examples are provided in the documentation.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you are passing a <cite>callable</cite> to <code class="docutils literal notranslate"><span class="pre">mode</span></code>, then make sure that
+the number of frames (indices) it returns is equal to the value of
+<code class="docutils literal notranslate"><span class="pre">num_frames</span></code>. If this condition is not met, then this would mean
+that the number of frames selected is different for different videos,
+and therefore they cannot be stacked into a single tensor.</p>
+</div>
+<dl class="method">
+<dt id="mydia.Videos.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>paths</em>, <em>verbose=1</em>, <em>workers=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mydia/mydia.html#Videos.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mydia.Videos.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to read videos</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>paths</strong> (<em>str</em><em> or </em><em>list</em><em>[</em><em>str</em><em>]</em>) – A list of paths/path of the video(s) to be read.</li>
+<li><strong>verbose</strong> (<em>int</em>) – If set to 0, the progress bar will be disabled.</li>
+<li><strong>workers</strong> (<em>int</em>) – <p>The number of processes (CPUs) to use for reading the videos.
+This uses the <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> module present in the python
+standard library.</p>
+<p>Its value can range from 0 to <cite>max_workers</cite> where the latter
+can be determined by calling <code class="docutils literal notranslate"><span class="pre">multiprocessing.cpu_count()</span></code>
+on your machine.</p>
+<p>Defaults to 0, which means that multiprocessing will <strong>not</strong>
+be used.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>A 5-dimensional tensor, whose shape will depend on the value
+of <code class="docutils literal notranslate"><span class="pre">data_format</span></code>.</p>
+<ul class="simple">
+<li>For <code class="docutils literal notranslate"><span class="pre">&quot;channels_last&quot;</span></code>: The tensor will have shape
+<code class="docutils literal notranslate"><span class="pre">(&lt;videos&gt;,</span> <span class="pre">&lt;frames&gt;,</span> <span class="pre">&lt;height&gt;,</span> <span class="pre">&lt;width&gt;,</span> <span class="pre">&lt;channels&gt;)</span></code></li>
+<li>For <code class="docutils literal notranslate"><span class="pre">&quot;channels_first&quot;</span></code>: The tensor will have shape
+<code class="docutils literal notranslate"><span class="pre">(&lt;videos&gt;,</span> <span class="pre">&lt;channels&gt;,</span> <span class="pre">&lt;frames&gt;,</span> <span class="pre">&lt;height&gt;,</span> <span class="pre">&lt;width&gt;)</span></code></li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If <code class="docutils literal notranslate"><span class="pre">paths</span></code> is neither a string, not a list of strings.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code> – If <code class="docutils literal notranslate"><span class="pre">num_frames</span></code> is set to a value greater than the total
+number of frames available in the video.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">If multiple videos are to be read, then each video should have
+the same dimension <code class="docutils literal notranslate"><span class="pre">(frames,</span> <span class="pre">height,</span> <span class="pre">width)</span></code>, otherwise they
+cannot be stacked into a single tensor. Therefore, the user <strong>must</strong>
+use the parameters <code class="docutils literal notranslate"><span class="pre">target_size</span></code> and <code class="docutils literal notranslate"><span class="pre">num_frames</span></code> to make
+sure of this.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mydia-make-grid">
+<h2>mydia.make_grid<a class="headerlink" href="#mydia-make-grid" title="Permalink to this headline">¶</a></h2>
+<p>This method can be used for converting a video into a grid of frames.
+Inspired from a similar utility provided in
+<a class="reference external" href="https://pytorch.org/docs/master/torchvision/utils.html#torchvision.utils.make_grid">torchvision</a></p>
+<dl class="function">
+<dt id="mydia.make_grid">
+<code class="descclassname">mydia.</code><code class="descname">make_grid</code><span class="sig-paren">(</span><em>video</em>, <em>num_col=3</em>, <em>padding=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mydia/mydia.html#make_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mydia.make_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a video into a grid of frames.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>video</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – A 4-dimensional video tensor (a single video).</li>
+<li><strong>num_col</strong> (<em>int</em>) – The number of columns in the grid, defaults to 3.</li>
+<li><strong>padding</strong> (<em>int</em>) – Amount of padding (in pixels), defaults to 5.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A gird of frames (numpy array) of shape <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width,</span> <span class="pre">3)</span></code>
+if the video is in RGB format, or <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width)</span></code> if the
+video is in grayscale.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the dimension of the <code class="docutils literal notranslate"><span class="pre">video</span></code> tensor is invalid.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mydia</span> <span class="kn">import</span> <span class="n">Videos</span><span class="p">,</span> <span class="n">make_grid</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">Videos</span><span class="p">(</span><span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span> <span class="n">to_gray</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;./path/to/video&quot;</span><span class="p">)</span>
+
+<span class="hll"><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_col</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span><span class="hll"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The input to this function should be a single video tensor, with <em>any</em>
+<code class="docutils literal notranslate"><span class="pre">data_format</span></code>. However, the grid of frames produced as the output will
+<strong>always</strong> be <code class="docutils literal notranslate"><span class="pre">&quot;channels_last&quot;</span></code>.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="auto_examples/plot_3_custom_frame_selection.html" title="Previous document">Custom frame selection</a>
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Mydia</a></h1>
+
+
+
+<p class="blurb">A simple and efficient wrapper for reading videos as NumPy tensors</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=MrinalJain17&repo=mydia&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/MrinalJain17/mydia">
+    <img
+        alt="https://secure.travis-ci.org/MrinalJain17/mydia.svg?branch=master"
+        src="https://secure.travis-ci.org/MrinalJain17/mydia.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mydia-videos">mydia.Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mydia-make-grid">mydia.make_grid</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="auto_examples/plot_3_custom_frame_selection.html" title="previous chapter">Custom frame selection</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mrinal Jain.
+      
+      |
+      <a href="_sources/videos.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/MrinalJain17/mydia" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-114571173-2']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
