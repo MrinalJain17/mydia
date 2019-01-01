@@ -194,7 +194,7 @@ class Videos(object):
         :obj:`numpy.ndarray`
             A 5-dimensional tensor, whose shape will depend on the value 
             of ``data_format``.
-            
+
             * For ``"channels_last"``: The tensor will have shape 
               ``(<videos>, <frames>, <height>, <width>, <channels>)``
             * For ``"channels_first"``: The tensor will have shape 
@@ -410,6 +410,12 @@ def make_grid(video, num_col=3, padding=5):
 
        grid = make_grid(video[0], num_col=6, padding=8)
        plt.imshow(grid, cmap="gray")
+
+    Note
+    ----
+    The input to this function should be a single video tensor, with *any* 
+    ``data_format``. However, the grid of frames produced as the output will 
+    **always** be ``"channels_last"``.
 
     """
     if video.ndim != 4:

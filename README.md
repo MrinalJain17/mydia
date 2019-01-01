@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/MrinalJain17/mydia.svg?branch=master)](https://travis-ci.org/MrinalJain17/mydia)
 ![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
 ![Platform](https://img.shields.io/badge/Platforms-linux--64,osx--64,win--64-orange.svg)
+[![Downloads](https://pepy.tech/badge/mydia)](https://pepy.tech/project/mydia)
 
 Reading videos as NumPy arrays was never more simple. This library provides an 
 entire range of additional functionalities such as custom frame selection, frame 
