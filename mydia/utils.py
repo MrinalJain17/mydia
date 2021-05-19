@@ -1,6 +1,6 @@
 """Contains the callables for the built-in frame selection modes.
 
-Refer to the documentation of the class :class:`Videos` for further 
+Refer to the documentation of the class :class:`Videos` for further
 details on their usage.
 
 """
